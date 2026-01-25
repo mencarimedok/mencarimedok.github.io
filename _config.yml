@@ -1,13 +1,20 @@
 title: Mencari Medok
-description: Catatan rasa, kota, dan yang tetap medok walau dunia keburu cepat.
-url: ""
-baseurl: "/blog"
+description: Catatan rasa, kota, dan arsip kecil yang tetap medok.
+lang: id
+
+# User Pages (repo: mencarimedok.github.io)
+url: "https://mencarimedok.github.io"
+baseurl: ""
 
 markdown: kramdown
-permalink: /:categories/:year/:month/:day/:title/
+permalink: /:year/:month/:day/:title/
 
-# ini biar snippet kamu bisa “dipotong” dari konten
 excerpt_separator: "<!--more-->"
 
 plugins:
+  - jekyll-sitemap
   - jekyll-feed
+  - jekyll-seo-tag
+
+# (opsional) isi setelah kamu dapat dari Google Search Console:
+# google_site_verification: "PASTE_TOKEN_DI_SINI"
