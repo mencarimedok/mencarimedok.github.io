@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mencarimedok.github.io/sitemap.xml
