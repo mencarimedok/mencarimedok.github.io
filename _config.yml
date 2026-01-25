@@ -1,0 +1,13 @@
+title: Mencari Medok
+description: Catatan rasa, kota, dan yang tetap medok walau dunia keburu cepat.
+url: ""
+baseurl: "/blog"
+
+markdown: kramdown
+permalink: /:categories/:year/:month/:day/:title/
+
+# ini biar snippet kamu bisa “dipotong” dari konten
+excerpt_separator: "<!--more-->"
+
+plugins:
+  - jekyll-feed

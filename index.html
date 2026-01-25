@@ -1,0 +1,38 @@
+---
+layout: default
+title: Home
+---
+
+<section class="hero">
+  <h1 class="h1">{{ site.title }}</h1>
+  <p class="lead">{{ site.description }}</p>
+</section>
+
+<section class="grid">
+  {% for post in site.posts %}
+    <article class="card">
+      <a class="card__link" href="{{ post.url | relative_url }}">
+        <div class="card__media">
+          {% if post.cover %}
+            <img src="{{ post.cover | relative_url }}" alt="" loading="lazy" />
+          {% else %}
+            <img src="{{ '/assets/images/default-cover.jpg' | relative_url }}" alt="" loading="lazy" />
+          {% endif %}
+        </div>
+
+        <div class="card__body">
+          <h2 class="h2">{{ post.title }}</h2>
+          <p class="meta">{{ post.date | date: "%d %B %Y" }}</p>
+
+          <p class="snippet">
+            {{ post.excerpt | strip_html | truncate: 180 }}
+          </p>
+        </div>
+      </a>
+    </article>
+  {% endfor %}
+</section>
+
+{% if site.posts.size == 0 %}
+  <p class="empty">Belum ada artikel. Taruh file pertama kamu di folder <code>_posts</code>.</p>
+{% endif %}
