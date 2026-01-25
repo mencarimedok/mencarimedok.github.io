@@ -17,4 +17,4 @@ plugins:
   - jekyll-seo-tag
 
 # (opsional) isi setelah kamu dapat dari Google Search Console:
-# google_site_verification: "PASTE_TOKEN_DI_SINI"
+google_site_verification: "google-site-verification=eCluXlKjn1oSs8nMXgiCsuMAXsMcF_QR3xYFax_fdDY"
