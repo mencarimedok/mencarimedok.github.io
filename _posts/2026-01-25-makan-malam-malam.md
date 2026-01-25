@@ -2,7 +2,7 @@
 layout: post
 title: "Makan Malam-Malam"
 date: 2026-01-25
-cover: /assets/images/default-cover.jpg
+cover: /assets/images/posts/2026-01-25-makan-malam-malam/makan-malam-malam-01.jpeg
 description: "Mengapa aku dan orang-orang makan malam-malam?"
 ---
 
