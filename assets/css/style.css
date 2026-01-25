@@ -182,6 +182,24 @@ a:hover{ text-decoration-color: rgba(21,21,21,.55); }
   letter-spacing: var(--track-meta);
   text-transform: uppercase;
 }
+.meta--archive{
+  text-transform: uppercase;
+  letter-spacing: calc(var(--track-meta) + 0.02em);
+}
+
+.meta__by{
+  opacity: .85;
+}
+
+.meta__author{
+  font-weight: 700; /* tetap “label” */
+}
+
+.meta__sep{
+  margin: 0 .55em;
+  opacity: .7;
+}
+
 .snippet{
   margin: 0;
   color: rgba(21,21,21,.86);
