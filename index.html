@@ -23,10 +23,7 @@ title: Home
         <div class="card__body">
           <h2 class="h2">{{ post.title }}</h2>
           <p class="meta">{{ post.date | date: "%d %B %Y" }}</p>
-
-          <p class="snippet">
-            {{ post.excerpt | strip_html | truncate: 180 }}
-          </p>
+          <p class="snippet">{{ post.excerpt | strip_html | truncate: 180 }}</p>
         </div>
       </a>
     </article>
@@ -34,5 +31,5 @@ title: Home
 </section>
 
 {% if site.posts.size == 0 %}
-  <p class="empty">Belum ada artikel. Taruh file pertama kamu di folder <code>_posts</code>.</p>
+  <p class="empty">Belum ada artikel. Taruh file pertama di folder <code>_posts</code>.</p>
 {% endif %}
