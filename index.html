@@ -4,7 +4,6 @@ title: Home
 ---
 
 <section class="hero">
-  <h1 class="h1">{{ site.title }}</h1>
   <p class="lead">{{ site.description }}</p>
 </section>
 
@@ -22,7 +21,14 @@ title: Home
 
         <div class="card__body">
           <h2 class="h2">{{ post.title }}</h2>
-          <p class="meta">{{ post.date | date: "%d %B %Y" }}</p>
+          <p class="meta meta--archive">
+  <span class="meta__by">OLEH</span>
+  <span class="meta__author">{{ post.author | default: site.author.name }}</span>
+  <span class="meta__sep">·</span>
+  <time class="meta__date" datetime="{{ post.date | date_to_xmlschema }}">
+    {{ post.date | date: "%d %B %Y" }}
+  </time>
+</p>
           <p class="snippet">{{ post.excerpt | strip_html | truncate: 180 }}</p>
         </div>
       </a>
