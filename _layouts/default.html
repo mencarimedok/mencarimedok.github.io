@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ page.excerpt | strip_html | default: site.description }}" />
+
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="{{ '/' | relative_url }}">
+          <span class="brand__title">{{ site.title }}</span>
+          <span class="brand__tagline">{{ site.description }}</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      {{ content }}
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>© {{ "now" | date: "%Y" }} {{ site.title }}.</p>
+      </div>
+    </footer>
+  </body>
+</html>
