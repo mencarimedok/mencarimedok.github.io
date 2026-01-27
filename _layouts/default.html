@@ -23,9 +23,12 @@
     </main>
 
     <footer class="site-footer">
-      <div class="wrap">
-        <p>© {{ "now" | date: "%Y" }} {{ site.title }}.</p>
-      </div>
-    </footer>
+  <div class="wrap">
+    <p>
+      © {{ "now" | date: "%Y" }} {{ site.title }} ·
+      <a href="{{ '/lisensi/' | relative_url }}">Lisensi (CC BY-NC-ND)</a>
+    </p>
+  </div>
+</footer>
   </body>
 </html>
