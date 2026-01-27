@@ -257,3 +257,10 @@ code{
   :root{ --gutter: 18px; --base: 18px; }
   .h1{ font-size: 36px; }
 }
+
+.site-footer a{
+  font-family: "Courier Prime", "Courier New", Courier, ui-monospace, monospace;
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  text-decoration-color: rgba(21,21,21,.30);
+}
