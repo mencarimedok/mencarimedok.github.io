@@ -4,15 +4,24 @@ layout: default
 <article class="post">
   <header class="post__header">
     <h1 class="h1">{{ page.title }}</h1>
-    <p class="meta meta--archive">
-  <span class="meta__by">OLEH</span>
-  <span class="meta__author">{{ page.author | default: site.author.name }}</span>
-  <span class="meta__sep">·</span>
-  <time class="meta__date" datetime="{{ page.date | date_to_xmlschema }}">
-    {{ page.date | date: "%d %B %Y" }}
-  </time>
-</p>
 
+    <!-- Arsip meta: author + date -->
+    <p class="meta meta--archive">
+      <span class="meta__by">OLEH</span>
+      <span class="meta__author">{{ page.author | default: site.author.name }}</span>
+      <span class="meta__sep">·</span>
+      <time class="meta__date" datetime="{{ page.date | date_to_xmlschema }}">
+        {{ page.date | date: "%d %B %Y" }}
+      </time>
+    </p>
+
+    <!-- Editor: hanya tampil di post -->
+    {% if page.editor %}
+      <p class="meta meta--archive meta--editor">
+        <span class="meta__by">DISUNTING OLEH</span>
+        <span class="meta__editor">{{ page.editor }}</span>
+      </p>
+    {% endif %}
 
     {% if page.cover %}
       <img class="post__cover" src="{{ page.cover | relative_url }}" alt="" loading="lazy" />
@@ -23,4 +32,3 @@ layout: default
     {{ content }}
   </div>
 </article>
-
