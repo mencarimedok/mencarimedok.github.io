@@ -1,0 +1,165 @@
+name: Publish scheduled posts (from issues)
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch scheduled issues
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh api "repos/$REPO/issues?state=open&labels=scheduled-post&per_page=100" > issues.json
+
+      - name: Publish due issues to _posts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, datetime, subprocess
+          from pathlib import Path
+
+          def parse_meta_and_content(body: str):
+              body = (body or "").strip()
+              meta = {}
+              lines = body.splitlines()
+              i = 0
+              while i < len(lines):
+                  line = lines[i].strip()
+                  if not line:
+                      i += 1
+                      break
+                  m = re.match(r"^([A-Za-z0-9_-]+)\s*:\s*(.+)\s*$", line)
+                  if not m:
+                      break
+                  k = m.group(1).lower()
+                  v = m.group(2).strip().strip('"').strip("'")
+                  meta[k] = v
+                  i += 1
+              content = "\n".join(lines[i:]).strip() or "(konten kosong)"
+              return meta, content
+
+          def slugify(s):
+              s = s.lower()
+              s = re.sub(r"[^\w\s-]", "", s)
+              s = re.sub(r"[\s_-]+", "-", s).strip("-")
+              return s or "post"
+
+          def parse_publish_at(s: str):
+              # Accept:
+              #  - YYYY-MM-DD HH:MM +0700
+              #  - YYYY-MM-DD HH:MM +07:00
+              #  - YYYY-MM-DD HH:MM        (assume +0700)
+              s = s.strip()
+              if re.match(r"^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}$", s):
+                  s = s + " +0700"
+              if re.match(r"^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}\s+[+-]\d{2}:\d{2}$", s):
+                  # convert "YYYY-MM-DD HH:MM +07:00" -> isoformat
+                  dt = datetime.datetime.fromisoformat(s.replace(" ", "T"))
+                  return dt
+              if re.match(r"^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}\s+[+-]\d{4}$", s):
+                  dt = datetime.datetime.strptime(s, "%Y-%m-%d %H:%M %z")
+                  return dt
+              raise ValueError("publish_at format invalid")
+
+          now_utc = datetime.datetime.now(datetime.timezone.utc)
+
+          issues = json.load(open("issues.json", "r", encoding="utf-8"))
+          any_change = False
+          repo = os.environ["REPO"]
+
+          for issue in issues:
+              assoc = issue.get("author_association")
+              if assoc not in ("OWNER", "MEMBER", "COLLABORATOR"):
+                  continue
+
+              number = issue["number"]
+              title = (issue.get("title") or "").strip()
+              meta, content = parse_meta_and_content(issue.get("body") or "")
+
+              publish_raw = meta.get("publish_at")
+              if not publish_raw:
+                  subprocess.run(["gh","api",f"repos/{repo}/issues/{number}/comments",
+                                  "-f",("body=⚠️ Missing `publish_at:`. "
+                                        "Contoh: `publish_at: 2026-02-01 09:00 +0700`")],
+                                 check=False)
+                  continue
+
+              try:
+                  publish_dt = parse_publish_at(publish_raw).astimezone(datetime.timezone.utc)
+              except Exception:
+                  subprocess.run(["gh","api",f"repos/{repo}/issues/{number}/comments",
+                                  "-f",("body=⚠️ Format `publish_at` tidak kebaca. "
+                                        "Pakai: `YYYY-MM-DD HH:MM +0700` (recommended).")],
+                                 check=False)
+                  continue
+
+              if publish_dt > now_utc:
+                  continue  # not due yet
+
+              # due -> create post file using Jakarta time (+0700)
+              tz = datetime.timezone(datetime.timedelta(hours=7))
+              publish_local = publish_dt.astimezone(tz)
+
+              file_date = publish_local.strftime("%Y-%m-%d")
+              date_str  = publish_local.strftime("%Y-%m-%d %H:%M:%S %z")
+              slug = slugify(title)
+
+              post_path = Path("_posts") / f"{file_date}-{slug}.md"
+              post_path.parent.mkdir(parents=True, exist_ok=True)
+
+              def esc(x): return x.replace('"', '\\"')
+
+              fm = [
+                  "---",
+                  "layout: post",
+                  f'title: "{esc(title)}"',
+                  f"date: {date_str}",
+              ]
+              if meta.get("author"):
+                  fm.append(f'author: "{esc(meta["author"])}"')
+              if meta.get("editor"):
+                  fm.append(f'editor: "{esc(meta["editor"])}"')
+              if meta.get("cover"):
+                  fm.append(f'cover: "{meta["cover"]}"')
+              if meta.get("description"):
+                  fm.append(f'description: "{esc(meta["description"])}"')
+              fm.append("---\n")
+
+              post_path.write_text("\n".join(fm) + content + "\n", encoding="utf-8")
+              any_change = True
+
+              subprocess.run(["gh","api",f"repos/{repo}/issues/{number}/comments",
+                              "-f",f"body=✅ Dipublikasikan: `{post_path}` (publish_at: {publish_local.strftime('%Y-%m-%d %H:%M %z')})."],
+                             check=False)
+              subprocess.run(["gh","api",f"repos/{repo}/issues/{number}",
+                              "-X","PATCH","-f","state=closed"],
+                             check=False)
+
+          if not any_change:
+              print("No due issues to publish.")
+          PY
+
+      - name: Commit and push (if changed)
+        run: |
+          git config user.name "mencarimedok-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add _posts/*.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Publish scheduled posts"
+          git push
