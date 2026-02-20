@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "_Snack_ Enak Enggak Bikin Buncit"
+title: "Snack Enak Enggak Bikin Buncit"
 date: 2026-02-20 14:26:13 +0700
 author: "Mustika K."
 editor: "Baskoro Aris Sansoko"
