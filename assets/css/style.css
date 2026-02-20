@@ -187,17 +187,17 @@ a:hover{ text-decoration-color: rgba(21,21,21,.55); }
   letter-spacing: calc(var(--track-meta) + 0.02em);
 }
 
-.meta__by{
-  opacity: .85;
-}
+.meta__sep{ margin: 0 .55em; opacity: .7; }
+.meta__author{ font-weight: 700; }
+.meta__by{ opacity: .85; }
 
-.meta__author{
-  font-weight: 700; /* tetap “label” */
+.meta--editor{
+  margin-top: -6px;       /* rapat ala label arsip */
+  font-size: 12px;
+  opacity: .9;
 }
-
-.meta__sep{
-  margin: 0 .55em;
-  opacity: .7;
+.meta__editor{
+  font-weight: 700;
 }
 
 .snippet{
