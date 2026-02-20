@@ -1,0 +1,119 @@
+name: Publish post from issue (now)
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  issue_to_post:
+    if: >
+      github.event.label.name == 'new-post' &&
+      (github.event.issue.author_association == 'OWNER' ||
+       github.event.issue.author_association == 'MEMBER' ||
+       github.event.issue.author_association == 'COLLABORATOR')
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create _posts file from issue
+        env:
+          EVENT_PATH: ${{ github.event_path }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, datetime
+          from pathlib import Path
+
+          with open(os.environ["EVENT_PATH"], "r", encoding="utf-8") as f:
+              event = json.load(f)
+
+          issue = event["issue"]
+          title = (issue.get("title") or "").strip()
+          body  = (issue.get("body") or "").strip()
+
+          def slugify(s):
+              s = s.lower()
+              s = re.sub(r"[^\w\s-]", "", s)
+              s = re.sub(r"[\s_-]+", "-", s).strip("-")
+              return s or "post"
+
+          # Parse meta header "key: value" until first blank line
+          meta = {}
+          lines = body.splitlines()
+          i = 0
+          while i < len(lines):
+              line = lines[i].strip()
+              if not line:
+                  i += 1
+                  break
+              m = re.match(r"^([A-Za-z0-9_-]+)\s*:\s*(.+)\s*$", line)
+              if not m:
+                  break
+              k = m.group(1).lower()
+              v = m.group(2).strip().strip('"').strip("'")
+              meta[k] = v
+              i += 1
+          content = "\n".join(lines[i:]).strip() or "(konten kosong)"
+
+          # Use issue created_at as publish time (+0700 by default)
+          created_at = issue.get("created_at")
+          dt_utc = datetime.datetime.fromisoformat(created_at.replace("Z", "+00:00")) if created_at else datetime.datetime.now(datetime.timezone.utc)
+          tz = datetime.timezone(datetime.timedelta(hours=7))  # Asia/Jakarta
+          dt = dt_utc.astimezone(tz)
+
+          date_str = dt.strftime("%Y-%m-%d %H:%M:%S %z")
+          file_date = dt.strftime("%Y-%m-%d")
+          slug = slugify(title)
+
+          post_path = Path("_posts") / f"{file_date}-{slug}.md"
+          post_path.parent.mkdir(parents=True, exist_ok=True)
+
+          def esc(x): return x.replace('"', '\\"')
+
+          fm = [
+              "---",
+              "layout: post",
+              f'title: "{esc(title)}"',
+              f"date: {date_str}",
+          ]
+          if meta.get("author"):
+              fm.append(f'author: "{esc(meta["author"])}"')
+          if meta.get("editor"):
+              fm.append(f'editor: "{esc(meta["editor"])}"')
+          if meta.get("cover"):
+              fm.append(f'cover: "{meta["cover"]}"')
+          if meta.get("description"):
+              fm.append(f'description: "{esc(meta["description"])}"')
+          fm.append("---\n")
+
+          post_path.write_text("\n".join(fm) + content + "\n", encoding="utf-8")
+          print("Created:", post_path)
+          PY
+
+      - name: Commit and push
+        run: |
+          git config user.name "mencarimedok-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add _posts/*.md
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git commit -m "Add post: ${{ github.event.issue.title }}"
+          git push
+
+      - name: Comment + close issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {owner, repo} = context.repo;
+            const issue_number = context.payload.issue.number;
+            await github.rest.issues.createComment({
+              owner, repo, issue_number,
+              body: "✅ Sudah dipublish sebagai post (file masuk `_posts/`). GitHub Pages akan rebuild otomatis."
+            });
+            await github.rest.issues.update({ owner, repo, issue_number, state: "closed" });
