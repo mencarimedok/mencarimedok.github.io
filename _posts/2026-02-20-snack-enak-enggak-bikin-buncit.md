@@ -4,7 +4,7 @@ title: "_Snack_ Enak Enggak Bikin Buncit"
 date: 2026-02-20 14:26:13 +0700
 author: "Mustika K."
 editor: "Baskoro Aris Sansoko"
-cover: "/assets/images/posts/YYYY-MM-DD-slug/cover.jpg"
+cover: "/assets/images/posts/2026-02-20-snack-enak-enggak-bikin-buncit/43cdd50b-b9bf-4a13-a46d-1e4026253261.jpeg"
 description: "ulasan kukis gluten-free Ladang Lima"
 ---
 Pernah dengar istilah _gluten-free food_, Kawan-kawan? Entah di media sosial, artikel, atau kemasan makanan? Pasti pernah lah ya; sekali atau dua kali gitu. Apakah kamu tahu maksud istilah itu? Aku jelasin sedikit ya. 
