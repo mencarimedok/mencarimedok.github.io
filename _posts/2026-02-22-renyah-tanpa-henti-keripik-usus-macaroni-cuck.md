@@ -13,9 +13,9 @@ Sebagai orang yang doyan makanan asin dan pedas, aku penasaran dengan Macaroni C
 
 Sesuai nama Macaroni Cuck, jualan utama gerai ini adalah macaroni. Hanya saja, dibandingkan makaroni, aku lebih menyukai keripik usus; bahkan jadi keripik usus favoritku. 
 
-Kekhasan utama seluruh varian Macaroni Cuck adalah bumbu utama yang memiliki  rasa bawang dan daun jeruk. Ini bikin sensasinya berasa makan ayam geprek dengan sambal bawang versi kering. Aroma daun jeruk yang menggugah selera ditambah gurih bawang putih berpadu bersama garam dan cabe bubuk membuat ketahihan dan ingin terus mengunyah. Hali ini sesuai dengan jargon mereka, "So spicy and addictive".
+Kekhasan utama seluruh varian Macaroni Cuck adalah bumbu utama yang memiliki  rasa bawang dan daun jeruk. Ini bikin sensasinya berasa makan ayam geprek dengan sambal bawang versi kering. Aroma daun jeruk yang menggugah selera ditambah gurih bawang putih berpadu bersama garam dan cabe bubuk membuat ketahihan dan ingin terus mengunyah. Hali ini sesuai dengan jargon mereka, "_So spicy and addictive_".
 
-Keripik usus Macaroni Cuck menurutku lebih renyah dan tidak alot daripada macaroninya. Secara tidak langsung, memakan keripik usus ini membuatku mengadopsi salah satu kebiasaan hidup sehat. Sebab setelah makan keripik usus yang asin dan gurih ini, aku jadi begitu haus dan ingin terus minum—wkwkwk. aku bisa mencukupi target minum air bening setiap harinya. 
+Keripik usus Macaroni Cuck menurutku lebih renyah dan tidak alot daripada macaroninya. Secara tidak langsung, memakan keripik usus ini membuatku mengadopsi salah satu kebiasaan hidup sehat. Sebab setelah makan keripik usus yang asin dan gurih ini, aku jadi begitu haus dan ingin terus minum—_wkwkwk_. aku bisa mencukupi target minum air bening setiap harinya. 
 
 Macaroni Cuck tersedia dalam berbagai rasa dan tingkat kepedasan. Pilihan rasa yang paling aku suka adalah Bawang dan Daun Jeruk. Selain itu, ada varian rasa Bawang Asin, Keju, Barbeque, dan Balado. Tingkat kepedasan bisa dipilih dari level 0 sampai level 5. 
  
