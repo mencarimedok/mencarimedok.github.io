@@ -2,7 +2,7 @@
 layout: post
 title: "Renyah Tanpa Henti Keripik Usus Macaroni Cuck"
 date: 2026-02-22 04:11:39 +0700
-author: "Titik"
+author: "Titik Rohmawati"
 editor: "Baskoro Aris Sansoko"
 cover: "/assets/images/posts/YYYY-MM-DD-slug/cover.jpg"
 description: "Ulasan keripik usus Macaroni Cuck, Surabaya"
