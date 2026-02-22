@@ -4,7 +4,7 @@ title: "Renyah Tanpa Henti Keripik Usus Macaroni Cuck"
 date: 2026-02-22 04:11:39 +0700
 author: "Titik Rohmawati"
 editor: "Baskoro Aris Sansoko"
-cover: "/assets/images/posts/YYYY-MM-DD-slug/cover.jpg"
+cover: "/assets/images/posts/23677fa9-3267-4234-9d84-24bfe6b44db6.jpeg"
 description: "Ulasan keripik usus Macaroni Cuck, Surabaya"
 ---
 Sebagai orang yang doyan makanan asin dan pedas, aku penasaran dengan Macaroni Cuck sejak pertama kali aku tahu outlet pertama mereka di Keputih. Sekitar tahun 2014 atau 2015,  aku melihat di media sosial dan tergoda dengan pilihan cemilan yang mereka jual. Terlebih, mereka juga menjual mie lidi yang membuat aku nostalgia masa Sekolah Dasar. 
