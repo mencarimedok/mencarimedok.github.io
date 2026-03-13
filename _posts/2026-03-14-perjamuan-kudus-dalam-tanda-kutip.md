@@ -4,7 +4,7 @@ title: "Perjamuan Kudus dalam Tanda Kutip"
 date: 2026-03-14 01:55:23 +0700
 author: "Heru Setiawan"
 editor: "Baskoro Aris Sansoko"
-cover: "/assets/images/posts/Hujan-hujan gini paling pas nyeruput hidangan berkuah panas. Ada Soto Kudus Kerbau #sodus  yang.webp"
+cover: "/assets/images/posts/IMG_0007.png"
 description: "Ulasan tentang semangkok soto kudus di Sodus Kedai Taman"
 ---
 Mengawali sebuah ulasan makanan dengan klarifikasi mungkin terdengar absurd. Namun,
