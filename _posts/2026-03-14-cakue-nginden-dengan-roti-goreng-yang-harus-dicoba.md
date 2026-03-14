@@ -2,9 +2,9 @@
 layout: post
 title: "Cakue Nginden dengan Roti Goreng yang Harus Dicoba"
 date: 2026-03-14 21:58:45 +0700
-author: "Yenny"
+author: "@crisp.lemonade"
 editor: "Baskoro Aris Sansoko"
-cover: "/assets/images/posts/YYYY-MM-DD-slug/cover.jpg"
+cover: "/assets/images/posts/618c5765-07e9-4741-8ee0-945f70f380b9.jpeg"
 description: "ulasan cakue dan roti goreng di Cakue Nginden"
 ---
 Kelompok kuliner yang akan saya bahas kali ini adalah _guilty pleasure_ kita semua, yaitu gorengan. Salah satu gorengan favorit warga Surabaya—pada berbagai etnis—adalah cakue. Tiap warga Surabaya memiliki bahkan fanatik terhadap cakue andalannya. Aku memilih Cakue Nginden sebab cakue ini terhitung populer di Surabaya. Di gerai ini hidangan utamanya tentu saja, sesuai nama, adalah cakue. Tentu saja cakue selalu berpasangan dengan dan tak lengkap tanpa roti goreng.
