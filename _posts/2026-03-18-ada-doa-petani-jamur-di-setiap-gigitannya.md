@@ -2,9 +2,9 @@
 layout: post
 title: "Ada Doa Petani Jamur di Setiap Gigitannya"
 date: 2026-03-18 17:15:12 +0700
-author: "Ferdinand Aditya"
+author: "Adit Ferdian"
 editor: "Baskoro Aris Sansoko"
-cover: "![image](https://github.com/user-attachments/assets/1c206a76-b0b5-49ce-93c0-bd2178da73ad)"
+cover: "/assets/images/posts/af6f577e-b5b1-4c5b-803c-86d9fc96ee6e.jpeg"
 description: "ulasan nasi kepal jamur dan pentol jamur Sego Njamoer"
 ---
 Kreasi kuliner yang kupilih ini terikat kuat pada masa lampau penulis saat mengenyam pendidikan di kampus perjuangan. Kreasi kuliner tersebut adalah Sego Njamoer; salah satu kuliner penyelamat anak muda, khususnya pelajar dan mahasiswa Surabaya, yang sangat ikonik.
