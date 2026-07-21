@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-21T16:08:22.731001Z",
+  "generatedAt": "2026-07-21T17:07:10.973542Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -42,8 +42,18 @@
                   "lastModified": "2025-11-19T01:22:54Z",
                   "etag": "\"187943e3aeb5150012c28a\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/81/media-819b95a0b930c1fb-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/81/media-819b95a0b930c1fb-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 2811,
+                  "sourceHeight": 2811,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1800,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 33362,
+                  "previewBytes": 220888
                 }
               ]
             }
@@ -80,8 +90,18 @@
                   "lastModified": "2025-11-19T01:16:15Z",
                   "etag": "\"18794386dfa3ea4015d99a\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/19/media-19c4665a6b0724dc-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/19/media-19c4665a6b0724dc-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 50132,
+                  "previewBytes": 267038
                 }
               ]
             }
@@ -127,8 +147,18 @@
                   "lastModified": "2025-11-19T08:35:08Z",
                   "etag": "\"18795b79fb16b6802528e2\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/06/media-06167c67252bf5b8-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/06/media-06167c67252bf5b8-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 21294,
+                  "previewBytes": 105020
                 }
               ]
             },
@@ -157,8 +187,18 @@
                   "lastModified": "2025-11-19T08:59:44Z",
                   "etag": "\"18795cd1a35d97c03160d0\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/7d/media-7d4681aa04f6ba53-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/7d/media-7d4681aa04f6ba53-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 57134,
+                  "previewBytes": 281360
                 }
               ]
             }
@@ -195,8 +235,18 @@
                   "lastModified": "2025-11-19T01:51:04Z",
                   "etag": "\"1879456d270a54401f26e1\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/4e/media-4e4babfcb0c89b0e-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/4e/media-4e4babfcb0c89b0e-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 3024,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1800,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 36410,
+                  "previewBytes": 284950
                 }
               ]
             },
@@ -225,8 +275,18 @@
                   "lastModified": "2025-11-19T01:37:30Z",
                   "etag": "\"187944af9f4f4dc0138036\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/2e/media-2e9d1287e94a144a-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/2e/media-2e9d1287e94a144a-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 3024,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1800,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 53848,
+                  "previewBytes": 248878
                 },
                 {
                   "id": "media-0dfa80f4cea39ebd",
@@ -245,8 +305,18 @@
                   "lastModified": "2025-11-19T01:37:25Z",
                   "etag": "\"187944ae85ad86801c553f\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/0d/media-0dfa80f4cea39ebd-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/0d/media-0dfa80f4cea39ebd-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 3024,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1800,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 55192,
+                  "previewBytes": 268596
                 }
               ]
             },
@@ -275,8 +345,18 @@
                   "lastModified": "2025-11-19T00:52:23Z",
                   "etag": "\"187942397b7390001cb43e\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/cb/media-cbf5f2062ea8168a-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/cb/media-cbf5f2062ea8168a-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 78724,
+                  "previewBytes": 403278
                 }
               ]
             },
@@ -305,8 +385,18 @@
                   "lastModified": "2025-11-19T09:00:30Z",
                   "etag": "\"18795cdc635f248030d5fb\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/62/media-62920996ee5d2a6a-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/62/media-62920996ee5d2a6a-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 45652,
+                  "previewBytes": 247164
                 }
               ]
             },
@@ -335,8 +425,18 @@
                   "lastModified": "2025-11-19T04:53:51Z",
                   "etag": "\"18794f669c7dabc01aebe9\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/5a/media-5a569ef7c513a3a5-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/5a/media-5a569ef7c513a3a5-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 3024,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1800,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 34416,
+                  "previewBytes": 218624
                 },
                 {
                   "id": "media-12b32680bdf1b923",
@@ -355,8 +455,18 @@
                   "lastModified": "2025-11-19T04:53:47Z",
                   "etag": "\"18794f65b5f0acc01e09ee\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/12/media-12b32680bdf1b923-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/12/media-12b32680bdf1b923-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 3024,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1800,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 56520,
+                  "previewBytes": 276512
                 },
                 {
                   "id": "media-326dc432d8834dbf",
@@ -375,8 +485,18 @@
                   "lastModified": "2025-11-19T04:53:43Z",
                   "etag": "\"18794f64d80834001762f3\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/32/media-326dc432d8834dbf-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/32/media-326dc432d8834dbf-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 3024,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1800,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 54162,
+                  "previewBytes": 264220
                 },
                 {
                   "id": "media-0b0efea50c82de46",
@@ -395,8 +515,18 @@
                   "lastModified": "2025-11-19T04:53:40Z",
                   "etag": "\"18794f64277bab801969e4\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/0b/media-0b0efea50c82de46-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/0b/media-0b0efea50c82de46-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 3024,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1800,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 32638,
+                  "previewBytes": 191212
                 }
               ]
             }
@@ -442,8 +572,18 @@
                   "lastModified": "2025-11-19T14:00:49Z",
                   "etag": "\"18796d3fb3e8b7403b96ba\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/12/media-1298c5e69f8fc09a-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/12/media-1298c5e69f8fc09a-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 4080,
+                  "sourceHeight": 3060,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 540,
+                  "previewWidth": 1800,
+                  "previewHeight": 1350,
+                  "thumbnailBytes": 70724,
+                  "previewBytes": 409674
                 }
               ]
             }
@@ -480,8 +620,18 @@
                   "lastModified": "2025-11-19T08:36:09Z",
                   "etag": "\"18795b88431e51002765fc\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/5d/media-5dea50729ea2e6c8-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/5d/media-5dea50729ea2e6c8-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 35258,
+                  "previewBytes": 173512
                 }
               ]
             }
@@ -529,8 +679,18 @@
                   "parseWarnings": [
                     "multiple-price-mentions"
                   ],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/71/media-716db64cbc48b05b-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/71/media-716db64cbc48b05b-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 50112,
+                  "previewBytes": 359688
                 }
               ]
             },
@@ -559,8 +719,18 @@
                   "lastModified": "2025-11-19T09:01:51Z",
                   "etag": "\"18795cef3c7ca280291933\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/ec/media-ecd03f5e0c143734-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/ec/media-ecd03f5e0c143734-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 40498,
+                  "previewBytes": 186300
                 }
               ]
             },
@@ -589,8 +759,18 @@
                   "lastModified": "2025-11-19T01:53:47Z",
                   "etag": "\"18794593466828002e65c9\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/82/media-8299dd18f778f643-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/82/media-8299dd18f778f643-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 39156,
+                  "previewBytes": 222006
                 },
                 {
                   "id": "media-ee5f62565f5fc57f",
@@ -609,8 +789,18 @@
                   "lastModified": "2025-11-19T01:12:22Z",
                   "etag": "\"187943509b0c9e80149a12\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/ee/media-ee5f62565f5fc57f-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/ee/media-ee5f62565f5fc57f-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 31380,
+                  "previewBytes": 173296
                 }
               ]
             },
@@ -639,8 +829,18 @@
                   "lastModified": "2025-11-19T09:01:05Z",
                   "etag": "\"18795ce46f029940281a58\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/d7/media-d7994d397b5f4802-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/d7/media-d7994d397b5f4802-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 33548,
+                  "previewBytes": 181308
                 }
               ]
             }
@@ -677,8 +877,18 @@
                   "lastModified": "2025-11-19T07:25:05Z",
                   "etag": "\"187957a7560b5cc0178eb8\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/57/media-57cac81238382279-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/57/media-57cac81238382279-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 1840,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 323,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 809,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 45638,
+                  "previewBytes": 244876
                 },
                 {
                   "id": "media-ec8d288fdf0d327c",
@@ -697,8 +907,18 @@
                   "lastModified": "2025-11-19T07:23:17Z",
                   "etag": "\"1879578e49c6d5c0115e75\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/ec/media-ec8d288fdf0d327c-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/ec/media-ec8d288fdf0d327c-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 1840,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 323,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 809,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 24348,
+                  "previewBytes": 129010
                 },
                 {
                   "id": "media-b0f4d36ffa00f7a4",
@@ -717,8 +937,18 @@
                   "lastModified": "2025-11-19T07:22:11Z",
                   "etag": "\"1879577ed1a4e3c015a621\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/b0/media-b0f4d36ffa00f7a4-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/b0/media-b0f4d36ffa00f7a4-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 1840,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 323,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 809,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 32550,
+                  "previewBytes": 202860
                 }
               ]
             },
@@ -747,8 +977,18 @@
                   "lastModified": "2025-11-19T08:34:46Z",
                   "etag": "\"18795b74d2ba04802e8b25\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/80/media-80d16a828cb64407-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/80/media-80d16a828cb64407-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 27406,
+                  "previewBytes": 158138
                 }
               ]
             }
@@ -785,8 +1025,18 @@
                   "lastModified": "2025-11-19T07:48:30Z",
                   "etag": "\"187958ee6d271b401bfff4\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/50/media-50394350bda3d0d2-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/50/media-50394350bda3d0d2-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 52336,
+                  "previewBytes": 252496
                 },
                 {
                   "id": "media-acbb3e60784e28fb",
@@ -805,8 +1055,18 @@
                   "lastModified": "2025-11-19T07:48:48Z",
                   "etag": "\"187958f2b3322e001b90a1\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/ac/media-acbb3e60784e28fb-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/ac/media-acbb3e60784e28fb-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 42248,
+                  "previewBytes": 189046
                 }
               ]
             },
@@ -835,8 +1095,18 @@
                   "lastModified": "2025-11-19T07:49:14Z",
                   "etag": "\"187958f8a30e0ac01dd08b\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/2b/media-2bc0eda2ef2f517f-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/2b/media-2bc0eda2ef2f517f-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 45474,
+                  "previewBytes": 226408
                 }
               ]
             },
@@ -865,8 +1135,18 @@
                   "lastModified": "2025-11-19T08:35:40Z",
                   "etag": "\"18795b8186fe95802e37a7\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/29/media-293920bda1955d7f-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/29/media-293920bda1955d7f-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 46664,
+                  "previewBytes": 238630
                 }
               ]
             }
@@ -903,8 +1183,18 @@
                   "lastModified": "2025-11-19T09:02:41Z",
                   "etag": "\"18795cfad053ebc02e4c59\"",
                   "parseWarnings": [],
-                  "previewUrl": null,
-                  "originalUrl": null
+                  "previewUrl": "/assets/archive-media/34/media-34e50ce100db89f5-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/34/media-34e50ce100db89f5-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 44778,
+                  "previewBytes": 225746
                 }
               ]
             }
