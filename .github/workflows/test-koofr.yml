@@ -1,0 +1,313 @@
+name: Test Koofr Connection
+
+run-name: Test Koofr connection on ${{ github.ref_name }}
+
+on:
+  push:
+    branches:
+      - arsip-kuliner-surabaya
+    paths:
+      - ".github/workflows/test-koofr.yml"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-koofr:
+    name: Test read-only Koofr access
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    env:
+      KOOFR_USERNAME: ${{ secrets.KOOFR_USERNAME }}
+      KOOFR_APP_PASSWORD: ${{ secrets.KOOFR_APP_PASSWORD }}
+      KOOFR_WEBDAV_URL: https://app.koofr.net/dav/Koofr/
+      KOOFR_ARCHIVE_FOLDER: Arsip Kuliner Surabaya
+
+    steps:
+      - name: Validate required secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${KOOFR_USERNAME:-}" ]]; then
+            echo "::error::Repository secret KOOFR_USERNAME belum tersedia atau kosong."
+            exit 1
+          fi
+
+          if [[ -z "${KOOFR_APP_PASSWORD:-}" ]]; then
+            echo "::error::Repository secret KOOFR_APP_PASSWORD belum tersedia atau kosong."
+            exit 1
+          fi
+
+          echo "Required Koofr secrets are available."
+
+      - name: Test WebDAV connection and archive folder
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 <<'PYTHON'
+          import base64
+          import os
+          import sys
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          import xml.etree.ElementTree as ET
+
+
+          WEBDAV_NAMESPACE = {"d": "DAV:"}
+
+          username = os.environ["KOOFR_USERNAME"]
+          password = os.environ["KOOFR_APP_PASSWORD"]
+          base_url = os.environ["KOOFR_WEBDAV_URL"].rstrip("/") + "/"
+          archive_folder = os.environ["KOOFR_ARCHIVE_FOLDER"].strip()
+
+          if not archive_folder:
+              print(
+                  "::error::KOOFR_ARCHIVE_FOLDER tidak boleh kosong.",
+                  flush=True,
+              )
+              sys.exit(1)
+
+          credentials = f"{username}:{password}".encode("utf-8")
+          authorization = (
+              "Basic "
+              + base64.b64encode(credentials).decode("ascii")
+          )
+
+          request_body = b"""<?xml version="1.0" encoding="utf-8"?>
+          <d:propfind xmlns:d="DAV:">
+            <d:prop>
+              <d:displayname />
+              <d:resourcetype />
+            </d:prop>
+          </d:propfind>
+          """
+
+
+          def propfind(url: str, depth: str = "1") -> bytes:
+              request = urllib.request.Request(
+                  url=url,
+                  data=request_body,
+                  method="PROPFIND",
+                  headers={
+                      "Authorization": authorization,
+                      "Depth": depth,
+                      "Content-Type": "application/xml; charset=utf-8",
+                      "User-Agent": "Mencari-Medok-Archive-Sync/1.0",
+                  },
+              )
+
+              try:
+                  with urllib.request.urlopen(
+                      request,
+                      timeout=30,
+                  ) as response:
+                      status = response.status
+                      response_body = response.read()
+
+              except urllib.error.HTTPError as error:
+                  if error.code == 401:
+                      message = (
+                          "Autentikasi Koofr ditolak. Periksa "
+                          "KOOFR_USERNAME dan KOOFR_APP_PASSWORD."
+                      )
+                  elif error.code == 403:
+                      message = (
+                          "Koofr menerima kredensial, tetapi "
+                          "menolak akses ke lokasi tersebut."
+                      )
+                  elif error.code == 404:
+                      message = (
+                          "Alamat WebDAV atau folder Koofr "
+                          "tidak ditemukan."
+                      )
+                  else:
+                      message = (
+                          "Permintaan WebDAV gagal dengan "
+                          f"HTTP status {error.code}."
+                      )
+
+                  print(f"::error::{message}", flush=True)
+                  sys.exit(1)
+
+              except urllib.error.URLError as error:
+                  print(
+                      "::error::Tidak dapat terhubung ke Koofr. "
+                      f"Alasan jaringan: {error.reason}",
+                      flush=True,
+                  )
+                  sys.exit(1)
+
+              if status != 207:
+                  print(
+                      "::error::Koofr mengembalikan status "
+                      f"{status}; status WebDAV yang diharapkan "
+                      "adalah 207 Multi-Status.",
+                      flush=True,
+                  )
+                  sys.exit(1)
+
+              return response_body
+
+
+          def parse_responses(xml_body: bytes) -> list[dict]:
+              try:
+                  root = ET.fromstring(xml_body)
+              except ET.ParseError:
+                  print(
+                      "::error::Respons Koofr bukan XML WebDAV "
+                      "yang valid.",
+                      flush=True,
+                  )
+                  sys.exit(1)
+
+              resources = []
+
+              for response in root.findall(
+                  "d:response",
+                  WEBDAV_NAMESPACE,
+              ):
+                  href_element = response.find(
+                      "d:href",
+                      WEBDAV_NAMESPACE,
+                  )
+
+                  if (
+                      href_element is None
+                      or not href_element.text
+                  ):
+                      continue
+
+                  href = href_element.text
+                  decoded_path = urllib.parse.unquote(
+                      urllib.parse.urlparse(href).path
+                  ).rstrip("/")
+
+                  name = decoded_path.rsplit("/", 1)[-1]
+
+                  resource_type = response.find(
+                      ".//d:resourcetype",
+                      WEBDAV_NAMESPACE,
+                  )
+
+                  is_collection = bool(
+                      resource_type is not None
+                      and resource_type.find(
+                          "d:collection",
+                          WEBDAV_NAMESPACE,
+                      )
+                      is not None
+                  )
+
+                  resources.append(
+                      {
+                          "href": href,
+                          "path": decoded_path,
+                          "name": name,
+                          "is_collection": is_collection,
+                      }
+                  )
+
+              return resources
+
+
+          print(
+              "Testing read-only access to Koofr WebDAV...",
+              flush=True,
+          )
+
+          root_response = propfind(base_url, depth="1")
+          root_resources = parse_responses(root_response)
+
+          archive_resource = next(
+              (
+                  resource
+                  for resource in root_resources
+                  if resource["name"] == archive_folder
+                  and resource["is_collection"]
+              ),
+              None,
+          )
+
+          if archive_resource is None:
+              print(
+                  "::error::Koneksi Koofr berhasil, tetapi folder "
+                  f"'{archive_folder}' tidak ditemukan di root Koofr.",
+                  flush=True,
+              )
+              sys.exit(1)
+
+          encoded_folder = urllib.parse.quote(
+              archive_folder,
+              safe="",
+          )
+
+          archive_url = urllib.parse.urljoin(
+              base_url,
+              f"{encoded_folder}/",
+          )
+
+          archive_response = propfind(
+              archive_url,
+              depth="1",
+          )
+
+          archive_resources = parse_responses(
+              archive_response
+          )
+
+          expected_archive_path = urllib.parse.unquote(
+              urllib.parse.urlparse(archive_url).path
+          ).rstrip("/")
+
+          children = [
+              resource
+              for resource in archive_resources
+              if resource["path"] != expected_archive_path
+          ]
+
+          folder_count = sum(
+              1
+              for resource in children
+              if resource["is_collection"]
+          )
+
+          file_count = sum(
+              1
+              for resource in children
+              if not resource["is_collection"]
+          )
+
+          print(
+              "Koofr WebDAV authentication: successful",
+              flush=True,
+          )
+
+          print(
+              f"Archive folder found: {archive_folder}",
+              flush=True,
+          )
+
+          print(
+              "Immediate archive contents: "
+              f"{folder_count} folder(s), "
+              f"{file_count} file(s)",
+              flush=True,
+          )
+
+          print(
+              "No file or folder names were written to the log.",
+              flush=True,
+          )
+          PYTHON
+
+      - name: Report success
+        shell: bash
+        run: |
+          echo "Koofr connection test completed successfully."
+          echo "The workflow performed read-only WebDAV requests."
