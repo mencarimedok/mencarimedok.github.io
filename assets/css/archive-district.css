@@ -1,0 +1,823 @@
+/* =========================================================
+   MENCARI MEDOK — HALAMAN KECAMATAN ARSIP
+
+   Dipakai untuk:
+   /arsip/wilayah/surabaya-barat/tandes/
+   dan halaman kecamatan lainnya.
+
+   Prinsip:
+   - Kuning Mencari Medok
+   - Tanpa gradasi
+   - Sudut kotak
+   - Skala golden ratio
+   - Mobile friendly
+   - Kartu tempat dapat memuat foto pratinjau
+========================================================= */
+
+/* ---------------------------------------------------------
+   1. PAGE SHELL
+--------------------------------------------------------- */
+
+.archive-district-site .archive-main {
+  min-height: 75vh;
+}
+
+.archive-district-page {
+  padding-bottom: var(--archive-space-6);
+}
+
+/* ---------------------------------------------------------
+   2. BREADCRUMB
+--------------------------------------------------------- */
+
+.archive-district-breadcrumb {
+  padding-top: var(--archive-space-4);
+}
+
+.archive-district-breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--archive-space-1);
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.archive-district-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--archive-space-1);
+}
+
+.archive-district-breadcrumb__item:not(:last-child)::after {
+  content: "/";
+  color: var(--archive-muted);
+}
+
+.archive-district-breadcrumb__link {
+  color: inherit;
+
+  text-decoration: underline;
+  text-decoration-color: rgba(21, 21, 21, 0.3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.archive-district-breadcrumb__link:hover {
+  text-decoration-color: rgba(21, 21, 21, 0.7);
+}
+
+.archive-district-breadcrumb__current {
+  color: var(--archive-muted);
+}
+
+/* ---------------------------------------------------------
+   3. DISTRICT HERO
+--------------------------------------------------------- */
+
+.archive-district-hero {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.618fr)
+    minmax(16rem, 1fr);
+
+  gap: var(--archive-space-5);
+  align-items: end;
+
+  padding-block:
+    var(--archive-space-5)
+    var(--archive-space-6);
+}
+
+.archive-district-hero__copy {
+  min-width: 0;
+}
+
+.archive-district-kicker {
+  margin:
+    0
+    0
+    var(--archive-space-3);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.archive-district-title {
+  max-width: 12ch;
+  margin: 0;
+
+  overflow-wrap: anywhere;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: clamp(
+    var(--archive-text-xl),
+    7.5vw,
+    var(--archive-text-xxl)
+  );
+
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+
+  text-shadow:
+    0.8px 0 rgba(21, 21, 21, 0.3),
+    -0.4px 0 rgba(21, 21, 21, 0.16);
+}
+
+.archive-district-hero__aside {
+  padding-left: var(--archive-space-4);
+  border-left: 1px solid var(--archive-border);
+}
+
+.archive-district-description {
+  max-width: 34ch;
+  margin: 0;
+
+  color: var(--archive-muted);
+
+  font-size: var(--archive-text-sm);
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------
+   4. DISTRICT STATISTICS
+--------------------------------------------------------- */
+
+.archive-district-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  margin:
+    var(--archive-space-4)
+    0
+    0;
+
+  padding: 0;
+
+  border-top: 1px solid var(--archive-border);
+  border-left: 1px solid var(--archive-border);
+
+  list-style: none;
+}
+
+.archive-district-stat {
+  min-width: 0;
+  padding: var(--archive-space-3);
+
+  border-right: 1px solid var(--archive-border);
+  border-bottom: 1px solid var(--archive-border);
+
+  background: var(--archive-paper);
+}
+
+.archive-district-stat__value {
+  display: block;
+
+  margin-bottom: var(--archive-space-1);
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-md);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.archive-district-stat__label {
+  display: block;
+
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   5. PLACE SECTION
+--------------------------------------------------------- */
+
+.archive-place-section {
+  padding-top: var(--archive-space-5);
+}
+
+.archive-place-section__head {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.618fr)
+    minmax(14rem, 1fr);
+
+  gap: var(--archive-space-4);
+  align-items: end;
+
+  margin-bottom: var(--archive-space-4);
+}
+
+.archive-place-section__title {
+  margin: 0;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: clamp(
+    var(--archive-text-lg),
+    5vw,
+    var(--archive-text-xl)
+  );
+
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.archive-place-section__description {
+  max-width: 34ch;
+  margin: 0;
+
+  color: var(--archive-muted);
+}
+
+/* ---------------------------------------------------------
+   6. SEARCH
+--------------------------------------------------------- */
+
+.archive-place-search {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.618fr)
+    minmax(10rem, 1fr);
+
+  gap: var(--archive-space-3);
+  align-items: end;
+
+  margin-bottom: var(--archive-space-5);
+}
+
+.archive-place-search__field {
+  display: grid;
+  gap: var(--archive-space-1);
+}
+
+.archive-place-search__label {
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.archive-place-search__input {
+  width: 100%;
+  min-height: 3.4375rem;
+
+  padding:
+    var(--archive-space-2)
+    var(--archive-space-3);
+
+  border: 1px solid var(--archive-border);
+  border-radius: 0;
+
+  color: var(--archive-ink);
+  background: var(--archive-paper);
+
+  font: inherit;
+  line-height: 1.4;
+
+  appearance: none;
+}
+
+.archive-place-search__input::placeholder {
+  color: rgba(21, 21, 21, 0.48);
+}
+
+.archive-place-search__input:focus {
+  outline: 3px solid var(--archive-ink);
+  outline-offset: 3px;
+}
+
+.archive-place-search__result {
+  margin: 0;
+  padding-bottom: var(--archive-space-2);
+
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   7. PLACE GRID
+--------------------------------------------------------- */
+
+.archive-places {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--archive-space-3);
+}
+
+.archive-places[aria-busy="true"] {
+  opacity: 0.72;
+}
+
+/* ---------------------------------------------------------
+   8. PLACE CARD
+--------------------------------------------------------- */
+
+.archive-place-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  min-width: 0;
+  overflow: hidden;
+
+  border: 1px solid var(--archive-border);
+  border-radius: 0;
+
+  color: var(--archive-ink);
+  background: var(--archive-paper);
+
+  text-decoration: none;
+
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease;
+}
+
+.archive-place-card:hover {
+  transform: translateY(-3px);
+  background: #ffffff;
+  text-decoration: none;
+}
+
+.archive-place-card:focus-visible {
+  outline: 3px solid var(--archive-ink);
+  outline-offset: 4px;
+}
+
+/* ---------------------------------------------------------
+   9. PLACE CARD MEDIA
+--------------------------------------------------------- */
+
+.archive-place-card__media {
+  position: relative;
+
+  aspect-ratio: 1.618 / 1;
+  overflow: hidden;
+
+  border-bottom: 1px solid var(--archive-border);
+  background: rgba(21, 21, 21, 0.08);
+}
+
+.archive-place-card__image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.archive-place-card__placeholder {
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  height: 100%;
+  padding: var(--archive-space-3);
+
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.07em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.archive-place-card__status {
+  position: absolute;
+  top: var(--archive-space-2);
+  left: var(--archive-space-2);
+
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 2.125rem;
+  padding:
+    var(--archive-space-1)
+    var(--archive-space-2);
+
+  border: 1px solid var(--archive-ink);
+
+  color: var(--archive-ink);
+  background: var(--archive-yellow);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   10. PLACE CARD BODY
+--------------------------------------------------------- */
+
+.archive-place-card__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--archive-space-4);
+
+  min-width: 0;
+  padding: var(--archive-space-4);
+}
+
+.archive-place-card__header {
+  display: grid;
+  gap: var(--archive-space-2);
+}
+
+.archive-place-card__number {
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.12em;
+}
+
+.archive-place-card__title {
+  max-width: 18ch;
+  margin: 0;
+
+  overflow-wrap: anywhere;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: clamp(
+    var(--archive-text-md),
+    3.25vw,
+    var(--archive-text-lg)
+  );
+
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.archive-place-card__address {
+  max-width: 40ch;
+  margin: 0;
+
+  color: var(--archive-muted);
+
+  font-size: var(--archive-text-sm);
+  line-height: 1.45;
+}
+
+.archive-place-card__footer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--archive-space-3);
+  align-items: end;
+}
+
+.archive-place-card__meta {
+  margin: 0;
+
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.archive-place-card__arrow {
+  flex: 0 0 auto;
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-md);
+  line-height: 0.8;
+}
+
+/* ---------------------------------------------------------
+   11. EMPTY, LOADING, AND ERROR STATES
+--------------------------------------------------------- */
+
+.archive-district-message {
+  grid-column: 1 / -1;
+
+  padding: var(--archive-space-4);
+
+  border: 1px solid var(--archive-border);
+  background: var(--archive-paper);
+}
+
+.archive-district-message__title {
+  margin:
+    0
+    0
+    var(--archive-space-2);
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-md);
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.archive-district-message__body {
+  max-width: var(--archive-measure);
+  margin: 0;
+
+  color: var(--archive-muted);
+}
+
+.archive-district-message__body
+  + .archive-district-message__body {
+  margin-top: var(--archive-space-2);
+}
+
+/* ---------------------------------------------------------
+   12. RETURN LINK
+--------------------------------------------------------- */
+
+.archive-district-return {
+  padding-top: var(--archive-space-5);
+}
+
+.archive-district-return__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--archive-space-2);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   13. TABLET
+--------------------------------------------------------- */
+
+@media (max-width: 880px) {
+  .archive-district-hero {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .archive-district-hero__aside {
+    max-width: var(--archive-measure);
+
+    padding:
+      var(--archive-space-4)
+      0
+      0;
+
+    border-top: 1px solid var(--archive-border);
+    border-left: 0;
+  }
+
+  .archive-place-section__head {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-place-search {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-place-search__result {
+    padding-bottom: 0;
+  }
+}
+
+/* ---------------------------------------------------------
+   14. MOBILE
+--------------------------------------------------------- */
+
+@media (max-width: 620px) {
+  .archive-district-page {
+    padding-bottom: var(--archive-space-5);
+  }
+
+  .archive-district-breadcrumb {
+    padding-top: var(--archive-space-3);
+  }
+
+  .archive-district-hero {
+    gap: var(--archive-space-4);
+
+    padding-block:
+      var(--archive-space-4)
+      var(--archive-space-5);
+  }
+
+  .archive-district-title {
+    font-size: clamp(
+      var(--archive-text-lg),
+      14vw,
+      var(--archive-text-xl)
+    );
+
+    line-height: 0.94;
+  }
+
+  .archive-district-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-district-stat {
+    display: grid;
+    grid-template-columns: 1fr 1.618fr;
+    gap: var(--archive-space-3);
+    align-items: baseline;
+  }
+
+  .archive-district-stat__value {
+    margin-bottom: 0;
+  }
+
+  .archive-place-section {
+    padding-top: var(--archive-space-4);
+  }
+
+  .archive-place-section__head {
+    margin-bottom: var(--archive-space-4);
+  }
+
+  .archive-place-search {
+    margin-bottom: var(--archive-space-4);
+  }
+
+  .archive-places {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-place-card__body {
+    padding: var(--archive-space-3);
+  }
+}
+
+/* ---------------------------------------------------------
+   15. VERY SMALL SCREENS
+--------------------------------------------------------- */
+
+@media (max-width: 360px) {
+  .archive-district-stat {
+    grid-template-columns: 1fr;
+    gap: var(--archive-space-1);
+  }
+
+  .archive-place-card__title {
+    font-size: var(--archive-text-md);
+  }
+
+  .archive-place-card__footer {
+    align-items: flex-start;
+  }
+}
+
+/* ---------------------------------------------------------
+   16. REDUCED MOTION
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-place-card {
+    transition: none;
+  }
+
+  .archive-place-card:hover {
+    transform: none;
+  }
+}
