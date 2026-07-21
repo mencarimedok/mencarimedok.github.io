@@ -1,0 +1,1294 @@
+#!/usr/bin/env python3
+"""
+MENCARI MEDOK — PEMBANGUN KATALOG KOOFR
+
+Membaca Arsip Kuliner Surabaya melalui WebDAV secara read-only,
+kemudian menghasilkan archive.json.
+
+Struktur yang diharapkan:
+
+Arsip Kuliner Surabaya/
+├── Surabaya Barat/
+│   └── Tandes/
+│       └── Gunarso (Buka) - Jalan Raya Manukan Kulon No. 33/
+│           └── 2021-04-19 18.31.15 Gunarso - Nasi Campur - Rp12.000.HEIC
+├── Surabaya Pusat/
+├── Surabaya Selatan/
+├── Surabaya Timur/
+└── Surabaya Utara/
+
+Yang diabaikan:
+- Folder Karantina
+- file lepas di Arsip Kuliner Surabaya
+- folder lain di luar lima wilayah yang diizinkan
+- file lepas langsung di wilayah
+- file lepas langsung di kecamatan
+"""
+
+from __future__ import annotations
+
+import argparse
+import base64
+import hashlib
+import json
+import mimetypes
+import os
+import re
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+import xml.etree.ElementTree as ET
+
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
+from pathlib import Path
+from typing import Any, Iterable
+
+
+ALLOWED_REGIONS = (
+    "Surabaya Barat",
+    "Surabaya Pusat",
+    "Surabaya Selatan",
+    "Surabaya Timur",
+    "Surabaya Utara",
+)
+
+IGNORED_NAMES = {
+    ".DS_Store",
+    "Thumbs.db",
+    "desktop.ini",
+}
+
+DAV_NAMESPACE = {"d": "DAV:"}
+
+PROPFIND_BODY = b"""<?xml version="1.0" encoding="utf-8"?>
+<d:propfind xmlns:d="DAV:">
+  <d:prop>
+    <d:displayname />
+    <d:resourcetype />
+    <d:getcontentlength />
+    <d:getcontenttype />
+    <d:getlastmodified />
+    <d:getetag />
+  </d:prop>
+</d:propfind>
+"""
+
+PLACE_WITH_STATUS_AND_ADDRESS = re.compile(
+    r"""
+    ^
+    (?P<name>.*?)
+    \s*
+    \(
+      (?P<status>[^()]*)
+    \)
+    \s*
+    -
+    \s*
+    (?P<address>.+)
+    $
+    """,
+    re.VERBOSE,
+)
+
+PLACE_WITH_ADDRESS = re.compile(
+    r"""
+    ^
+    (?P<name>.*?)
+    \s*
+    -
+    \s*
+    (?P<address>.+)
+    $
+    """,
+    re.VERBOSE,
+)
+
+MEDIA_PREFIX = re.compile(
+    r"""
+    ^
+    (?P<date>\d{4}-\d{2}-\d{2})
+    (?:
+      [\s_T]+
+      (?P<time>
+        \d{2}
+        [.:_-]
+        \d{2}
+        (?:
+          [.:_-]
+          \d{2}
+        )?
+      )
+    )?
+    \s*
+    (?P<remainder>.*)
+    $
+    """,
+    re.VERBOSE,
+)
+
+PRICE_PATTERN = re.compile(
+    r"""
+    ^
+    Rp
+    \.?
+    \s*
+    \d
+    [\d.,\s]*
+    (?:,-)?
+    $
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
+
+class CatalogueError(RuntimeError):
+    """Kesalahan yang dapat ditampilkan dengan aman pada workflow log."""
+
+
+@dataclass(frozen=True)
+class WebDavResource:
+    """Satu resource yang ditemukan melalui WebDAV."""
+
+    name: str
+    url: str
+    decoded_path: str
+    is_collection: bool
+    content_length: int | None
+    content_type: str | None
+    last_modified: str | None
+    etag: str | None
+
+
+def get_required_environment(name: str) -> str:
+    """Mengambil environment variable wajib."""
+
+    value = os.environ.get(name, "").strip()
+
+    if not value:
+        raise CatalogueError(
+            f"Environment variable {name} belum tersedia atau kosong."
+        )
+
+    return value
+
+
+def slugify(value: str) -> str:
+    """Menghasilkan slug URL sederhana dan stabil."""
+
+    normalized = value.casefold().strip()
+
+    replacements = {
+        "á": "a",
+        "à": "a",
+        "â": "a",
+        "ä": "a",
+        "ã": "a",
+        "å": "a",
+        "é": "e",
+        "è": "e",
+        "ê": "e",
+        "ë": "e",
+        "í": "i",
+        "ì": "i",
+        "î": "i",
+        "ï": "i",
+        "ó": "o",
+        "ò": "o",
+        "ô": "o",
+        "ö": "o",
+        "õ": "o",
+        "ú": "u",
+        "ù": "u",
+        "û": "u",
+        "ü": "u",
+        "ñ": "n",
+        "ç": "c",
+        "&": " dan ",
+    }
+
+    for source, replacement in replacements.items():
+        normalized = normalized.replace(source, replacement)
+
+    normalized = re.sub(r"[^a-z0-9]+", "-", normalized)
+    normalized = normalized.strip("-")
+
+    return normalized or "tanpa-nama"
+
+
+def create_unique_slug(
+    base_slug: str,
+    used_slugs: set[str],
+) -> str:
+    """Menghindari tabrakan slug di dalam parent yang sama."""
+
+    candidate = base_slug
+    suffix = 2
+
+    while candidate in used_slugs:
+        candidate = f"{base_slug}-{suffix}"
+        suffix += 1
+
+    used_slugs.add(candidate)
+
+    return candidate
+
+
+def stable_id(*parts: str) -> str:
+    """Menghasilkan ID stabil dari path katalog."""
+
+    joined = "\n".join(parts).encode("utf-8")
+    digest = hashlib.sha1(joined).hexdigest()[:16]
+
+    return f"media-{digest}"
+
+
+def safe_integer(value: str | None) -> int | None:
+    """Mengubah string menjadi integer non-negatif."""
+
+    if value is None:
+        return None
+
+    try:
+        number = int(value)
+    except (TypeError, ValueError):
+        return None
+
+    return number if number >= 0 else None
+
+
+def normalize_last_modified(value: str | None) -> str | None:
+    """Mengubah tanggal HTTP menjadi ISO 8601 UTC."""
+
+    if not value:
+        return None
+
+    try:
+        parsed = parsedate_to_datetime(value)
+
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+
+        return (
+            parsed.astimezone(timezone.utc)
+            .isoformat()
+            .replace("+00:00", "Z")
+        )
+    except (TypeError, ValueError, OverflowError):
+        return value
+
+
+def path_name_from_href(href: str) -> str:
+    """Mengambil nama file atau folder dari WebDAV href."""
+
+    parsed = urllib.parse.urlparse(href)
+    decoded_path = urllib.parse.unquote(parsed.path).rstrip("/")
+
+    if not decoded_path:
+        return ""
+
+    return decoded_path.rsplit("/", 1)[-1]
+
+
+def normalized_decoded_path(url_or_href: str) -> str:
+    """Menghasilkan path decoded untuk perbandingan resource."""
+
+    parsed = urllib.parse.urlparse(url_or_href)
+
+    return urllib.parse.unquote(parsed.path).rstrip("/")
+
+
+def resolve_resource_url(
+    root_url: str,
+    href: str,
+    is_collection: bool,
+) -> str:
+    """Mengubah href WebDAV menjadi URL absolut."""
+
+    resolved = urllib.parse.urljoin(root_url, href)
+
+    if is_collection and not resolved.endswith("/"):
+        resolved += "/"
+
+    return resolved
+
+
+class KoofrWebDavClient:
+    """WebDAV client read-only memakai Python standard library."""
+
+    def __init__(
+        self,
+        username: str,
+        password: str,
+        root_url: str,
+    ) -> None:
+        self.root_url = root_url.rstrip("/") + "/"
+
+        credentials = f"{username}:{password}".encode("utf-8")
+
+        self.authorization = (
+            "Basic "
+            + base64.b64encode(credentials).decode("ascii")
+        )
+
+    def _propfind(
+        self,
+        url: str,
+        depth: str = "1",
+    ) -> bytes:
+        """Menjalankan PROPFIND dengan retry terbatas."""
+
+        maximum_attempts = 3
+
+        for attempt in range(1, maximum_attempts + 1):
+            request = urllib.request.Request(
+                url=url,
+                data=PROPFIND_BODY,
+                method="PROPFIND",
+                headers={
+                    "Authorization": self.authorization,
+                    "Depth": depth,
+                    "Content-Type": "application/xml; charset=utf-8",
+                    "User-Agent": "Mencari-Medok-Archive-Sync/1.0",
+                },
+            )
+
+            try:
+                with urllib.request.urlopen(
+                    request,
+                    timeout=45,
+                ) as response:
+                    if response.status != 207:
+                        raise CatalogueError(
+                            "Koofr mengembalikan HTTP "
+                            f"{response.status}; WebDAV seharusnya "
+                            "mengembalikan 207 Multi-Status."
+                        )
+
+                    return response.read()
+
+            except urllib.error.HTTPError as error:
+                if error.code == 401:
+                    raise CatalogueError(
+                        "Autentikasi Koofr ditolak. Periksa "
+                        "KOOFR_USERNAME dan KOOFR_APP_PASSWORD."
+                    ) from error
+
+                if error.code == 403:
+                    raise CatalogueError(
+                        "Koofr menolak akses ke resource tersebut."
+                    ) from error
+
+                if error.code == 404:
+                    raise CatalogueError(
+                        "Resource Koofr tidak ditemukan."
+                    ) from error
+
+                if error.code == 429:
+                    if attempt >= maximum_attempts:
+                        raise CatalogueError(
+                            "Koofr membatasi terlalu banyak permintaan "
+                            "(HTTP 429). Hentikan workflow dan coba lagi "
+                            "setelah jeda."
+                        ) from error
+
+                    retry_after = error.headers.get("Retry-After")
+                    wait_seconds = 10 * attempt
+
+                    if retry_after and retry_after.isdigit():
+                        wait_seconds = min(int(retry_after), 60)
+
+                    time.sleep(wait_seconds)
+                    continue
+
+                if 500 <= error.code < 600:
+                    if attempt >= maximum_attempts:
+                        raise CatalogueError(
+                            "Koofr mengalami gangguan server dengan "
+                            f"HTTP {error.code}."
+                        ) from error
+
+                    time.sleep(3 * attempt)
+                    continue
+
+                raise CatalogueError(
+                    "Permintaan WebDAV gagal dengan "
+                    f"HTTP {error.code}."
+                ) from error
+
+            except urllib.error.URLError as error:
+                if attempt >= maximum_attempts:
+                    raise CatalogueError(
+                        "Tidak dapat terhubung ke Koofr: "
+                        f"{error.reason}"
+                    ) from error
+
+                time.sleep(3 * attempt)
+
+        raise CatalogueError(
+            "Permintaan WebDAV gagal setelah beberapa percobaan."
+        )
+
+    def list_children(
+        self,
+        collection_url: str,
+    ) -> list[WebDavResource]:
+        """Membaca isi langsung sebuah folder."""
+
+        xml_body = self._propfind(
+            collection_url,
+            depth="1",
+        )
+
+        try:
+            root = ET.fromstring(xml_body)
+        except ET.ParseError as error:
+            raise CatalogueError(
+                "Respons Koofr bukan XML WebDAV yang valid."
+            ) from error
+
+        collection_path = normalized_decoded_path(collection_url)
+        resources: list[WebDavResource] = []
+
+        for response in root.findall(
+            "d:response",
+            DAV_NAMESPACE,
+        ):
+            href_element = response.find(
+                "d:href",
+                DAV_NAMESPACE,
+            )
+
+            if (
+                href_element is None
+                or not href_element.text
+            ):
+                continue
+
+            href = href_element.text
+
+            successful_prop = None
+
+            for propstat in response.findall(
+                "d:propstat",
+                DAV_NAMESPACE,
+            ):
+                status_element = propstat.find(
+                    "d:status",
+                    DAV_NAMESPACE,
+                )
+
+                status_text = (
+                    status_element.text
+                    if status_element is not None
+                    else ""
+                )
+
+                if " 200 " in status_text:
+                    successful_prop = propstat.find(
+                        "d:prop",
+                        DAV_NAMESPACE,
+                    )
+                    break
+
+            if successful_prop is None:
+                continue
+
+            resource_type = successful_prop.find(
+                "d:resourcetype",
+                DAV_NAMESPACE,
+            )
+
+            is_collection = bool(
+                resource_type is not None
+                and resource_type.find(
+                    "d:collection",
+                    DAV_NAMESPACE,
+                )
+                is not None
+            )
+
+            resource_url = resolve_resource_url(
+                self.root_url,
+                href,
+                is_collection,
+            )
+
+            decoded_path = normalized_decoded_path(
+                resource_url
+            )
+
+            if decoded_path == collection_path:
+                continue
+
+            display_name_element = successful_prop.find(
+                "d:displayname",
+                DAV_NAMESPACE,
+            )
+
+            display_name = (
+                display_name_element.text.strip()
+                if (
+                    display_name_element is not None
+                    and display_name_element.text
+                )
+                else path_name_from_href(href)
+            )
+
+            content_length_element = successful_prop.find(
+                "d:getcontentlength",
+                DAV_NAMESPACE,
+            )
+
+            content_type_element = successful_prop.find(
+                "d:getcontenttype",
+                DAV_NAMESPACE,
+            )
+
+            modified_element = successful_prop.find(
+                "d:getlastmodified",
+                DAV_NAMESPACE,
+            )
+
+            etag_element = successful_prop.find(
+                "d:getetag",
+                DAV_NAMESPACE,
+            )
+
+            resources.append(
+                WebDavResource(
+                    name=display_name,
+                    url=resource_url,
+                    decoded_path=decoded_path,
+                    is_collection=is_collection,
+                    content_length=safe_integer(
+                        content_length_element.text
+                        if content_length_element is not None
+                        else None
+                    ),
+                    content_type=(
+                        content_type_element.text.strip()
+                        if (
+                            content_type_element is not None
+                            and content_type_element.text
+                        )
+                        else None
+                    ),
+                    last_modified=normalize_last_modified(
+                        modified_element.text
+                        if modified_element is not None
+                        else None
+                    ),
+                    etag=(
+                        etag_element.text.strip()
+                        if (
+                            etag_element is not None
+                            and etag_element.text
+                        )
+                        else None
+                    ),
+                )
+            )
+
+        return sorted(
+            resources,
+            key=lambda item: (
+                not item.is_collection,
+                item.name.casefold(),
+            ),
+        )
+
+
+def should_ignore(resource: WebDavResource) -> bool:
+    """Menentukan resource teknis yang tidak perlu dimasukkan."""
+
+    stripped_name = resource.name.strip()
+
+    return (
+        not stripped_name
+        or stripped_name in IGNORED_NAMES
+        or stripped_name.startswith(".")
+        or stripped_name.startswith("~$")
+    )
+
+
+def parse_place_folder(folder_name: str) -> dict[str, str | None]:
+    """Memecah nama folder tempat menjadi nama, status, dan alamat."""
+
+    cleaned = re.sub(r"\s+", " ", folder_name).strip()
+
+    match = PLACE_WITH_STATUS_AND_ADDRESS.match(cleaned)
+
+    if match:
+        return {
+            "name": match.group("name").strip(),
+            "status": match.group("status").strip() or None,
+            "address": match.group("address").strip() or None,
+        }
+
+    match = PLACE_WITH_ADDRESS.match(cleaned)
+
+    if match:
+        return {
+            "name": match.group("name").strip(),
+            "status": None,
+            "address": match.group("address").strip() or None,
+        }
+
+    return {
+        "name": cleaned,
+        "status": None,
+        "address": None,
+    }
+
+
+def normalize_media_time(value: str | None) -> str | None:
+    """Mengubah 18.31.15 atau 18-31-15 menjadi 18:31:15."""
+
+    if not value:
+        return None
+
+    components = re.split(r"[.:_-]", value)
+
+    if len(components) not in {2, 3}:
+        return value
+
+    try:
+        numbers = [int(component) for component in components]
+    except ValueError:
+        return value
+
+    hour = numbers[0]
+    minute = numbers[1]
+    second = numbers[2] if len(numbers) == 3 else None
+
+    if (
+        hour > 23
+        or minute > 59
+        or (second is not None and second > 59)
+    ):
+        return value
+
+    if second is None:
+        return f"{hour:02d}:{minute:02d}"
+
+    return f"{hour:02d}:{minute:02d}:{second:02d}"
+
+
+def remove_place_prefix(
+    remainder: str,
+    place_name: str,
+) -> str:
+    """Menghapus nama tempat dari awal informasi media."""
+
+    cleaned = remainder.strip(" _-")
+
+    if not cleaned or not place_name:
+        return cleaned
+
+    if cleaned.casefold().startswith(place_name.casefold()):
+        cleaned = cleaned[len(place_name):]
+        cleaned = cleaned.strip(" _-")
+
+    return cleaned
+
+
+def parse_media_filename(
+    filename: str,
+    place_name: str,
+) -> dict[str, Any]:
+    """Membaca tanggal, waktu, sajian, harga, dan format dari filename."""
+
+    suffix = Path(filename).suffix
+    extension = suffix.lstrip(".").upper() or None
+
+    stem = (
+        filename[: -len(suffix)]
+        if suffix
+        else filename
+    )
+
+    date_value: str | None = None
+    time_value: str | None = None
+    dish: str | None = None
+    price: str | None = None
+
+    match = MEDIA_PREFIX.match(stem)
+
+    if match:
+        date_value = match.group("date")
+        time_value = normalize_media_time(
+            match.group("time")
+        )
+
+        remainder = remove_place_prefix(
+            match.group("remainder") or "",
+            place_name,
+        )
+    else:
+        remainder = stem.strip()
+
+    segments = [
+        segment.strip()
+        for segment in remainder.split(" - ")
+        if segment.strip()
+    ]
+
+    if segments and PRICE_PATTERN.match(segments[-1]):
+        price = segments.pop()
+
+    if segments:
+        dish = " - ".join(segments)
+
+    guessed_type, _ = mimetypes.guess_type(filename)
+
+    if extension in {"HEIC", "HEIF"}:
+        guessed_type = (
+            "image/heic"
+            if extension == "HEIC"
+            else "image/heif"
+        )
+
+    return {
+        "date": date_value,
+        "time": time_value,
+        "dish": dish,
+        "price": price,
+        "extension": extension,
+        "mimeType": guessed_type,
+    }
+
+
+def walk_files(
+    client: KoofrWebDavClient,
+    collection_url: str,
+    relative_parts: tuple[str, ...] = (),
+    depth: int = 0,
+    maximum_depth: int = 12,
+) -> Iterable[tuple[WebDavResource, tuple[str, ...]]]:
+    """Mengambil seluruh file di dalam folder tempat secara rekursif."""
+
+    if depth > maximum_depth:
+        raise CatalogueError(
+            "Struktur folder terlalu dalam. Kedalaman maksimum "
+            f"adalah {maximum_depth} tingkat di bawah folder tempat."
+        )
+
+    for resource in client.list_children(collection_url):
+        if should_ignore(resource):
+            continue
+
+        current_parts = relative_parts + (resource.name,)
+
+        if resource.is_collection:
+            yield from walk_files(
+                client=client,
+                collection_url=resource.url,
+                relative_parts=current_parts,
+                depth=depth + 1,
+                maximum_depth=maximum_depth,
+            )
+        else:
+            yield resource, current_parts
+
+
+def build_media_record(
+    resource: WebDavResource,
+    relative_parts: tuple[str, ...],
+    region_name: str,
+    district_name: str,
+    place_folder_name: str,
+    place_name: str,
+) -> dict[str, Any]:
+    """Menghasilkan satu entri media katalog."""
+
+    parsed = parse_media_filename(
+        resource.name,
+        place_name,
+    )
+
+    relative_path = "/".join(relative_parts)
+
+    return {
+        "id": stable_id(
+            region_name,
+            district_name,
+            place_folder_name,
+            relative_path,
+        ),
+        "filename": resource.name,
+        "relativePath": relative_path,
+        "date": parsed["date"],
+        "time": parsed["time"],
+        "dish": parsed["dish"],
+        "price": parsed["price"],
+        "extension": parsed["extension"],
+        "mimeType": (
+            resource.content_type
+            or parsed["mimeType"]
+        ),
+        "sizeBytes": resource.content_length,
+        "lastModified": resource.last_modified,
+        "etag": resource.etag,
+        "previewUrl": None,
+        "originalUrl": None,
+    }
+
+
+def build_place_record(
+    client: KoofrWebDavClient,
+    place_resource: WebDavResource,
+    region_name: str,
+    district_name: str,
+    place_slug: str,
+) -> dict[str, Any]:
+    """Menghasilkan data sebuah tempat dan seluruh medianya."""
+
+    parsed_place = parse_place_folder(
+        place_resource.name
+    )
+
+    place_name = (
+        parsed_place["name"]
+        or place_resource.name
+    )
+
+    media_records = [
+        build_media_record(
+            resource=file_resource,
+            relative_parts=relative_parts,
+            region_name=region_name,
+            district_name=district_name,
+            place_folder_name=place_resource.name,
+            place_name=place_name,
+        )
+        for file_resource, relative_parts in walk_files(
+            client,
+            place_resource.url,
+        )
+    ]
+
+    media_records.sort(
+        key=lambda item: (
+            item.get("date") or "",
+            item.get("time") or "",
+            item.get("filename") or "",
+        ),
+        reverse=True,
+    )
+
+    return {
+        "name": place_name,
+        "folderName": place_resource.name,
+        "slug": place_slug,
+        "status": parsed_place["status"],
+        "address": parsed_place["address"],
+        "mediaCount": len(media_records),
+        "media": media_records,
+    }
+
+
+def build_district_record(
+    client: KoofrWebDavClient,
+    district_resource: WebDavResource,
+    region_name: str,
+    district_slug: str,
+) -> dict[str, Any]:
+    """Menghasilkan data kecamatan dari folder di bawah wilayah."""
+
+    place_resources = [
+        resource
+        for resource in client.list_children(
+            district_resource.url
+        )
+        if (
+            resource.is_collection
+            and not should_ignore(resource)
+        )
+    ]
+
+    used_place_slugs: set[str] = set()
+    places: list[dict[str, Any]] = []
+
+    for place_resource in place_resources:
+        parsed_place = parse_place_folder(
+            place_resource.name
+        )
+
+        place_name = (
+            parsed_place["name"]
+            or place_resource.name
+        )
+
+        place_slug = create_unique_slug(
+            slugify(place_name),
+            used_place_slugs,
+        )
+
+        places.append(
+            build_place_record(
+                client=client,
+                place_resource=place_resource,
+                region_name=region_name,
+                district_name=district_resource.name,
+                place_slug=place_slug,
+            )
+        )
+
+    places.sort(
+        key=lambda item: item["name"].casefold()
+    )
+
+    media_count = sum(
+        place["mediaCount"]
+        for place in places
+    )
+
+    return {
+        "name": district_resource.name,
+        "slug": district_slug,
+        "placeCount": len(places),
+        "mediaCount": media_count,
+        "places": places,
+    }
+
+
+def empty_region_record(region_name: str) -> dict[str, Any]:
+    """Membuat data wilayah kosong jika folder tidak ditemukan."""
+
+    return {
+        "name": region_name,
+        "slug": slugify(region_name),
+        "districtCount": 0,
+        "placeCount": 0,
+        "mediaCount": 0,
+        "districts": [],
+    }
+
+
+def build_region_record(
+    client: KoofrWebDavClient,
+    region_resource: WebDavResource,
+) -> dict[str, Any]:
+    """Menghasilkan data wilayah beserta seluruh kecamatan."""
+
+    district_resources = [
+        resource
+        for resource in client.list_children(
+            region_resource.url
+        )
+        if (
+            resource.is_collection
+            and not should_ignore(resource)
+        )
+    ]
+
+    used_district_slugs: set[str] = set()
+    districts: list[dict[str, Any]] = []
+
+    for district_resource in district_resources:
+        district_slug = create_unique_slug(
+            slugify(district_resource.name),
+            used_district_slugs,
+        )
+
+        districts.append(
+            build_district_record(
+                client=client,
+                district_resource=district_resource,
+                region_name=region_resource.name,
+                district_slug=district_slug,
+            )
+        )
+
+    districts.sort(
+        key=lambda item: item["name"].casefold()
+    )
+
+    place_count = sum(
+        district["placeCount"]
+        for district in districts
+    )
+
+    media_count = sum(
+        district["mediaCount"]
+        for district in districts
+    )
+
+    return {
+        "name": region_resource.name,
+        "slug": slugify(region_resource.name),
+        "districtCount": len(districts),
+        "placeCount": place_count,
+        "mediaCount": media_count,
+        "districts": districts,
+    }
+
+
+def find_archive_folder(
+    client: KoofrWebDavClient,
+    archive_folder_name: str,
+) -> WebDavResource:
+    """Mencari folder Arsip Kuliner Surabaya di root Koofr."""
+
+    root_resources = client.list_children(
+        client.root_url
+    )
+
+    archive_resource = next(
+        (
+            resource
+            for resource in root_resources
+            if (
+                resource.is_collection
+                and resource.name == archive_folder_name
+            )
+        ),
+        None,
+    )
+
+    if archive_resource is None:
+        raise CatalogueError(
+            f"Folder '{archive_folder_name}' tidak ditemukan "
+            "di root Koofr."
+        )
+
+    return archive_resource
+
+
+def build_catalogue(
+    client: KoofrWebDavClient,
+    archive_folder_name: str,
+) -> dict[str, Any]:
+    """Membangun seluruh katalog dari lima wilayah publik."""
+
+    archive_resource = find_archive_folder(
+        client,
+        archive_folder_name,
+    )
+
+    archive_children = client.list_children(
+        archive_resource.url
+    )
+
+    region_resources = {
+        resource.name: resource
+        for resource in archive_children
+        if (
+            resource.is_collection
+            and resource.name in ALLOWED_REGIONS
+        )
+    }
+
+    regions: list[dict[str, Any]] = []
+
+    for region_name in ALLOWED_REGIONS:
+        region_resource = region_resources.get(
+            region_name
+        )
+
+        if region_resource is None:
+            regions.append(
+                empty_region_record(region_name)
+            )
+            continue
+
+        regions.append(
+            build_region_record(
+                client,
+                region_resource,
+            )
+        )
+
+    return {
+        "schemaVersion": 1,
+        "mode": "koofr-preview",
+        "generatedAt": (
+            datetime.now(timezone.utc)
+            .isoformat()
+            .replace("+00:00", "Z")
+        ),
+        "regions": regions,
+    }
+
+
+def write_catalogue(
+    catalogue: dict[str, Any],
+    output_path: Path,
+) -> None:
+    """Menulis katalog secara atomik."""
+
+    output_path.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    temporary_path = output_path.with_suffix(
+        output_path.suffix + ".tmp"
+    )
+
+    with temporary_path.open(
+        "w",
+        encoding="utf-8",
+        newline="\n",
+    ) as output_file:
+        json.dump(
+            catalogue,
+            output_file,
+            ensure_ascii=False,
+            indent=2,
+        )
+
+        output_file.write("\n")
+
+    temporary_path.replace(output_path)
+
+
+def print_summary(catalogue: dict[str, Any]) -> None:
+    """Mencetak ringkasan aman tanpa nama kecamatan atau tempat."""
+
+    print("Koofr catalogue generated successfully.")
+
+    for region in catalogue["regions"]:
+        print(
+            f"- {region['name']}: "
+            f"{region['districtCount']} district(s), "
+            f"{region['placeCount']} place(s), "
+            f"{region['mediaCount']} media file(s)"
+        )
+
+    total_districts = sum(
+        region["districtCount"]
+        for region in catalogue["regions"]
+    )
+
+    total_places = sum(
+        region["placeCount"]
+        for region in catalogue["regions"]
+    )
+
+    total_media = sum(
+        region["mediaCount"]
+        for region in catalogue["regions"]
+    )
+
+    print(
+        "Total public catalogue: "
+        f"{total_districts} district(s), "
+        f"{total_places} place(s), "
+        f"{total_media} media file(s)."
+    )
+
+    print(
+        "Folders and files outside the five allowed regions "
+        "were not included."
+    )
+
+
+def parse_arguments() -> argparse.Namespace:
+    """Membaca argumen command line."""
+
+    parser = argparse.ArgumentParser(
+        description=(
+            "Build Arsip Kuliner Surabaya catalogue "
+            "from Koofr WebDAV."
+        )
+    )
+
+    parser.add_argument(
+        "--output",
+        default="generated/archive.json",
+        help=(
+            "Lokasi archive.json hasil pemindaian. "
+            "Default: generated/archive.json"
+        ),
+    )
+
+    return parser.parse_args()
+
+
+def main() -> int:
+    """Entry point."""
+
+    arguments = parse_arguments()
+
+    try:
+        username = get_required_environment(
+            "KOOFR_USERNAME"
+        )
+
+        password = get_required_environment(
+            "KOOFR_APP_PASSWORD"
+        )
+
+        root_url = os.environ.get(
+            "KOOFR_WEBDAV_URL",
+            "https://app.koofr.net/dav/Koofr/",
+        ).strip()
+
+        archive_folder = os.environ.get(
+            "KOOFR_ARCHIVE_FOLDER",
+            "Arsip Kuliner Surabaya",
+        ).strip()
+
+        if not root_url:
+            raise CatalogueError(
+                "KOOFR_WEBDAV_URL tidak boleh kosong."
+            )
+
+        if not archive_folder:
+            raise CatalogueError(
+                "KOOFR_ARCHIVE_FOLDER tidak boleh kosong."
+            )
+
+        client = KoofrWebDavClient(
+            username=username,
+            password=password,
+            root_url=root_url,
+        )
+
+        catalogue = build_catalogue(
+            client=client,
+            archive_folder_name=archive_folder,
+        )
+
+        output_path = Path(arguments.output)
+
+        write_catalogue(
+            catalogue,
+            output_path,
+        )
+
+        print_summary(catalogue)
+
+        print(
+            f"Output written to: {output_path}"
+        )
+
+        return 0
+
+    except CatalogueError as error:
+        print(
+            f"::error::{error}",
+            file=sys.stderr,
+            flush=True,
+        )
+
+        return 1
+
+    except Exception as error:
+        print(
+            "::error::Terjadi kesalahan tak terduga saat "
+            f"membangun katalog: {error}",
+            file=sys.stderr,
+            flush=True,
+        )
+
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
