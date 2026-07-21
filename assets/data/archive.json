@@ -8,35 +8,70 @@
       "slug": "surabaya-barat",
       "districtCount": 1,
       "placeCount": 1,
-      "mediaCount": 1
+      "mediaCount": 1,
+      "districts": [
+        {
+          "name": "Tandes",
+          "slug": "tandes",
+          "placeCount": 1,
+          "mediaCount": 1,
+          "places": [
+            {
+              "name": "Gunarso",
+              "slug": "gunarso",
+              "status": "Buka",
+              "address": "Jalan Raya Manukan Kulon No. 33",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "surabaya-barat-tandes-gunarso-2021-04-19-183115",
+                  "filename": "2021-04-19 18.31.15 Gunarso - Nasi Campur - Rp12.000.HEIC",
+                  "date": "2021-04-19",
+                  "time": "18:31:15",
+                  "dish": "Nasi Campur",
+                  "price": "Rp12.000",
+                  "extension": "HEIC",
+                  "mimeType": "image/heic",
+                  "previewUrl": null,
+                  "originalUrl": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Surabaya Pusat",
       "slug": "surabaya-pusat",
       "districtCount": 0,
       "placeCount": 0,
-      "mediaCount": 0
+      "mediaCount": 0,
+      "districts": []
     },
     {
       "name": "Surabaya Selatan",
       "slug": "surabaya-selatan",
       "districtCount": 0,
       "placeCount": 0,
-      "mediaCount": 0
+      "mediaCount": 0,
+      "districts": []
     },
     {
       "name": "Surabaya Timur",
       "slug": "surabaya-timur",
       "districtCount": 0,
       "placeCount": 0,
-      "mediaCount": 0
+      "mediaCount": 0,
+      "districts": []
     },
     {
       "name": "Surabaya Utara",
       "slug": "surabaya-utara",
       "districtCount": 0,
       "placeCount": 0,
-      "mediaCount": 0
+      "mediaCount": 0,
+      "districts": []
     }
   ]
 }
