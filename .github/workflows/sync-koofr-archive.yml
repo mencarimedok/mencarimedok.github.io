@@ -1,0 +1,442 @@
+name: Sync Koofr Archive
+
+run-name: Sync Koofr archive on ${{ github.ref_name }}
+
+on:
+  push:
+    paths:
+      - ".github/workflows/sync-koofr-archive.yml"
+      - "scripts/build-koofr-catalog.py"
+      - "scripts/generate-archive-pages.py"
+
+  workflow_dispatch:
+
+  schedule:
+    - cron: "17,47 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-koofr-archive-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  sync-archive:
+    name: Build, validate, and commit archive
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      KOOFR_USERNAME: ${{ secrets.KOOFR_USERNAME }}
+      KOOFR_APP_PASSWORD: ${{ secrets.KOOFR_APP_PASSWORD }}
+      KOOFR_WEBDAV_URL: https://app.koofr.net/dav/Koofr/
+      KOOFR_ARCHIVE_FOLDER: Arsip Kuliner Surabaya
+      TEMP_CATALOGUE: generated/archive.json
+      PUBLIC_CATALOGUE: assets/data/archive.json
+      PAGE_OUTPUT_ROOT: arsip/wilayah
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate required secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${KOOFR_USERNAME:-}" ]]; then
+            echo "::error::Repository secret KOOFR_USERNAME belum tersedia atau kosong."
+            exit 1
+          fi
+
+          if [[ -z "${KOOFR_APP_PASSWORD:-}" ]]; then
+            echo "::error::Repository secret KOOFR_APP_PASSWORD belum tersedia atau kosong."
+            exit 1
+          fi
+
+          echo "Required Koofr secrets are available."
+
+      - name: Validate Python scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 -m py_compile \
+            scripts/build-koofr-catalog.py \
+            scripts/generate-archive-pages.py
+
+          echo "Python syntax validation passed."
+
+      - name: Build catalogue from Koofr
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          rm -rf generated
+          mkdir -p generated
+
+          python3 scripts/build-koofr-catalog.py \
+            --output "${TEMP_CATALOGUE}"
+
+      - name: Validate generated catalogue
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+
+
+          ALLOWED_REGIONS = [
+              "Surabaya Barat",
+              "Surabaya Pusat",
+              "Surabaya Selatan",
+              "Surabaya Timur",
+              "Surabaya Utara",
+          ]
+
+          path = Path(os.environ["TEMP_CATALOGUE"])
+
+          if not path.is_file():
+              raise SystemExit(
+                  f"::error::Catalogue tidak ditemukan: {path}"
+              )
+
+          with path.open("r", encoding="utf-8") as input_file:
+              catalogue = json.load(input_file)
+
+          if catalogue.get("schemaVersion") != 1:
+              raise SystemExit(
+                  "::error::schemaVersion harus bernilai 1."
+              )
+
+          if catalogue.get("parserVersion") != 2:
+              raise SystemExit(
+                  "::error::parserVersion harus bernilai 2."
+              )
+
+          regions = catalogue.get("regions")
+
+          if not isinstance(regions, list):
+              raise SystemExit(
+                  "::error::regions harus berbentuk array."
+              )
+
+          names = [
+              region.get("name")
+              for region in regions
+              if isinstance(region, dict)
+          ]
+
+          if names != ALLOWED_REGIONS:
+              raise SystemExit(
+                  "::error::Daftar atau urutan wilayah tidak sesuai allowlist."
+              )
+
+          serialized = json.dumps(
+              catalogue,
+              ensure_ascii=False,
+          )
+
+          if "Folder Karantina" in serialized:
+              raise SystemExit(
+                  "::error::Folder Karantina ditemukan dalam katalog publik."
+              )
+
+          total_districts = 0
+          total_places = 0
+          total_media = 0
+
+          for region in regions:
+              districts = region.get("districts")
+
+              if not isinstance(districts, list):
+                  raise SystemExit(
+                      f"::error::{region.get('name')}.districts bukan array."
+                  )
+
+              calculated_place_count = 0
+              calculated_media_count = 0
+
+              for district in districts:
+                  places = district.get("places")
+
+                  if not isinstance(places, list):
+                      raise SystemExit(
+                          f"::error::{district.get('name')}.places bukan array."
+                      )
+
+                  district_media_count = 0
+
+                  for place in places:
+                      media = place.get("media")
+
+                      if not isinstance(media, list):
+                          raise SystemExit(
+                              f"::error::{place.get('name')}.media bukan array."
+                          )
+
+                      if place.get("mediaCount") != len(media):
+                          raise SystemExit(
+                              f"::error::mediaCount tidak cocok untuk {place.get('name')}."
+                          )
+
+                      district_media_count += len(media)
+
+                  if district.get("placeCount") != len(places):
+                      raise SystemExit(
+                          f"::error::placeCount tidak cocok untuk {district.get('name')}."
+                      )
+
+                  if district.get("mediaCount") != district_media_count:
+                      raise SystemExit(
+                          f"::error::mediaCount tidak cocok untuk {district.get('name')}."
+                      )
+
+                  calculated_place_count += len(places)
+                  calculated_media_count += district_media_count
+
+              if region.get("districtCount") != len(districts):
+                  raise SystemExit(
+                      f"::error::districtCount tidak cocok untuk {region.get('name')}."
+                  )
+
+              if region.get("placeCount") != calculated_place_count:
+                  raise SystemExit(
+                      f"::error::placeCount tidak cocok untuk {region.get('name')}."
+                  )
+
+              if region.get("mediaCount") != calculated_media_count:
+                  raise SystemExit(
+                      f"::error::mediaCount tidak cocok untuk {region.get('name')}."
+                  )
+
+              total_districts += len(districts)
+              total_places += calculated_place_count
+              total_media += calculated_media_count
+
+          print("Generated catalogue validation passed.")
+          print(
+              "Catalogue totals: "
+              f"{total_districts} district(s), "
+              f"{total_places} place(s), "
+              f"{total_media} media file(s)."
+          )
+          print(f"JSON size: {path.stat().st_size:,} bytes.")
+          PYTHON
+
+      - name: Detect meaningful catalogue changes
+        id: catalogue_changes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 <<'PYTHON'
+          import copy
+          import json
+          import os
+          from pathlib import Path
+
+
+          new_path = Path(os.environ["TEMP_CATALOGUE"])
+          old_path = Path(os.environ["PUBLIC_CATALOGUE"])
+
+          with new_path.open("r", encoding="utf-8") as input_file:
+              new_catalogue = json.load(input_file)
+
+          old_catalogue = None
+
+          if old_path.is_file():
+              with old_path.open("r", encoding="utf-8") as input_file:
+                  old_catalogue = json.load(input_file)
+
+          def comparable(value):
+              if value is None:
+                  return None
+
+              result = copy.deepcopy(value)
+              result.pop("generatedAt", None)
+              return result
+
+          changed = (
+              old_catalogue is None
+              or comparable(old_catalogue) != comparable(new_catalogue)
+          )
+
+          output_path = Path(os.environ["GITHUB_OUTPUT"])
+
+          with output_path.open("a", encoding="utf-8") as output_file:
+              output_file.write(
+                  f"changed={'true' if changed else 'false'}\n"
+              )
+
+          if changed:
+              print(
+                  "Meaningful catalogue changes were detected."
+              )
+          else:
+              print(
+                  "Koofr contents are unchanged. "
+                  "generatedAt-only differences will not create a commit."
+              )
+          PYTHON
+
+      - name: Publish catalogue into repository
+        if: steps.catalogue_changes.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p "$(dirname "${PUBLIC_CATALOGUE}")"
+          cp "${TEMP_CATALOGUE}" "${PUBLIC_CATALOGUE}"
+
+          echo "Published catalogue to ${PUBLIC_CATALOGUE}."
+
+      - name: Generate all archive pages
+        if: steps.catalogue_changes.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 scripts/generate-archive-pages.py \
+            --catalogue "${PUBLIC_CATALOGUE}" \
+            --output-root "${PAGE_OUTPUT_ROOT}" \
+            --force
+
+      - name: Validate generated page manifest
+        if: steps.catalogue_changes.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+
+
+          catalogue_path = Path(os.environ["PUBLIC_CATALOGUE"])
+          manifest_path = (
+              Path(os.environ["PAGE_OUTPUT_ROOT"])
+              / "catalogue-pages.json"
+          )
+
+          with catalogue_path.open(
+              "r",
+              encoding="utf-8",
+          ) as input_file:
+              catalogue = json.load(input_file)
+
+          with manifest_path.open(
+              "r",
+              encoding="utf-8",
+          ) as input_file:
+              manifest = json.load(input_file)
+
+          expected_regions = len(catalogue["regions"])
+          expected_districts = sum(
+              len(region["districts"])
+              for region in catalogue["regions"]
+          )
+          expected_places = sum(
+              len(district["places"])
+              for region in catalogue["regions"]
+              for district in region["districts"]
+          )
+
+          expected = {
+              "regionPages": expected_regions,
+              "districtPages": expected_districts,
+              "placePages": expected_places,
+          }
+
+          for key, value in expected.items():
+              if manifest.get(key) != value:
+                  raise SystemExit(
+                      f"::error::{key} seharusnya {value}, "
+                      f"tetapi manifest berisi {manifest.get(key)}."
+                  )
+
+          print("Generated page manifest validation passed.")
+          print(
+              "Generated pages: "
+              f"{expected_regions} region(s), "
+              f"{expected_districts} district(s), "
+              f"{expected_places} place(s)."
+          )
+          PYTHON
+
+      - name: Set up Ruby
+        if: steps.catalogue_changes.outputs.changed == 'true'
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+
+      - name: Validate Jekyll site
+        if: steps.catalogue_changes.outputs.changed == 'true'
+        shell: bash
+        env:
+          JEKYLL_ENV: production
+        run: |
+          set -euo pipefail
+
+          bundle exec jekyll build \
+            --destination "${RUNNER_TEMP}/mencari-medok-site"
+
+          rm -rf .jekyll-cache
+
+          echo "Jekyll production build passed."
+
+      - name: Commit synchronized catalogue and pages
+        if: steps.catalogue_changes.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config \
+            user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            "${PUBLIC_CATALOGUE}" \
+            "${PAGE_OUTPUT_ROOT}"
+
+          if git diff --cached --quiet; then
+            echo "No repository changes remain to commit."
+            exit 0
+          fi
+
+          git commit -m "Sync Koofr archive catalogue"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+          echo "Synchronized catalogue committed to ${GITHUB_REF_NAME}."
+
+      - name: Report synchronization result
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Koofr archive synchronization"
+            echo
+
+            if [[ "${{ steps.catalogue_changes.outputs.changed }}" == "true" ]]; then
+              echo "Koofr contained meaningful catalogue changes."
+              echo
+              echo "- Updated: \`${PUBLIC_CATALOGUE}\`"
+              echo "- Regenerated: \`${PAGE_OUTPUT_ROOT}\`"
+              echo "- Target branch: \`${GITHUB_REF_NAME}\`"
+            elif [[ "${{ steps.catalogue_changes.outputs.changed }}" == "false" ]]; then
+              echo "No meaningful Koofr changes were found."
+              echo
+              echo "No catalogue or page commit was created."
+            else
+              echo "The workflow stopped before catalogue comparison completed."
+            fi
+          } >> "${GITHUB_STEP_SUMMARY}"
