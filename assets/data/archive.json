@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "mode": "sample",
+  "generatedAt": null,
+  "regions": [
+    {
+      "name": "Surabaya Barat",
+      "slug": "surabaya-barat",
+      "districtCount": 1,
+      "placeCount": 1,
+      "mediaCount": 1
+    },
+    {
+      "name": "Surabaya Pusat",
+      "slug": "surabaya-pusat",
+      "districtCount": 0,
+      "placeCount": 0,
+      "mediaCount": 0
+    },
+    {
+      "name": "Surabaya Selatan",
+      "slug": "surabaya-selatan",
+      "districtCount": 0,
+      "placeCount": 0,
+      "mediaCount": 0
+    },
+    {
+      "name": "Surabaya Timur",
+      "slug": "surabaya-timur",
+      "districtCount": 0,
+      "placeCount": 0,
+      "mediaCount": 0
+    },
+    {
+      "name": "Surabaya Utara",
+      "slug": "surabaya-utara",
+      "districtCount": 0,
+      "placeCount": 0,
+      "mediaCount": 0
+    }
+  ]
+}
