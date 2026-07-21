@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Representasi Rawon Surabaya yang Lebih Baik"
-date: 2026-07-21 07:52:51 +0700
+date: 2026-07-21 15:43:06 +0700
 author: "Baskoro Aris Sansoko"
 editor: "Baskoro Aris Sansoko"
 cover: "/assets/images/posts/representasi-rawon-surabaya-yang-lebih-baik/image-01.jpg"
@@ -40,7 +40,3 @@ Maka, representasi rawon Surabaya yang lebih baik tidak cukup bertanya: rawon ma
 Nama-nama yang menurutku penting diperbesar kuletakkan pada 10 pertama pemeringkatan rawon Surabaya yang kulakukan. Ada rawon di **Indigo Restaurant** (1) dengan paduan semua komponen yang mendekati sempurna; terutama rona kuah yang tak sedikitpun punya kuning dan kental kuah yang bisa memiliki sensasi menyelimuti lidah dan memberikannya pelukan hangat. Lalu **Rawon Subedo** (2), **Rawon Bu Lilis** (3), **Depot Hijau Bu Nganten** (5), **Mbok Sil Sambel Tempong** (6, sudah tutup), **Rawon Oleng** (7, sudah tutup), **Gudeg Bu Toegijo** (9), dan **Rawon H. Suparan** (10) bisa memenuhi karakteristik sensori yang aku elaborasikan di atas dengan harga di antara Rp20.000-30.000 yang relatif masih terjangkau oleh masyarakat. Pada restoran yang lebih mahal, **Kartiko Heritage** (8) dan **Depot Rawon Malang MM** (4) pun bisa menghadirkan rawon yang punya pesonanya bahkan sampai istimewa.
 
 Selama ini, rawon tertentu menjadi wajah Surabaya bukan hanya karena rasa. Ia menjadi wajah karena terus disebut, terus dicari, terus direkomendasikan, terus muncul di mesin telusur, terus dipilih sebagai tujuan aman bagi tamu luar kota, lalu perlahan diterima sebagai kebenaran.
-
-Di titik itulah representasi rawon Surabaya perlu diperiksa. Bukan untuk membatalkan rawon *touristy*, melainkan menanyakan melalui mekanisme apa sebuah rawon diberi wewenang mewakili Surabaya? Apakah karena ia ramai? Karena ia mudah dicari? Karena ia punya parkir luas? Karena ia sering masuk rekomendasi? Atau karena kuah, keluak, dimensi rasa, daging, lauk utama, kondimen, dan harganya membentuk gramatika rasa yang lebih tepat disebut rawon Surabaya?
-
-*Zine* ini hadir untuk mengganggu logika amplifikasi kuliner yang berjalan. Bukan untuk meminta pembaca menerima pemeringkatanku sebagai kebenaran akhir, melainkan membawa pembicaraan tentang rawon Surabaya bergerak untuk tak sekadar karena nama besar. Sebab dalam kulineria kota, yang paling sering terdengar tidak hanya sedang direkomendasikan; ia sedang ada dalam kuasa untuk mendefinisikan rasa.
