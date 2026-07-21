@@ -20,13 +20,23 @@
       rel="stylesheet"
       href="{{ '/assets/css/archive.css' | relative_url }}?v={{ site.time | date: '%s' }}"
     />
+
+    <script
+      defer
+      src="{{ '/assets/js/archive.js' | relative_url }}?v={{ site.time | date: '%s' }}"
+    ></script>
   </head>
 
-  <body class="archive-site">
+  <body
+    class="archive-site"
+    data-archive-data-url="{{ '/assets/data/archive.json' | relative_url }}"
+  >
     <header class="site-header archive-header">
       <div class="wrap archive-header__inner">
         <a class="brand" href="{{ '/' | relative_url }}">
-          <span class="brand__title">{{ site.title }}</span>
+          <span class="brand__title">
+            {{ site.title }}
+          </span>
         </a>
 
         <a
