@@ -1,28 +1,18 @@
 #!/usr/bin/env python3
 """
-MENCARI MEDOK — PEMBANGUN KATALOG KOOFR
+MENCARI MEDOK — PEMBANGUN KATALOG KOOFR V2
 
-Membaca Arsip Kuliner Surabaya melalui WebDAV secara read-only,
-kemudian menghasilkan archive.json.
+Membaca folder publik Arsip Kuliner Surabaya melalui WebDAV secara
+read-only dan menghasilkan archive.json.
 
-Struktur yang diharapkan:
+Hanya lima folder wilayah berikut yang dipindai:
+- Surabaya Barat
+- Surabaya Pusat
+- Surabaya Selatan
+- Surabaya Timur
+- Surabaya Utara
 
-Arsip Kuliner Surabaya/
-├── Surabaya Barat/
-│   └── Tandes/
-│       └── Gunarso (Buka) - Jalan Raya Manukan Kulon No. 33/
-│           └── 2021-04-19 18.31.15 Gunarso - Nasi Campur - Rp12.000.HEIC
-├── Surabaya Pusat/
-├── Surabaya Selatan/
-├── Surabaya Timur/
-└── Surabaya Utara/
-
-Yang diabaikan:
-- Folder Karantina
-- file lepas di Arsip Kuliner Surabaya
-- folder lain di luar lima wilayah yang diizinkan
-- file lepas langsung di wilayah
-- file lepas langsung di kecamatan
+Folder Karantina, file lepas di folder induk, dan folder lain tidak masuk.
 """
 
 from __future__ import annotations
@@ -36,6 +26,7 @@ import os
 import re
 import sys
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -85,8 +76,7 @@ PLACE_WITH_STATUS_AND_ADDRESS = re.compile(
     \(
       (?P<status>[^()]*)
     \)
-    \s*
-    -
+    \s*-
     \s*
     (?P<address>.+)
     $
@@ -98,8 +88,7 @@ PLACE_WITH_ADDRESS = re.compile(
     r"""
     ^
     (?P<name>.*?)
-    \s*
-    -
+    \s*-
     \s*
     (?P<address>.+)
     $
@@ -123,30 +112,71 @@ MEDIA_PREFIX = re.compile(
         )?
       )
     )?
-    \s*
     (?P<remainder>.*)
     $
     """,
     re.VERBOSE,
 )
 
-PRICE_PATTERN = re.compile(
+STATUS_SUFFIX_PATTERN = re.compile(
     r"""
-    ^
-    Rp
-    \.?
     \s*
-    \d
-    [\d.,\s]*
-    (?:,-)?
+    \(
+      (?P<status>
+        buka
+        |tutup
+        |pindah
+        |tidak\s+aktif
+        |permanen\s+tutup
+        |sementara\s+tutup
+        |buka\s*,\s*tutup
+        |tutup\s*,\s*buka
+      )
+    \)
+    \s*$
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
+PRICE_TOKEN = (
+    r"(?:Rp\.?\s*\d[\d.,]*|\d+(?:[.,]\d+)?\s*k(?:\s*an)?)"
+)
+
+PRICE_GROUP = (
+    rf"{PRICE_TOKEN}(?:\s*(?:dan|&|/|,)\s*{PRICE_TOKEN})*"
+)
+
+TRAILING_PRICE_PATTERN = re.compile(
+    rf"""
+    ^\s*
+    \(?\s*
+    (?P<price>{PRICE_GROUP})
+    \s*\)?
+    (?P<note>.*)
     $
     """,
     re.IGNORECASE | re.VERBOSE,
 )
 
+EMBEDDED_PRICE_PATTERN = re.compile(
+    rf"\((?P<price>{PRICE_GROUP})\)",
+    re.IGNORECASE,
+)
+
+PLAIN_CREDIT_PATTERN = re.compile(
+    r"[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ .'-]{0,50}"
+)
+
+PRICE_UNKNOWN_NOTES = {
+    "lupa harga",
+    "harga lupa",
+    "tidak ingat harga",
+    "lupa",
+}
+
 
 class CatalogueError(RuntimeError):
-    """Kesalahan yang dapat ditampilkan dengan aman pada workflow log."""
+    """Kesalahan aman yang boleh ditampilkan pada workflow log."""
 
 
 @dataclass(frozen=True)
@@ -176,43 +206,31 @@ def get_required_environment(name: str) -> str:
     return value
 
 
+def normalized_identity(value: str) -> str:
+    """Menormalisasi nama untuk perbandingan alias."""
+
+    normalized = unicodedata.normalize("NFKD", value)
+    normalized = "".join(
+        character
+        for character in normalized
+        if not unicodedata.combining(character)
+    )
+    normalized = normalized.casefold().replace("&", " and ")
+    normalized = re.sub(r"[^a-z0-9]+", " ", normalized)
+
+    return " ".join(normalized.split())
+
+
+def identity_tokens(value: str) -> list[str]:
+    """Mengubah identitas menjadi token pembanding."""
+
+    return normalized_identity(value).split()
+
+
 def slugify(value: str) -> str:
     """Menghasilkan slug URL sederhana dan stabil."""
 
-    normalized = value.casefold().strip()
-
-    replacements = {
-        "á": "a",
-        "à": "a",
-        "â": "a",
-        "ä": "a",
-        "ã": "a",
-        "å": "a",
-        "é": "e",
-        "è": "e",
-        "ê": "e",
-        "ë": "e",
-        "í": "i",
-        "ì": "i",
-        "î": "i",
-        "ï": "i",
-        "ó": "o",
-        "ò": "o",
-        "ô": "o",
-        "ö": "o",
-        "õ": "o",
-        "ú": "u",
-        "ù": "u",
-        "û": "u",
-        "ü": "u",
-        "ñ": "n",
-        "ç": "c",
-        "&": " dan ",
-    }
-
-    for source, replacement in replacements.items():
-        normalized = normalized.replace(source, replacement)
-
+    normalized = normalized_identity(value)
     normalized = re.sub(r"[^a-z0-9]+", "-", normalized)
     normalized = normalized.strip("-")
 
@@ -352,7 +370,7 @@ class KoofrWebDavClient:
                     "Authorization": self.authorization,
                     "Depth": depth,
                     "Content-Type": "application/xml; charset=utf-8",
-                    "User-Agent": "Mencari-Medok-Archive-Sync/1.0",
+                    "User-Agent": "Mencari-Medok-Archive-Sync/2.0",
                 },
             )
 
@@ -391,8 +409,7 @@ class KoofrWebDavClient:
                     if attempt >= maximum_attempts:
                         raise CatalogueError(
                             "Koofr membatasi terlalu banyak permintaan "
-                            "(HTTP 429). Hentikan workflow dan coba lagi "
-                            "setelah jeda."
+                            "(HTTP 429). Coba lagi setelah jeda."
                         ) from error
 
                     retry_after = error.headers.get("Retry-After")
@@ -462,14 +479,10 @@ class KoofrWebDavClient:
                 DAV_NAMESPACE,
             )
 
-            if (
-                href_element is None
-                or not href_element.text
-            ):
+            if href_element is None or not href_element.text:
                 continue
 
             href = href_element.text
-
             successful_prop = None
 
             for propstat in response.findall(
@@ -517,9 +530,7 @@ class KoofrWebDavClient:
                 is_collection,
             )
 
-            decoded_path = normalized_decoded_path(
-                resource_url
-            )
+            decoded_path = normalized_decoded_path(resource_url)
 
             if decoded_path == collection_path:
                 continue
@@ -678,87 +689,333 @@ def normalize_media_time(value: str | None) -> str | None:
     return f"{hour:02d}:{minute:02d}:{second:02d}"
 
 
-def remove_place_prefix(
-    remainder: str,
+def split_media_segments(value: str) -> list[str]:
+    """Memecah bagian nama file menjadi segmen metadata."""
+
+    cleaned = value.strip(" \t_-–—")
+
+    if not cleaned:
+        return []
+
+    if re.search(r"\s+-\s+", cleaned):
+        segments = re.split(r"\s+-\s+", cleaned)
+    else:
+        # Fallback untuk format lama tanpa spasi:
+        # 2023-06-02-Tempat-Sajian-25k
+        segments = re.split(r"\s*-\s*", cleaned)
+
+    return [
+        segment.strip()
+        for segment in segments
+        if segment.strip()
+    ]
+
+
+def strip_status_suffix(value: str) -> tuple[str, str | None]:
+    """Menghapus status seperti (Tutup) dari akhir label tempat."""
+
+    match = STATUS_SUFFIX_PATTERN.search(value)
+
+    if not match:
+        return value.strip(), None
+
+    return (
+        value[: match.start()].strip(),
+        match.group("status").strip(),
+    )
+
+
+def is_place_alias(candidate: str, place_name: str) -> bool:
+    """Membandingkan nama file dan nama folder secara toleran."""
+
+    candidate_tokens = identity_tokens(candidate)
+    place_tokens = identity_tokens(place_name)
+
+    if not candidate_tokens or not place_tokens:
+        return False
+
+    if candidate_tokens == place_tokens:
+        return True
+
+    if (
+        len(candidate_tokens) <= len(place_tokens)
+        and candidate_tokens
+        == place_tokens[: len(candidate_tokens)]
+    ):
+        return (
+            len(candidate_tokens) >= 2
+            or len(candidate_tokens[0]) >= 5
+        )
+
+    if (
+        len(place_tokens) <= len(candidate_tokens)
+        and place_tokens == candidate_tokens[: len(place_tokens)]
+    ):
+        return True
+
+    common_prefix = 0
+
+    for candidate_token, place_token in zip(
+        candidate_tokens,
+        place_tokens,
+    ):
+        if candidate_token != place_token:
+            break
+
+        common_prefix += 1
+
+    shorter_length = min(
+        len(candidate_tokens),
+        len(place_tokens),
+    )
+
+    return (
+        common_prefix >= 2
+        and common_prefix / shorter_length >= 0.75
+    )
+
+
+def strip_place_segment(
+    segments: list[str],
     place_name: str,
-) -> str:
-    """Menghapus nama tempat dari awal informasi media."""
+) -> tuple[list[str], str | None, bool]:
+    """Menghapus label tempat dari segmen pertama."""
 
-    cleaned = remainder.strip(" _-")
+    if not segments:
+        return segments, None, False
 
-    if not cleaned or not place_name:
-        return cleaned
+    candidate = segments[0]
+    candidate_without_status, _ = strip_status_suffix(candidate)
 
-    if cleaned.casefold().startswith(place_name.casefold()):
-        cleaned = cleaned[len(place_name):]
-        cleaned = cleaned.strip(" _-")
+    if not is_place_alias(
+        candidate_without_status,
+        place_name,
+    ):
+        return segments, None, False
 
-    return cleaned
+    collaboration: str | None = None
+
+    collaboration_match = re.match(
+        r"^(?P<place>.*?)\s+[x×]\s+(?P<partner>.+)$",
+        candidate_without_status,
+        re.IGNORECASE,
+    )
+
+    if (
+        collaboration_match
+        and is_place_alias(
+            collaboration_match.group("place"),
+            place_name,
+        )
+    ):
+        collaboration = (
+            collaboration_match.group("partner").strip()
+            or None
+        )
+
+    return segments[1:], collaboration, True
+
+
+def extract_credit(
+    segments: list[str],
+) -> tuple[list[str], str | None]:
+    """Memisahkan kredit seperti (@crisp.lemonade) atau (Alwari)."""
+
+    if not segments:
+        return segments, None
+
+    last_segment = segments[-1]
+    match = re.search(
+        r"\s*\((?P<credit>[^()]*)\)\s*$",
+        last_segment,
+    )
+
+    if not match:
+        return segments, None
+
+    credit = match.group("credit").strip()
+    before_credit = last_segment[: match.start()].rstrip()
+
+    is_handle = credit.startswith("@")
+    price_before_credit = re.search(
+        rf"{PRICE_GROUP}\s*$",
+        before_credit,
+        re.IGNORECASE,
+    )
+    is_plain_credit = bool(
+        price_before_credit
+        and PLAIN_CREDIT_PATTERN.fullmatch(credit)
+    )
+
+    if not is_handle and not is_plain_credit:
+        return segments, None
+
+    updated_segments = segments[:-1]
+
+    if before_credit:
+        updated_segments.append(before_credit)
+
+    return updated_segments, credit
+
+
+def extract_price_and_notes(
+    segments: list[str],
+) -> tuple[
+    list[str],
+    str | None,
+    str | None,
+    list[str],
+]:
+    """Memisahkan harga, catatan harga, dan peringatan parser."""
+
+    working_segments = list(segments)
+    price: str | None = None
+    notes: list[str] = []
+    warnings: list[str] = []
+
+    if working_segments:
+        last_segment = working_segments[-1].strip()
+        normalized_last = normalized_identity(last_segment)
+
+        if normalized_last in PRICE_UNKNOWN_NOTES:
+            notes.append(last_segment)
+            working_segments.pop()
+        else:
+            price_match = TRAILING_PRICE_PATTERN.match(last_segment)
+
+            if price_match:
+                price = price_match.group("price").strip()
+                trailing_note = price_match.group("note").strip(
+                    " -–—,;"
+                )
+
+                working_segments.pop()
+
+                if trailing_note:
+                    notes.append(trailing_note)
+
+    joined = " - ".join(working_segments)
+    embedded_matches = list(
+        EMBEDDED_PRICE_PATTERN.finditer(joined)
+    )
+
+    if embedded_matches:
+        embedded_prices = [
+            match.group("price").strip()
+            for match in embedded_matches
+        ]
+
+        if price is None:
+            price = embedded_prices[0]
+
+        if len(embedded_matches) > 1:
+            warnings.append("multiple-price-mentions")
+        else:
+            match = embedded_matches[0]
+            joined = (
+                joined[: match.start()]
+                + joined[match.end() :]
+            )
+            joined = re.sub(r"\s{2,}", " ", joined)
+            joined = joined.strip(" -–—")
+            working_segments = split_media_segments(joined)
+
+    notes_value = "; ".join(notes) if notes else None
+
+    return working_segments, price, notes_value, warnings
+
+
+def determine_mime_type(
+    filename: str,
+    extension: str | None,
+    webdav_content_type: str | None,
+) -> str | None:
+    """Menentukan MIME type dengan override untuk HEIC dan HEIF."""
+
+    normalized_extension = (extension or "").upper()
+
+    if normalized_extension == "HEIC":
+        return "image/heic"
+
+    if normalized_extension == "HEIF":
+        return "image/heif"
+
+    if webdav_content_type and (
+        webdav_content_type != "application/octet-stream"
+    ):
+        return webdav_content_type
+
+    guessed_type, _ = mimetypes.guess_type(filename)
+
+    return webdav_content_type or guessed_type
 
 
 def parse_media_filename(
     filename: str,
     place_name: str,
 ) -> dict[str, Any]:
-    """Membaca tanggal, waktu, sajian, harga, dan format dari filename."""
+    """Membaca metadata utama dari nama file dokumentasi."""
 
     suffix = Path(filename).suffix
     extension = suffix.lstrip(".").upper() or None
-
-    stem = (
-        filename[: -len(suffix)]
-        if suffix
-        else filename
-    )
+    stem = filename[: -len(suffix)] if suffix else filename
 
     date_value: str | None = None
     time_value: str | None = None
-    dish: str | None = None
-    price: str | None = None
+    remainder = stem.strip()
+    parse_warnings: list[str] = []
 
-    match = MEDIA_PREFIX.match(stem)
+    prefix_match = MEDIA_PREFIX.match(stem)
 
-    if match:
-        date_value = match.group("date")
+    if prefix_match:
+        date_value = prefix_match.group("date")
         time_value = normalize_media_time(
-            match.group("time")
+            prefix_match.group("time")
         )
+        remainder = (
+            prefix_match.group("remainder") or ""
+        ).strip(" \t_-–—")
+    else:
+        parse_warnings.append("date-prefix-not-detected")
 
-        remainder = remove_place_prefix(
-            match.group("remainder") or "",
+    segments = split_media_segments(remainder)
+
+    segments, collaboration, place_prefix_detected = (
+        strip_place_segment(
+            segments,
             place_name,
         )
-    else:
-        remainder = stem.strip()
+    )
 
-    segments = [
-        segment.strip()
-        for segment in remainder.split(" - ")
-        if segment.strip()
-    ]
+    if not place_prefix_detected:
+        parse_warnings.append("place-prefix-not-detected")
 
-    if segments and PRICE_PATTERN.match(segments[-1]):
-        price = segments.pop()
+    segments, credit = extract_credit(segments)
 
-    if segments:
-        dish = " - ".join(segments)
+    (
+        segments,
+        price,
+        notes,
+        price_warnings,
+    ) = extract_price_and_notes(segments)
 
-    guessed_type, _ = mimetypes.guess_type(filename)
+    parse_warnings.extend(price_warnings)
 
-    if extension in {"HEIC", "HEIF"}:
-        guessed_type = (
-            "image/heic"
-            if extension == "HEIC"
-            else "image/heif"
-        )
+    dish = " - ".join(segments).strip() or None
+
+    if not dish:
+        parse_warnings.append("dish-not-detected")
 
     return {
         "date": date_value,
         "time": time_value,
         "dish": dish,
         "price": price,
+        "credit": credit,
+        "notes": notes,
+        "collaboration": collaboration,
         "extension": extension,
-        "mimeType": guessed_type,
+        "parseWarnings": sorted(set(parse_warnings)),
     }
 
 
@@ -769,7 +1026,7 @@ def walk_files(
     depth: int = 0,
     maximum_depth: int = 12,
 ) -> Iterable[tuple[WebDavResource, tuple[str, ...]]]:
-    """Mengambil seluruh file di dalam folder tempat secara rekursif."""
+    """Mengambil seluruh file di folder tempat secara rekursif."""
 
     if depth > maximum_depth:
         raise CatalogueError(
@@ -825,14 +1082,19 @@ def build_media_record(
         "time": parsed["time"],
         "dish": parsed["dish"],
         "price": parsed["price"],
+        "credit": parsed["credit"],
+        "notes": parsed["notes"],
+        "collaboration": parsed["collaboration"],
         "extension": parsed["extension"],
-        "mimeType": (
-            resource.content_type
-            or parsed["mimeType"]
+        "mimeType": determine_mime_type(
+            filename=resource.name,
+            extension=parsed["extension"],
+            webdav_content_type=resource.content_type,
         ),
         "sizeBytes": resource.content_length,
         "lastModified": resource.last_modified,
         "etag": resource.etag,
+        "parseWarnings": parsed["parseWarnings"],
         "previewUrl": None,
         "originalUrl": None,
     }
@@ -847,14 +1109,8 @@ def build_place_record(
 ) -> dict[str, Any]:
     """Menghasilkan data sebuah tempat dan seluruh medianya."""
 
-    parsed_place = parse_place_folder(
-        place_resource.name
-    )
-
-    place_name = (
-        parsed_place["name"]
-        or place_resource.name
-    )
+    parsed_place = parse_place_folder(place_resource.name)
+    place_name = parsed_place["name"] or place_resource.name
 
     media_records = [
         build_media_record(
@@ -904,24 +1160,15 @@ def build_district_record(
         for resource in client.list_children(
             district_resource.url
         )
-        if (
-            resource.is_collection
-            and not should_ignore(resource)
-        )
+        if resource.is_collection and not should_ignore(resource)
     ]
 
     used_place_slugs: set[str] = set()
     places: list[dict[str, Any]] = []
 
     for place_resource in place_resources:
-        parsed_place = parse_place_folder(
-            place_resource.name
-        )
-
-        place_name = (
-            parsed_place["name"]
-            or place_resource.name
-        )
+        parsed_place = parse_place_folder(place_resource.name)
+        place_name = parsed_place["name"] or place_resource.name
 
         place_slug = create_unique_slug(
             slugify(place_name),
@@ -938,9 +1185,7 @@ def build_district_record(
             )
         )
 
-    places.sort(
-        key=lambda item: item["name"].casefold()
-    )
+    places.sort(key=lambda item: item["name"].casefold())
 
     media_count = sum(
         place["mediaCount"]
@@ -980,10 +1225,7 @@ def build_region_record(
         for resource in client.list_children(
             region_resource.url
         )
-        if (
-            resource.is_collection
-            and not should_ignore(resource)
-        )
+        if resource.is_collection and not should_ignore(resource)
     ]
 
     used_district_slugs: set[str] = set()
@@ -1004,9 +1246,7 @@ def build_region_record(
             )
         )
 
-    districts.sort(
-        key=lambda item: item["name"].casefold()
-    )
+    districts.sort(key=lambda item: item["name"].casefold())
 
     place_count = sum(
         district["placeCount"]
@@ -1034,14 +1274,12 @@ def find_archive_folder(
 ) -> WebDavResource:
     """Mencari folder Arsip Kuliner Surabaya di root Koofr."""
 
-    root_resources = client.list_children(
-        client.root_url
-    )
-
     archive_resource = next(
         (
             resource
-            for resource in root_resources
+            for resource in client.list_children(
+                client.root_url
+            )
             if (
                 resource.is_collection
                 and resource.name == archive_folder_name
@@ -1063,20 +1301,18 @@ def build_catalogue(
     client: KoofrWebDavClient,
     archive_folder_name: str,
 ) -> dict[str, Any]:
-    """Membangun seluruh katalog dari lima wilayah publik."""
+    """Membangun katalog dari lima wilayah publik."""
 
     archive_resource = find_archive_folder(
         client,
         archive_folder_name,
     )
 
-    archive_children = client.list_children(
-        archive_resource.url
-    )
-
     region_resources = {
         resource.name: resource
-        for resource in archive_children
+        for resource in client.list_children(
+            archive_resource.url
+        )
         if (
             resource.is_collection
             and resource.name in ALLOWED_REGIONS
@@ -1086,14 +1322,10 @@ def build_catalogue(
     regions: list[dict[str, Any]] = []
 
     for region_name in ALLOWED_REGIONS:
-        region_resource = region_resources.get(
-            region_name
-        )
+        region_resource = region_resources.get(region_name)
 
         if region_resource is None:
-            regions.append(
-                empty_region_record(region_name)
-            )
+            regions.append(empty_region_record(region_name))
             continue
 
         regions.append(
@@ -1105,6 +1337,7 @@ def build_catalogue(
 
     return {
         "schemaVersion": 1,
+        "parserVersion": 2,
         "mode": "koofr-preview",
         "generatedAt": (
             datetime.now(timezone.utc)
@@ -1141,14 +1374,28 @@ def write_catalogue(
             ensure_ascii=False,
             indent=2,
         )
-
         output_file.write("\n")
 
     temporary_path.replace(output_path)
 
 
+def count_parse_warnings(catalogue: dict[str, Any]) -> int:
+    """Menghitung media yang masih memiliki peringatan parser."""
+
+    count = 0
+
+    for region in catalogue["regions"]:
+        for district in region["districts"]:
+            for place in district["places"]:
+                for media in place["media"]:
+                    if media.get("parseWarnings"):
+                        count += 1
+
+    return count
+
+
 def print_summary(catalogue: dict[str, Any]) -> None:
-    """Mencetak ringkasan aman tanpa nama kecamatan atau tempat."""
+    """Mencetak ringkasan aman tanpa nama tempat atau file."""
 
     print("Koofr catalogue generated successfully.")
 
@@ -1175,11 +1422,17 @@ def print_summary(catalogue: dict[str, Any]) -> None:
         for region in catalogue["regions"]
     )
 
+    warning_count = count_parse_warnings(catalogue)
+
     print(
         "Total public catalogue: "
         f"{total_districts} district(s), "
         f"{total_places} place(s), "
         f"{total_media} media file(s)."
+    )
+
+    print(
+        f"Media with parser warnings: {warning_count}."
     )
 
     print(
@@ -1216,13 +1469,8 @@ def main() -> int:
     arguments = parse_arguments()
 
     try:
-        username = get_required_environment(
-            "KOOFR_USERNAME"
-        )
-
-        password = get_required_environment(
-            "KOOFR_APP_PASSWORD"
-        )
+        username = get_required_environment("KOOFR_USERNAME")
+        password = get_required_environment("KOOFR_APP_PASSWORD")
 
         root_url = os.environ.get(
             "KOOFR_WEBDAV_URL",
@@ -1263,10 +1511,7 @@ def main() -> int:
         )
 
         print_summary(catalogue)
-
-        print(
-            f"Output written to: {output_path}"
-        )
+        print(f"Output written to: {output_path}")
 
         return 0
 
