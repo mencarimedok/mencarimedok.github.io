@@ -1,0 +1,588 @@
+name: Sync Koofr Archive
+run-name: Sync Koofr archive on ${{ github.ref_name }}
+on:
+  push:
+    paths:
+      - .github/workflows/sync-koofr-archive.yml
+      - scripts/build-koofr-catalog.py
+      - scripts/build-koofr-media-previews.py
+      - scripts/generate-archive-pages.py
+  workflow_dispatch:
+  schedule:
+    - cron: "17,47 * * * *"
+permissions:
+  contents: write
+concurrency:
+  group: sync-koofr-archive-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  sync-archive:
+    name: Build, validate, and commit archive
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      KOOFR_USERNAME: ${{ secrets.KOOFR_USERNAME }}
+      KOOFR_APP_PASSWORD: ${{ secrets.KOOFR_APP_PASSWORD }}
+      KOOFR_WEBDAV_URL: https://app.koofr.net/dav/Koofr/
+      KOOFR_ARCHIVE_FOLDER: Arsip Kuliner Surabaya
+      TEMP_CATALOGUE: generated/archive.json
+      PUBLIC_CATALOGUE: assets/data/archive.json
+      MEDIA_OUTPUT_ROOT: assets/archive-media
+      MEDIA_URL_PREFIX: /assets/archive-media
+      PAGE_OUTPUT_ROOT: arsip/wilayah
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate required secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${KOOFR_USERNAME:-}" ]]; then
+            echo "::error::Repository secret KOOFR_USERNAME belum tersedia atau kosong."
+            exit 1
+          fi
+          if [[ -z "${KOOFR_APP_PASSWORD:-}" ]]; then
+            echo "::error::Repository secret KOOFR_APP_PASSWORD belum tersedia atau kosong."
+            exit 1
+          fi
+          echo "Required Koofr secrets are available."
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install image dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install \
+            "Pillow>=11,<13" \
+            "pillow-heif>=1.1,<2"
+          python - <<'PYTHON'
+          from PIL import features
+          from pillow_heif import register_heif_opener
+          register_heif_opener()
+          if not features.check("webp"):
+              raise SystemExit(
+                  "::error::Pillow runner tidak mendukung WebP."
+              )
+          print("Pillow WebP support is available.")
+          print("pillow-heif opener registered successfully.")
+          PYTHON
+      - name: Validate Python scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/build-koofr-catalog.py \
+            scripts/build-koofr-media-previews.py \
+            scripts/generate-archive-pages.py
+          echo "Python syntax validation passed."
+      - name: Build fresh catalogue from Koofr
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf generated
+          mkdir -p generated
+          python scripts/build-koofr-catalog.py \
+            --output "${TEMP_CATALOGUE}"
+      - name: Validate fresh catalogue
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+
+          ALLOWED_REGIONS = [
+              "Surabaya Barat",
+              "Surabaya Pusat",
+              "Surabaya Selatan",
+              "Surabaya Timur",
+              "Surabaya Utara",
+          ]
+
+          path = Path(os.environ["TEMP_CATALOGUE"])
+          if not path.is_file():
+              raise SystemExit(
+                  f"::error::Catalogue tidak ditemukan: {path}"
+              )
+
+          with path.open("r", encoding="utf-8") as input_file:
+              catalogue = json.load(input_file)
+
+          if catalogue.get("schemaVersion") != 1:
+              raise SystemExit(
+                  "::error::schemaVersion harus bernilai 1."
+              )
+
+          if catalogue.get("parserVersion") != 2:
+              raise SystemExit(
+                  "::error::parserVersion harus bernilai 2."
+              )
+
+          regions = catalogue.get("regions")
+          if not isinstance(regions, list):
+              raise SystemExit(
+                  "::error::regions harus berbentuk array."
+              )
+
+          names = [
+              region.get("name")
+              for region in regions
+              if isinstance(region, dict)
+          ]
+          if names != ALLOWED_REGIONS:
+              raise SystemExit(
+                  "::error::Daftar atau urutan wilayah tidak sesuai allowlist."
+              )
+
+          serialized = json.dumps(
+              catalogue,
+              ensure_ascii=False,
+          )
+          if "Folder Karantina" in serialized:
+              raise SystemExit(
+                  "::error::Folder Karantina ditemukan dalam katalog publik."
+              )
+
+          total_districts = 0
+          total_places = 0
+          total_media = 0
+
+          for region in regions:
+              districts = region.get("districts")
+              if not isinstance(districts, list):
+                  raise SystemExit(
+                      f"::error::{region.get('name')}.districts bukan array."
+                  )
+
+              calculated_place_count = 0
+              calculated_media_count = 0
+
+              for district in districts:
+                  places = district.get("places")
+                  if not isinstance(places, list):
+                      raise SystemExit(
+                          f"::error::{district.get('name')}.places bukan array."
+                      )
+
+                  district_media_count = 0
+
+                  for place in places:
+                      media = place.get("media")
+                      if not isinstance(media, list):
+                          raise SystemExit(
+                              f"::error::{place.get('name')}.media bukan array."
+                          )
+
+                      if place.get("mediaCount") != len(media):
+                          raise SystemExit(
+                              f"::error::mediaCount tidak cocok untuk {place.get('name')}."
+                          )
+
+                      district_media_count += len(media)
+
+                  if district.get("placeCount") != len(places):
+                      raise SystemExit(
+                          f"::error::placeCount tidak cocok untuk {district.get('name')}."
+                      )
+
+                  if district.get("mediaCount") != district_media_count:
+                      raise SystemExit(
+                          f"::error::mediaCount tidak cocok untuk {district.get('name')}."
+                      )
+
+                  calculated_place_count += len(places)
+                  calculated_media_count += district_media_count
+
+              if region.get("districtCount") != len(districts):
+                  raise SystemExit(
+                      f"::error::districtCount tidak cocok untuk {region.get('name')}."
+                  )
+
+              if region.get("placeCount") != calculated_place_count:
+                  raise SystemExit(
+                      f"::error::placeCount tidak cocok untuk {region.get('name')}."
+                  )
+
+              if region.get("mediaCount") != calculated_media_count:
+                  raise SystemExit(
+                      f"::error::mediaCount tidak cocok untuk {region.get('name')}."
+                  )
+
+              total_districts += len(districts)
+              total_places += calculated_place_count
+              total_media += calculated_media_count
+
+          print("Fresh catalogue validation passed.")
+          print(
+              "Catalogue totals: "
+              f"{total_districts} district(s), "
+              f"{total_places} place(s), "
+              f"{total_media} media file(s)."
+          )
+          print(f"JSON size: {path.stat().st_size:,} bytes.")
+          PYTHON
+      - name: Detect source or pipeline changes
+        id: sync_changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PYTHON'
+          import copy
+          import json
+          import os
+          from pathlib import Path
+
+          new_path = Path(os.environ["TEMP_CATALOGUE"])
+          old_path = Path(os.environ["PUBLIC_CATALOGUE"])
+          media_root = Path(os.environ["MEDIA_OUTPUT_ROOT"])
+          manifest_path = media_root / "manifest.json"
+
+          with new_path.open("r", encoding="utf-8") as input_file:
+              new_catalogue = json.load(input_file)
+
+          old_catalogue = None
+          if old_path.is_file():
+              with old_path.open("r", encoding="utf-8") as input_file:
+                  old_catalogue = json.load(input_file)
+
+          derived_media_keys = {
+              "thumbnailUrl",
+              "previewUrl",
+              "previewStatus",
+              "sourceWidth",
+              "sourceHeight",
+              "thumbnailWidth",
+              "thumbnailHeight",
+              "previewWidth",
+              "previewHeight",
+              "thumbnailBytes",
+              "previewBytes",
+          }
+
+          preview_warning_names = {
+              "unsupported-preview-format",
+              "preview-generation-failed",
+          }
+
+          def normalize(value):
+              result = copy.deepcopy(value)
+              if not isinstance(result, dict):
+                  return result
+
+              result.pop("generatedAt", None)
+
+              for region in result.get("regions", []):
+                  for district in region.get("districts", []):
+                      for place in district.get("places", []):
+                          for media in place.get("media", []):
+                              for key in derived_media_keys:
+                                  media.pop(key, None)
+
+                              warnings = media.get("parseWarnings")
+                              if isinstance(warnings, list):
+                                  media["parseWarnings"] = [
+                                      warning
+                                      for warning in warnings
+                                      if warning not in preview_warning_names
+                                  ]
+
+              return result
+
+          source_changed = (
+              old_catalogue is None
+              or normalize(old_catalogue)
+              != normalize(new_catalogue)
+          )
+
+          pipeline_missing = (
+              not manifest_path.is_file()
+              or not any(media_root.rglob("*-preview.webp"))
+              or not any(media_root.rglob("*-thumb.webp"))
+          )
+
+          needs_sync = source_changed or pipeline_missing
+
+          output_path = Path(os.environ["GITHUB_OUTPUT"])
+          with output_path.open("a", encoding="utf-8") as output_file:
+              output_file.write(
+                  f"needs_sync={'true' if needs_sync else 'false'}\n"
+              )
+              output_file.write(
+                  f"source_changed={'true' if source_changed else 'false'}\n"
+              )
+              output_file.write(
+                  f"pipeline_missing={'true' if pipeline_missing else 'false'}\n"
+              )
+
+          if source_changed:
+              print("Meaningful Koofr catalogue changes were detected.")
+          else:
+              print("Koofr source catalogue is unchanged.")
+
+          if pipeline_missing:
+              print("Media preview pipeline output is missing and will be built.")
+          else:
+              print("Existing media preview output is available.")
+
+          if not needs_sync:
+              print(
+                  "No synchronization commit is needed. "
+                  "generatedAt-only differences are ignored."
+              )
+          PYTHON
+      - name: Publish fresh catalogue into repository
+        if: steps.sync_changes.outputs.needs_sync == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$(dirname "${PUBLIC_CATALOGUE}")"
+          cp "${TEMP_CATALOGUE}" "${PUBLIC_CATALOGUE}"
+          echo "Published fresh catalogue to ${PUBLIC_CATALOGUE}."
+      - name: Build and reuse WebP media previews
+        if: steps.sync_changes.outputs.needs_sync == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "${MEDIA_OUTPUT_ROOT}"
+          python scripts/build-koofr-media-previews.py \
+            --catalogue "${PUBLIC_CATALOGUE}" \
+            --output-root "${MEDIA_OUTPUT_ROOT}" \
+            --manifest "${MEDIA_OUTPUT_ROOT}/manifest.json" \
+            --url-prefix "${MEDIA_URL_PREFIX}"
+      - name: Validate public catalogue and media
+        if: steps.sync_changes.outputs.needs_sync == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+
+          catalogue_path = Path(os.environ["PUBLIC_CATALOGUE"])
+          media_root = Path(os.environ["MEDIA_OUTPUT_ROOT"])
+
+          with catalogue_path.open(
+              "r",
+              encoding="utf-8",
+          ) as input_file:
+              catalogue = json.load(input_file)
+
+          total = 0
+          ready = 0
+          unavailable = 0
+          unsupported = 0
+
+          serialized = json.dumps(
+              catalogue,
+              ensure_ascii=False,
+          )
+          forbidden_fragments = [
+              os.environ["KOOFR_USERNAME"],
+              os.environ["KOOFR_APP_PASSWORD"],
+              os.environ["KOOFR_WEBDAV_URL"],
+          ]
+          for fragment in forbidden_fragments:
+              if fragment and fragment in serialized:
+                  raise SystemExit(
+                      "::error::Kredensial atau endpoint WebDAV bocor ke katalog publik."
+                  )
+
+          for region in catalogue["regions"]:
+              for district in region["districts"]:
+                  for place in district["places"]:
+                      for media in place["media"]:
+                          total += 1
+                          status = media.get("previewStatus")
+
+                          if status == "ready":
+                              ready += 1
+
+                              for key in (
+                                  "thumbnailUrl",
+                                  "previewUrl",
+                              ):
+                                  url = media.get(key)
+                                  if not isinstance(url, str):
+                                      raise SystemExit(
+                                          f"::error::{key} tidak valid untuk {media.get('id')}."
+                                      )
+
+                                  expected_prefix = (
+                                      os.environ["MEDIA_URL_PREFIX"].rstrip("/")
+                                      + "/"
+                                  )
+                                  if not url.startswith(expected_prefix):
+                                      raise SystemExit(
+                                          f"::error::{key} berada di luar prefix publik."
+                                      )
+
+                                  path = Path(url.lstrip("/"))
+                                  if not path.is_file():
+                                      raise SystemExit(
+                                          f"::error::File media publik hilang: {path}"
+                                      )
+
+                          elif status == "unsupported":
+                              unsupported += 1
+                          else:
+                              unavailable += 1
+
+          if total > 0 and ready == 0:
+              raise SystemExit(
+                  "::error::Tidak ada preview media yang berhasil dibuat."
+              )
+
+          webp_files = list(media_root.rglob("*.webp"))
+          webp_bytes = sum(
+              path.stat().st_size
+              for path in webp_files
+          )
+
+          print(
+              "Public media validation passed: "
+              f"{ready}/{total} ready, "
+              f"{unsupported} unsupported, "
+              f"{unavailable} unavailable."
+          )
+          print(
+              f"Generated WebP files: {len(webp_files)} "
+              f"({webp_bytes:,} bytes)."
+          )
+          PYTHON
+      - name: Generate all archive pages
+        if: steps.sync_changes.outputs.needs_sync == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/generate-archive-pages.py \
+            --catalogue "${PUBLIC_CATALOGUE}" \
+            --output-root "${PAGE_OUTPUT_ROOT}" \
+            --force
+      - name: Validate generated page manifest
+        if: steps.sync_changes.outputs.needs_sync == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+
+          catalogue_path = Path(os.environ["PUBLIC_CATALOGUE"])
+          manifest_path = (
+              Path(os.environ["PAGE_OUTPUT_ROOT"])
+              / "catalogue-pages.json"
+          )
+
+          with catalogue_path.open(
+              "r",
+              encoding="utf-8",
+          ) as input_file:
+              catalogue = json.load(input_file)
+
+          with manifest_path.open(
+              "r",
+              encoding="utf-8",
+          ) as input_file:
+              manifest = json.load(input_file)
+
+          expected_regions = len(catalogue["regions"])
+          expected_districts = sum(
+              len(region["districts"])
+              for region in catalogue["regions"]
+          )
+          expected_places = sum(
+              len(district["places"])
+              for region in catalogue["regions"]
+              for district in region["districts"]
+          )
+
+          expected = {
+              "regionPages": expected_regions,
+              "districtPages": expected_districts,
+              "placePages": expected_places,
+          }
+
+          for key, value in expected.items():
+              if manifest.get(key) != value:
+                  raise SystemExit(
+                      f"::error::{key} seharusnya {value}, "
+                      f"tetapi manifest berisi {manifest.get(key)}."
+                  )
+
+          print("Generated page manifest validation passed.")
+          print(
+              "Generated pages: "
+              f"{expected_regions} region(s), "
+              f"{expected_districts} district(s), "
+              f"{expected_places} place(s)."
+          )
+          PYTHON
+      - name: Set up Ruby
+        if: steps.sync_changes.outputs.needs_sync == 'true'
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Validate Jekyll site
+        if: steps.sync_changes.outputs.needs_sync == 'true'
+        shell: bash
+        env:
+          JEKYLL_ENV: production
+        run: |
+          set -euo pipefail
+          bundle exec jekyll build \
+            --destination "${RUNNER_TEMP}/mencari-medok-site"
+          rm -rf .jekyll-cache
+          echo "Jekyll production build passed."
+      - name: Commit synchronized catalogue, pages, and media
+        if: steps.sync_changes.outputs.needs_sync == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config \
+            user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            "${PUBLIC_CATALOGUE}" \
+            "${MEDIA_OUTPUT_ROOT}" \
+            "${PAGE_OUTPUT_ROOT}"
+          if git diff --cached --quiet; then
+            echo "No repository changes remain to commit."
+            exit 0
+          fi
+          git commit -m "Sync Koofr archive catalogue and media"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          echo "Synchronized archive committed to ${GITHUB_REF_NAME}."
+      - name: Report synchronization result
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Koofr archive synchronization"
+            echo
+            if [[ "${{ steps.sync_changes.outputs.needs_sync }}" == "true" ]]; then
+              echo "Synchronization was required."
+              echo
+              echo "- Source changed: \`${{ steps.sync_changes.outputs.source_changed }}\`"
+              echo "- Media pipeline missing: \`${{ steps.sync_changes.outputs.pipeline_missing }}\`"
+              echo "- Updated catalogue: \`${PUBLIC_CATALOGUE}\`"
+              echo "- Updated media: \`${MEDIA_OUTPUT_ROOT}\`"
+              echo "- Regenerated pages: \`${PAGE_OUTPUT_ROOT}\`"
+              echo "- Target branch: \`${GITHUB_REF_NAME}\`"
+            elif [[ "${{ steps.sync_changes.outputs.needs_sync }}" == "false" ]]; then
+              echo "No meaningful Koofr or media-pipeline changes were found."
+              echo
+              echo "No synchronization commit was created."
+            else
+              echo "The workflow stopped before synchronization comparison completed."
+            fi
+          } >> "${GITHUB_STEP_SUMMARY}"

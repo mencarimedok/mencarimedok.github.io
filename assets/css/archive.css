@@ -1,0 +1,572 @@
+/* =========================================================
+   MENCARI MEDOK — ARSIP KULINER SURABAYA
+
+   Prinsip:
+   - Kuning Mencari Medok
+   - Tanpa gradasi
+   - Sudut kotak
+   - Skala tipografi dan jarak berdasarkan golden ratio
+   - Mobile-first dan aksesibel
+========================================================= */
+
+/* ---------------------------------------------------------
+   1. DESIGN TOKENS
+--------------------------------------------------------- */
+
+.archive-site {
+  /* Warna */
+  --archive-yellow: #f5d44d;
+  --archive-paper: #fffdf5;
+  --archive-ink: #151515;
+  --archive-muted: rgba(21, 21, 21, 0.65);
+  --archive-soft: rgba(21, 21, 21, 0.07);
+  --archive-border: rgba(21, 21, 21, 0.35);
+
+  /*
+    Skala tipografi berbasis rasio ±1.618:
+    12 → 16 → 26 → 42 → 68 → 110
+  */
+  --archive-text-xs: 0.75rem;
+  --archive-text-sm: 1rem;
+  --archive-text-md: 1.625rem;
+  --archive-text-lg: 2.625rem;
+  --archive-text-xl: 4.25rem;
+  --archive-text-xxl: 6.875rem;
+
+  /*
+    Skala ruang:
+    8 → 13 → 21 → 34 → 55 → 89
+  */
+  --archive-space-1: 0.5rem;
+  --archive-space-2: 0.8125rem;
+  --archive-space-3: 1.3125rem;
+  --archive-space-4: 2.125rem;
+  --archive-space-5: 3.4375rem;
+  --archive-space-6: 5.5625rem;
+
+  --archive-max: 89rem;
+  --archive-measure: 55ch;
+}
+
+/* ---------------------------------------------------------
+   2. GLOBAL ARCHIVE SHELL
+--------------------------------------------------------- */
+
+.archive-site {
+  background: var(--archive-yellow);
+}
+
+.archive-main {
+  position: relative;
+  z-index: 1;
+  min-height: 70vh;
+}
+
+.archive-shell {
+  width: min(calc(100% - 2.625rem), var(--archive-max));
+  margin-inline: auto;
+}
+
+.archive-section {
+  padding-block: var(--archive-space-6);
+}
+
+.archive-section + .archive-section {
+  padding-top: 0;
+}
+
+/* ---------------------------------------------------------
+   3. HEADER
+--------------------------------------------------------- */
+
+.archive-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--archive-space-3);
+}
+
+.archive-header__label {
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: right;
+  text-decoration: none;
+}
+
+.archive-header__label:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------------------------------------------------------
+   4. HERO
+--------------------------------------------------------- */
+
+.archive-hero {
+  display: grid;
+
+  /*
+    Pembagian golden ratio:
+    1.618 bagian untuk judul
+    1 bagian untuk informasi pendamping
+  */
+  grid-template-columns:
+    minmax(0, 1.618fr)
+    minmax(16rem, 1fr);
+
+  gap: var(--archive-space-5);
+  align-items: end;
+
+  min-height: min(44rem, 78vh);
+  padding-block:
+    var(--archive-space-5)
+    var(--archive-space-6);
+}
+
+.archive-hero__copy {
+  min-width: 0;
+}
+
+.archive-kicker {
+  margin: 0 0 var(--archive-space-3);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.archive-title {
+  max-width: 11ch;
+  margin: 0;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: clamp(
+    var(--archive-text-xl),
+    7.5vw,
+    var(--archive-text-xxl)
+  );
+
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+
+  text-shadow:
+    0.8px 0 rgba(21, 21, 21, 0.3),
+    -0.4px 0 rgba(21, 21, 21, 0.16);
+}
+
+.archive-title span {
+  display: block;
+}
+
+.archive-hero__aside {
+  padding-left: var(--archive-space-4);
+  border-left: 1px solid var(--archive-border);
+}
+
+.archive-deck {
+  max-width: var(--archive-measure);
+  margin: 0;
+
+  font-size: clamp(
+    var(--archive-text-sm),
+    1.8vw,
+    var(--archive-text-md)
+  );
+
+  line-height: 1.45;
+}
+
+.archive-hero__note {
+  max-width: 34ch;
+  margin:
+    var(--archive-space-4)
+    0
+    0;
+
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   5. SECTION HEADINGS
+--------------------------------------------------------- */
+
+.archive-section__head {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.618fr)
+    minmax(12rem, 1fr);
+
+  gap: var(--archive-space-4);
+  align-items: end;
+
+  margin-bottom: var(--archive-space-5);
+}
+
+.archive-section__title {
+  margin: 0;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: clamp(
+    var(--archive-text-lg),
+    5vw,
+    var(--archive-text-xl)
+  );
+
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.archive-section__description {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--archive-muted);
+}
+
+/* ---------------------------------------------------------
+   6. REGION GRID
+--------------------------------------------------------- */
+
+.archive-regions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--archive-space-3);
+}
+
+.archive-region-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  aspect-ratio: 1.618 / 1;
+  min-height: 15rem;
+  padding: var(--archive-space-4);
+
+  overflow: hidden;
+  border: 1px solid var(--archive-border);
+  border-radius: 0;
+
+  color: var(--archive-ink);
+  background: var(--archive-paper);
+  text-decoration: none;
+
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease;
+}
+
+.archive-region-card:hover {
+  transform: translateY(-3px);
+  background: #ffffff;
+  text-decoration: none;
+}
+
+.archive-region-card:focus-visible {
+  outline: 3px solid var(--archive-ink);
+  outline-offset: 4px;
+}
+
+.archive-region-card__number {
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.12em;
+}
+
+.archive-region-card__body {
+  display: grid;
+  gap: var(--archive-space-2);
+}
+
+.archive-region-card__title {
+  max-width: 12ch;
+  margin: 0;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: clamp(
+    var(--archive-text-md),
+    3.2vw,
+    var(--archive-text-lg)
+  );
+
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+}
+
+.archive-region-card__meta {
+  margin: 0;
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   7. ARCHIVE STATUS
+--------------------------------------------------------- */
+
+.archive-status {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.618fr)
+    minmax(14rem, 1fr);
+
+  gap: var(--archive-space-4);
+  align-items: start;
+
+  padding-block: var(--archive-space-5);
+  border-top: 1px solid var(--archive-border);
+}
+
+.archive-status__title {
+  margin: 0;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-md);
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.archive-status__text {
+  max-width: var(--archive-measure);
+  margin: 0;
+  color: var(--archive-muted);
+}
+
+.archive-updated {
+  margin: 0;
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   8. LOADING AND EMPTY STATES
+--------------------------------------------------------- */
+
+.archive-message {
+  padding: var(--archive-space-4);
+  border: 1px solid var(--archive-border);
+  background: var(--archive-paper);
+}
+
+.archive-message__title {
+  margin: 0 0 var(--archive-space-2);
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-md);
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.archive-message__body {
+  max-width: var(--archive-measure);
+  margin: 0;
+  color: var(--archive-muted);
+}
+
+/* ---------------------------------------------------------
+   9. FOOTER
+--------------------------------------------------------- */
+
+.archive-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------------------------------------------------
+   10. TABLET
+--------------------------------------------------------- */
+
+@media (max-width: 880px) {
+  .archive-hero {
+    grid-template-columns: 1fr;
+    align-items: start;
+    min-height: auto;
+  }
+
+  .archive-hero__aside {
+    max-width: var(--archive-measure);
+    padding:
+      var(--archive-space-4)
+      0
+      0;
+
+    border-top: 1px solid var(--archive-border);
+    border-left: 0;
+  }
+
+  .archive-section__head,
+  .archive-status {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------------------------------
+   11. MOBILE
+--------------------------------------------------------- */
+
+@media (max-width: 620px) {
+  .archive-shell {
+    width: calc(100% - 2rem);
+  }
+
+  .archive-header__inner {
+    align-items: flex-start;
+  }
+
+  .archive-header__label {
+    max-width: 14ch;
+    padding-top: 1.2rem;
+  }
+
+  .archive-hero {
+    gap: var(--archive-space-4);
+    padding-block:
+      var(--archive-space-4)
+      var(--archive-space-5);
+  }
+
+  .archive-title {
+    font-size: clamp(
+      var(--archive-text-lg),
+      14vw,
+      var(--archive-text-xl)
+    );
+
+    line-height: 0.94;
+  }
+
+  .archive-section {
+    padding-block: var(--archive-space-5);
+  }
+
+  .archive-section__head {
+    margin-bottom: var(--archive-space-4);
+  }
+
+  .archive-regions {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-region-card {
+    min-height: 13rem;
+    padding: var(--archive-space-3);
+  }
+}
+
+/* ---------------------------------------------------------
+   12. REDUCED MOTION
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-region-card {
+    transition: none;
+  }
+
+  .archive-region-card:hover {
+    transform: none;
+  }
+}

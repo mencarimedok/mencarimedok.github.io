@@ -1,0 +1,898 @@
+/* =========================================================
+   MENCARI MEDOK — HALAMAN DETAIL TEMPAT ARSIP
+
+   Dipakai untuk:
+   /arsip/wilayah/surabaya-barat/tandes/gunarso/
+   dan halaman tempat lainnya.
+
+   Prinsip:
+   - Kuning Mencari Medok
+   - Tanpa gradasi
+   - Sudut kotak
+   - Skala golden ratio
+   - Galeri dokumentasi responsif
+   - Metadata mudah dibaca
+========================================================= */
+
+/* ---------------------------------------------------------
+   1. PAGE SHELL
+--------------------------------------------------------- */
+
+.archive-place-site .archive-main {
+  min-height: 75vh;
+}
+
+.archive-place-page {
+  padding-bottom: var(--archive-space-6);
+}
+
+/* ---------------------------------------------------------
+   2. BREADCRUMB
+--------------------------------------------------------- */
+
+.archive-place-breadcrumb {
+  padding-top: var(--archive-space-4);
+}
+
+.archive-place-breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--archive-space-1);
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.archive-place-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--archive-space-1);
+}
+
+.archive-place-breadcrumb__item:not(:last-child)::after {
+  content: "/";
+  color: var(--archive-muted);
+}
+
+.archive-place-breadcrumb__link {
+  color: inherit;
+
+  text-decoration: underline;
+  text-decoration-color: rgba(21, 21, 21, 0.3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.archive-place-breadcrumb__link:hover {
+  text-decoration-color: rgba(21, 21, 21, 0.7);
+}
+
+.archive-place-breadcrumb__current {
+  color: var(--archive-muted);
+}
+
+/* ---------------------------------------------------------
+   3. PLACE HERO
+--------------------------------------------------------- */
+
+.archive-place-hero {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.618fr)
+    minmax(17rem, 1fr);
+
+  gap: var(--archive-space-5);
+  align-items: end;
+
+  padding-block:
+    var(--archive-space-5)
+    var(--archive-space-6);
+}
+
+.archive-place-hero__copy {
+  min-width: 0;
+}
+
+.archive-place-kicker {
+  margin:
+    0
+    0
+    var(--archive-space-3);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.archive-place-title {
+  max-width: 13ch;
+  margin: 0;
+
+  overflow-wrap: anywhere;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: clamp(
+    var(--archive-text-xl),
+    7.5vw,
+    var(--archive-text-xxl)
+  );
+
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+
+  text-shadow:
+    0.8px 0 rgba(21, 21, 21, 0.3),
+    -0.4px 0 rgba(21, 21, 21, 0.16);
+}
+
+.archive-place-hero__aside {
+  display: grid;
+  gap: var(--archive-space-4);
+
+  padding-left: var(--archive-space-4);
+  border-left: 1px solid var(--archive-border);
+}
+
+.archive-place-status {
+  justify-self: start;
+
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 2.125rem;
+  padding:
+    var(--archive-space-1)
+    var(--archive-space-2);
+
+  border: 1px solid var(--archive-ink);
+
+  color: var(--archive-ink);
+  background: var(--archive-paper);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.archive-place-address {
+  max-width: 34ch;
+  margin: 0;
+
+  color: var(--archive-muted);
+
+  font-size: var(--archive-text-sm);
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------
+   4. PLACE STATISTICS
+--------------------------------------------------------- */
+
+.archive-place-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  margin: 0;
+  padding: 0;
+
+  border-top: 1px solid var(--archive-border);
+  border-left: 1px solid var(--archive-border);
+
+  list-style: none;
+}
+
+.archive-place-stat {
+  min-width: 0;
+  padding: var(--archive-space-3);
+
+  border-right: 1px solid var(--archive-border);
+  border-bottom: 1px solid var(--archive-border);
+
+  background: var(--archive-paper);
+}
+
+.archive-place-stat__value {
+  display: block;
+
+  margin-bottom: var(--archive-space-1);
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-md);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.archive-place-stat__label {
+  display: block;
+
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   5. GALLERY SECTION
+--------------------------------------------------------- */
+
+.archive-gallery-section {
+  padding-top: var(--archive-space-5);
+}
+
+.archive-gallery-section__head {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.618fr)
+    minmax(14rem, 1fr);
+
+  gap: var(--archive-space-4);
+  align-items: end;
+
+  margin-bottom: var(--archive-space-5);
+}
+
+.archive-gallery-section__title {
+  margin: 0;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: clamp(
+    var(--archive-text-lg),
+    5vw,
+    var(--archive-text-xl)
+  );
+
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.archive-gallery-section__description {
+  max-width: 34ch;
+  margin: 0;
+
+  color: var(--archive-muted);
+}
+
+/* ---------------------------------------------------------
+   6. GALLERY GRID
+--------------------------------------------------------- */
+
+.archive-media-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--archive-space-3);
+}
+
+.archive-media-grid[aria-busy="true"] {
+  opacity: 0.72;
+}
+
+/* ---------------------------------------------------------
+   7. MEDIA CARD
+--------------------------------------------------------- */
+
+.archive-media-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  min-width: 0;
+  overflow: hidden;
+
+  border: 1px solid var(--archive-border);
+  border-radius: 0;
+
+  color: var(--archive-ink);
+  background: var(--archive-paper);
+}
+
+.archive-media-card__visual {
+  position: relative;
+
+  aspect-ratio: 1.618 / 1;
+  overflow: hidden;
+
+  border-bottom: 1px solid var(--archive-border);
+  background: rgba(21, 21, 21, 0.08);
+}
+
+.archive-media-card__image-link {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+.archive-media-card__image-link:focus-visible {
+  outline: 3px solid var(--archive-ink);
+  outline-offset: -5px;
+}
+
+.archive-media-card__image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 180ms ease;
+}
+
+.archive-media-card__image-link:hover
+  .archive-media-card__image {
+  transform: scale(1.015);
+}
+
+.archive-media-card__placeholder {
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  height: 100%;
+  padding: var(--archive-space-3);
+
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.07em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.archive-media-card__format {
+  position: absolute;
+  top: var(--archive-space-2);
+  right: var(--archive-space-2);
+
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 2.125rem;
+  padding:
+    var(--archive-space-1)
+    var(--archive-space-2);
+
+  border: 1px solid var(--archive-ink);
+
+  color: var(--archive-ink);
+  background: var(--archive-yellow);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   8. MEDIA CARD BODY
+--------------------------------------------------------- */
+
+.archive-media-card__body {
+  display: grid;
+  gap: var(--archive-space-4);
+
+  min-width: 0;
+  padding: var(--archive-space-4);
+}
+
+.archive-media-card__header {
+  display: grid;
+  gap: var(--archive-space-2);
+}
+
+.archive-media-card__number {
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.12em;
+}
+
+.archive-media-card__title {
+  max-width: 18ch;
+  margin: 0;
+
+  overflow-wrap: anywhere;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: clamp(
+    var(--archive-text-md),
+    3.15vw,
+    var(--archive-text-lg)
+  );
+
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   9. MEDIA METADATA
+--------------------------------------------------------- */
+
+.archive-media-meta {
+  display: grid;
+  grid-template-columns:
+    minmax(7rem, 1fr)
+    minmax(0, 1.618fr);
+
+  margin: 0;
+  padding: 0;
+
+  border-top: 1px solid var(--archive-border);
+  border-left: 1px solid var(--archive-border);
+}
+
+.archive-media-meta__row {
+  display: contents;
+}
+
+.archive-media-meta__term,
+.archive-media-meta__value {
+  min-width: 0;
+  margin: 0;
+  padding: var(--archive-space-2);
+
+  border-right: 1px solid var(--archive-border);
+  border-bottom: 1px solid var(--archive-border);
+}
+
+.archive-media-meta__term {
+  background: rgba(21, 21, 21, 0.035);
+
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.archive-media-meta__value {
+  overflow-wrap: anywhere;
+
+  color: var(--archive-ink);
+
+  font-size: var(--archive-text-sm);
+  line-height: 1.45;
+}
+
+/* ---------------------------------------------------------
+   10. MEDIA ACTIONS
+--------------------------------------------------------- */
+
+.archive-media-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--archive-space-2);
+}
+
+.archive-media-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--archive-space-1);
+
+  min-height: 3.4375rem;
+  padding:
+    var(--archive-space-2)
+    var(--archive-space-3);
+
+  border: 1px solid var(--archive-ink);
+  border-radius: 0;
+
+  color: var(--archive-ink);
+  background: var(--archive-yellow);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.07em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.archive-media-action:hover {
+  color: var(--archive-paper);
+  background: var(--archive-ink);
+  text-decoration: none;
+}
+
+.archive-media-action:focus-visible {
+  outline: 3px solid var(--archive-ink);
+  outline-offset: 4px;
+}
+
+.archive-media-action--disabled {
+  border-color: var(--archive-border);
+
+  color: var(--archive-muted);
+  background: rgba(21, 21, 21, 0.04);
+
+  cursor: not-allowed;
+}
+
+.archive-media-action--disabled:hover {
+  color: var(--archive-muted);
+  background: rgba(21, 21, 21, 0.04);
+}
+
+/* ---------------------------------------------------------
+   11. ARCHIVE NOTE
+--------------------------------------------------------- */
+
+.archive-place-note {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.618fr)
+    minmax(14rem, 1fr);
+
+  gap: var(--archive-space-4);
+
+  margin-top: var(--archive-space-6);
+  padding-top: var(--archive-space-4);
+
+  border-top: 1px solid var(--archive-border);
+}
+
+.archive-place-note__title {
+  margin: 0;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-md);
+  font-weight: 400;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.archive-place-note__body {
+  max-width: var(--archive-measure);
+  margin: 0;
+
+  color: var(--archive-muted);
+}
+
+/* ---------------------------------------------------------
+   12. EMPTY, LOADING, AND ERROR STATES
+--------------------------------------------------------- */
+
+.archive-place-message {
+  grid-column: 1 / -1;
+
+  padding: var(--archive-space-4);
+
+  border: 1px solid var(--archive-border);
+  background: var(--archive-paper);
+}
+
+.archive-place-message__title {
+  margin:
+    0
+    0
+    var(--archive-space-2);
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-md);
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.archive-place-message__body {
+  max-width: var(--archive-measure);
+  margin: 0;
+
+  color: var(--archive-muted);
+}
+
+.archive-place-message__body
+  + .archive-place-message__body {
+  margin-top: var(--archive-space-2);
+}
+
+/* ---------------------------------------------------------
+   13. RETURN LINK
+--------------------------------------------------------- */
+
+.archive-place-return {
+  padding-top: var(--archive-space-5);
+}
+
+.archive-place-return__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--archive-space-2);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   14. TABLET
+--------------------------------------------------------- */
+
+@media (max-width: 880px) {
+  .archive-place-hero {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .archive-place-hero__aside {
+    max-width: var(--archive-measure);
+
+    padding:
+      var(--archive-space-4)
+      0
+      0;
+
+    border-top: 1px solid var(--archive-border);
+    border-left: 0;
+  }
+
+  .archive-gallery-section__head,
+  .archive-place-note {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------------------------------
+   15. MOBILE
+--------------------------------------------------------- */
+
+@media (max-width: 620px) {
+  .archive-place-page {
+    padding-bottom: var(--archive-space-5);
+  }
+
+  .archive-place-breadcrumb {
+    padding-top: var(--archive-space-3);
+  }
+
+  .archive-place-hero {
+    gap: var(--archive-space-4);
+
+    padding-block:
+      var(--archive-space-4)
+      var(--archive-space-5);
+  }
+
+  .archive-place-title {
+    font-size: clamp(
+      var(--archive-text-lg),
+      14vw,
+      var(--archive-text-xl)
+    );
+
+    line-height: 0.94;
+  }
+
+  .archive-place-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-place-stat {
+    display: grid;
+    grid-template-columns: 1fr 1.618fr;
+    gap: var(--archive-space-3);
+    align-items: baseline;
+  }
+
+  .archive-place-stat__value {
+    margin-bottom: 0;
+  }
+
+  .archive-gallery-section {
+    padding-top: var(--archive-space-4);
+  }
+
+  .archive-gallery-section__head {
+    margin-bottom: var(--archive-space-4);
+  }
+
+  .archive-media-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-media-card__body {
+    padding: var(--archive-space-3);
+  }
+
+  .archive-media-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-media-meta__row {
+    display: grid;
+  }
+
+  .archive-media-meta__term,
+  .archive-media-meta__value {
+    border-right: 1px solid var(--archive-border);
+  }
+
+  .archive-media-meta__term {
+    border-bottom: 0;
+  }
+
+  .archive-media-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .archive-media-action {
+    width: 100%;
+  }
+}
+
+/* ---------------------------------------------------------
+   16. VERY SMALL SCREENS
+--------------------------------------------------------- */
+
+@media (max-width: 360px) {
+  .archive-place-stat {
+    grid-template-columns: 1fr;
+    gap: var(--archive-space-1);
+  }
+
+  .archive-media-card__title {
+    font-size: var(--archive-text-md);
+  }
+}
+
+/* ---------------------------------------------------------
+   17. REDUCED MOTION
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-media-card__image {
+    transition: none;
+  }
+
+  .archive-media-card__image-link:hover
+    .archive-media-card__image {
+    transform: none;
+  }
+}
