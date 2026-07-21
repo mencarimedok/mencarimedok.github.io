@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'id' }}">
+  <head>
+    <meta charset="utf-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <meta
+      name="google-site-verification"
+      content="zLVI4kd6dOoIoMY0ow02fYqk3gRzpQZWYPVkVcFAUrw"
+    />
+
+    {% seo %}
+
+    <link
+      rel="stylesheet"
+      href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ '/assets/css/archive.css' | relative_url }}?v={{ site.time | date: '%s' }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ '/assets/css/archive-region.css' | relative_url }}?v={{ site.time | date: '%s' }}"
+    />
+
+    <script
+      defer
+      src="{{ '/assets/js/archive-region.js' | relative_url }}?v={{ site.time | date: '%s' }}"
+    ></script>
+  </head>
+
+  <body
+    class="archive-site archive-region-site"
+    data-archive-data-url="{{ '/assets/data/archive.json' | relative_url }}"
+    data-region-slug="{{ page.region_slug }}"
+    data-region-name="{{ page.region_name }}"
+  >
+    <header class="site-header archive-header">
+      <div class="wrap archive-header__inner">
+        <a
+          class="brand"
+          href="{{ '/' | relative_url }}"
+          aria-label="Kembali ke halaman utama Mencari Medok"
+        >
+          <span class="brand__title">
+            {{ site.title }}
+          </span>
+        </a>
+
+        <a
+          class="archive-header__label"
+          href="{{ '/arsip/' | relative_url }}"
+          aria-label="Kembali ke beranda Arsip Kuliner Surabaya"
+        >
+          Arsip Kuliner Surabaya
+        </a>
+      </div>
+    </header>
+
+    <main class="archive-main">
+      {{ content }}
+    </main>
+
+    <footer class="site-footer archive-footer">
+      <div class="wrap">
+        <p>
+          © {{ "now" | date: "%Y" }} {{ site.title }} ·
+
+          <a href="{{ '/lisensi/' | relative_url }}">
+            Lisensi (CC BY-NC-ND)
+          </a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
