@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-21T17:07:10.973542Z",
+  "generatedAt": "2026-07-22T12:05:41.658970Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -537,9 +537,9 @@
     {
       "name": "Surabaya Selatan",
       "slug": "surabaya-selatan",
-      "districtCount": 2,
-      "placeCount": 2,
-      "mediaCount": 2,
+      "districtCount": 3,
+      "placeCount": 3,
+      "mediaCount": 3,
       "districts": [
         {
           "name": "Tenggilis Mejoyo",
@@ -584,6 +584,54 @@
                   "previewHeight": 1350,
                   "thumbnailBytes": 70724,
                   "previewBytes": 409674
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Wonocolo",
+          "slug": "wonocolo",
+          "placeCount": 1,
+          "mediaCount": 1,
+          "places": [
+            {
+              "name": "Daeng Dalle",
+              "folderName": "Daeng Dalle (Buka) - Jl. Raya Jemursari No.252 A, Prapen, Kec. Tenggilis Mejoyo, Surabaya, Jawa Timur 60299",
+              "slug": "daeng-dalle",
+              "status": "Buka",
+              "address": "Jl. Raya Jemursari No.252 A, Prapen, Kec. Tenggilis Mejoyo, Surabaya, Jawa Timur 60299",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-76017b4a43d3cdf6",
+                  "filename": "2026-02-04 21.12.39 - Daeng Dalle - Es Pisang Ijo - Rp22.000 - (@bastronomika).JPG",
+                  "relativePath": "2026-02-04 21.12.39 - Daeng Dalle - Es Pisang Ijo - Rp22.000 - (@bastronomika).JPG",
+                  "date": "2026-02-04",
+                  "time": "21:12:39",
+                  "dish": "Es Pisang Ijo",
+                  "price": "Rp22.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 4195285,
+                  "lastModified": "2026-07-22T11:31:09Z",
+                  "etag": "\"18c4994401b4a1c04003d5\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/76/media-76017b4a43d3cdf6-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/76/media-76017b4a43d3cdf6-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 61032,
+                  "previewBytes": 431214
                 }
               ]
             }
