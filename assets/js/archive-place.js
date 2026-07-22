@@ -109,6 +109,36 @@
   }
 
   /**
+   * Mengambil nama atribusi foto.
+   *
+   * @param {object} media
+   * @returns {string|null}
+   */
+  function getMediaCredit(media) {
+    const credit = String(
+      media && media.credit
+        ? media.credit
+        : ""
+    ).trim();
+
+    return credit || null;
+  }
+
+  /**
+   * Membentuk teks atribusi yang selalu tersedia.
+   *
+   * @param {object} media
+   * @returns {string}
+   */
+  function getMediaAttribution(media) {
+    const credit = getMediaCredit(media);
+
+    return credit
+      ? `Foto: ${credit}`
+      : "Atribusi belum tercatat";
+  }
+
+  /**
    * Mengambil daftar media valid.
    *
    * @param {unknown} place
@@ -547,6 +577,253 @@
   }
 
   /**
+   * Membuat dialog penampil foto besar.
+   *
+   * Dialog dibuat satu kali dan dipakai ulang untuk
+   * seluruh dokumentasi pada halaman.
+   *
+   * @returns {HTMLDialogElement}
+   */
+  function getMediaViewer() {
+    const existing = document.getElementById(
+      "archive-media-viewer"
+    );
+
+    if (existing) {
+      return existing;
+    }
+
+    const dialog = document.createElement(
+      "dialog"
+    );
+
+    dialog.id = "archive-media-viewer";
+    dialog.className = "archive-media-viewer";
+
+    dialog.setAttribute(
+      "aria-labelledby",
+      "archive-media-viewer-title"
+    );
+
+    const panel = document.createElement("div");
+    panel.className = "archive-media-viewer__panel";
+
+    const closeButton =
+      document.createElement("button");
+
+    closeButton.className =
+      "archive-media-viewer__close";
+
+    closeButton.type = "button";
+    closeButton.textContent = "Tutup";
+
+    closeButton.setAttribute(
+      "aria-label",
+      "Tutup tampilan foto besar"
+    );
+
+    const figure = document.createElement(
+      "figure"
+    );
+
+    figure.className =
+      "archive-media-viewer__figure";
+
+    const image = document.createElement("img");
+
+    image.className =
+      "archive-media-viewer__image";
+
+    image.dataset.viewerImage = "";
+
+    const caption =
+      document.createElement("figcaption");
+
+    caption.className =
+      "archive-media-viewer__caption";
+
+    const title = document.createElement("h2");
+
+    title.id = "archive-media-viewer-title";
+    title.className =
+      "archive-media-viewer__title";
+
+    title.dataset.viewerTitle = "";
+
+    const attribution =
+      document.createElement("p");
+
+    attribution.className =
+      "archive-media-viewer__credit";
+
+    attribution.dataset.viewerCredit = "";
+
+    const details = document.createElement("p");
+
+    details.className =
+      "archive-media-viewer__details";
+
+    details.dataset.viewerDetails = "";
+
+    const originalLink =
+      document.createElement("a");
+
+    originalLink.className =
+      "archive-media-viewer__original";
+
+    originalLink.target = "_blank";
+    originalLink.rel = "noopener noreferrer";
+    originalLink.textContent = "Buka file asli";
+
+    originalLink.dataset.viewerOriginal = "";
+
+    caption.append(
+      title,
+      attribution,
+      details,
+      originalLink
+    );
+
+    figure.append(image, caption);
+    panel.append(closeButton, figure);
+    dialog.appendChild(panel);
+
+    closeButton.addEventListener(
+      "click",
+      () => {
+        dialog.close();
+      }
+    );
+
+    dialog.addEventListener(
+      "click",
+      (event) => {
+        if (event.target === dialog) {
+          dialog.close();
+        }
+      }
+    );
+
+    dialog.addEventListener(
+      "close",
+      () => {
+        image.removeAttribute("src");
+        image.alt = "";
+      }
+    );
+
+    document.body.appendChild(dialog);
+
+    return dialog;
+  }
+
+  /**
+   * Membuka foto besar dengan judul dan atribusi.
+   *
+   * @param {object} media
+   * @param {string} placeName
+   * @returns {boolean}
+   */
+  function openMediaViewer(media, placeName) {
+    const source =
+      getSafeUrl(media.previewUrl) ||
+      getSafeUrl(media.originalUrl);
+
+    if (!source) {
+      return false;
+    }
+
+    const dialog = getMediaViewer();
+
+    if (
+      !dialog ||
+      typeof dialog.showModal !== "function"
+    ) {
+      return false;
+    }
+
+    const image = dialog.querySelector(
+      "[data-viewer-image]"
+    );
+
+    const title = dialog.querySelector(
+      "[data-viewer-title]"
+    );
+
+    const credit = dialog.querySelector(
+      "[data-viewer-credit]"
+    );
+
+    const details = dialog.querySelector(
+      "[data-viewer-details]"
+    );
+
+    const originalLink = dialog.querySelector(
+      "[data-viewer-original]"
+    );
+
+    if (
+      !image ||
+      !title ||
+      !credit ||
+      !details ||
+      !originalLink
+    ) {
+      return false;
+    }
+
+    const mediaTitle = getMediaTitle(media);
+    const date = formatArchiveDate(media.date);
+    const time = formatArchiveTime(media.time);
+
+    const detailParts = [
+      placeName,
+      date
+    ];
+
+    if (time !== "Tidak tercatat") {
+      detailParts.push(time);
+    }
+
+    image.src = source;
+    image.alt = media.dish
+      ? `${media.dish} di ${placeName}`
+      : `Dokumentasi ${placeName}`;
+
+    title.textContent = mediaTitle;
+    credit.textContent =
+      getMediaAttribution(media);
+
+    credit.dataset.attributionState =
+      getMediaCredit(media)
+        ? "recorded"
+        : "missing";
+
+    details.textContent =
+      detailParts.join(" · ");
+
+    const originalUrl = getSafeUrl(
+      media.originalUrl
+    );
+
+    if (originalUrl) {
+      originalLink.href = originalUrl;
+      originalLink.hidden = false;
+    } else {
+      originalLink.removeAttribute("href");
+      originalLink.hidden = true;
+    }
+
+    if (dialog.open) {
+      dialog.close();
+    }
+
+    dialog.showModal();
+
+    return true;
+  }
+
+  /**
    * Membuat area visual media.
    *
    * @param {object} media
@@ -607,8 +884,22 @@
       link.setAttribute(
         "aria-label",
         media.dish
-          ? `Buka dokumentasi ${media.dish}`
-          : `Buka dokumentasi ${placeName}`
+          ? `Lihat foto besar ${media.dish}`
+          : `Lihat foto besar dokumentasi ${placeName}`
+      );
+
+      link.addEventListener(
+        "click",
+        (event) => {
+          if (
+            openMediaViewer(
+              media,
+              placeName
+            )
+          ) {
+            event.preventDefault();
+          }
+        }
       );
 
       link.appendChild(image);
@@ -668,6 +959,30 @@
   }
 
   /**
+   * Membuat baris atribusi yang terlihat pada setiap kartu.
+   *
+   * @param {object} media
+   * @returns {HTMLParagraphElement}
+   */
+  function createMediaAttribution(media) {
+    const attribution =
+      document.createElement("p");
+
+    attribution.className =
+      "archive-media-card__credit";
+
+    attribution.textContent =
+      getMediaAttribution(media);
+
+    attribution.dataset.attributionState =
+      getMediaCredit(media)
+        ? "recorded"
+        : "missing";
+
+    return attribution;
+  }
+
+  /**
    * Membuat daftar metadata media.
    *
    * @param {object} media
@@ -722,9 +1037,13 @@
    * Membuat tombol akses media.
    *
    * @param {object} media
+   * @param {string} placeName
    * @returns {HTMLDivElement}
    */
-  function createMediaActions(media) {
+  function createMediaActions(
+    media,
+    placeName
+  ) {
     const actions =
       document.createElement("div");
 
@@ -738,6 +1057,40 @@
     const previewUrl = getSafeUrl(
       media.previewUrl
     );
+
+    if (previewUrl) {
+      const viewerLink =
+        document.createElement("a");
+
+      viewerLink.className =
+        "archive-media-action";
+
+      viewerLink.href =
+        originalUrl || previewUrl;
+
+      viewerLink.target = "_blank";
+      viewerLink.rel =
+        "noopener noreferrer";
+
+      viewerLink.textContent =
+        "Lihat foto besar";
+
+      viewerLink.addEventListener(
+        "click",
+        (event) => {
+          if (
+            openMediaViewer(
+              media,
+              placeName
+            )
+          ) {
+            event.preventDefault();
+          }
+        }
+      );
+
+      actions.appendChild(viewerLink);
+    }
 
     if (originalUrl) {
       const originalLink =
@@ -771,27 +1124,6 @@
         "File asli belum terhubung";
 
       actions.appendChild(disabledOriginal);
-    }
-
-    if (
-      previewUrl &&
-      previewUrl !== originalUrl
-    ) {
-      const previewLink =
-        document.createElement("a");
-
-      previewLink.className =
-        "archive-media-action";
-
-      previewLink.href = previewUrl;
-      previewLink.target = "_blank";
-      previewLink.rel =
-        "noopener noreferrer";
-
-      previewLink.textContent =
-        "Buka pratinjau";
-
-      actions.appendChild(previewLink);
     }
 
     return actions;
@@ -888,8 +1220,12 @@
 
     body.append(
       header,
+      createMediaAttribution(media),
       createMediaMetadata(media),
-      createMediaActions(media)
+      createMediaActions(
+        media,
+        placeName
+      )
     );
 
     card.appendChild(body);

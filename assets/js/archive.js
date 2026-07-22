@@ -10,6 +10,9 @@
 
   const REGION_CARD_SELECTOR = "[data-region-slug]";
   const REGION_META_SELECTOR = "[data-region-meta]";
+  const COUNTER_CONTAINER_ID = "archive-counters";
+  const DESTINATION_COUNT_ID = "archive-destination-count";
+  const PHOTO_COUNT_ID = "archive-photo-count";
 
   /**
    * Mengubah nilai apa pun menjadi bilangan bulat aman.
@@ -71,6 +74,75 @@
       `${formatNumber(placeCount)} tempat`,
       `${formatNumber(mediaCount)} dokumentasi`
     ].join(" · ");
+  }
+
+  /**
+   * Menjumlahkan nilai katalog dari seluruh wilayah.
+   *
+   * @param {Array<object>} regions
+   * @param {"placeCount"|"mediaCount"} key
+   * @returns {number}
+   */
+  function sumRegionCount(regions, key) {
+    return regions.reduce(
+      (total, region) => {
+        if (!region || typeof region !== "object") {
+          return total;
+        }
+
+        return total + toSafeInteger(region[key]);
+      },
+      0
+    );
+  }
+
+  /**
+   * Memperbarui counter destinasi dan foto pada hero.
+   *
+   * @param {Array<object>} regions
+   */
+  function updateArchiveCounters(regions) {
+    const container = document.getElementById(
+      COUNTER_CONTAINER_ID
+    );
+
+    const destinationElement =
+      document.getElementById(
+        DESTINATION_COUNT_ID
+      );
+
+    const photoElement =
+      document.getElementById(
+        PHOTO_COUNT_ID
+      );
+
+    const destinationCount = sumRegionCount(
+      regions,
+      "placeCount"
+    );
+
+    const photoCount = sumRegionCount(
+      regions,
+      "mediaCount"
+    );
+
+    if (destinationElement) {
+      destinationElement.textContent =
+        formatNumber(destinationCount);
+    }
+
+    if (photoElement) {
+      photoElement.textContent =
+        formatNumber(photoCount);
+    }
+
+    if (container) {
+      container.dataset.archiveState = "ready";
+      container.setAttribute(
+        "aria-busy",
+        "false"
+      );
+    }
   }
 
   /**
@@ -263,6 +335,39 @@
       card.dataset.archiveState = "error";
     });
 
+    const counterContainer =
+      document.getElementById(
+        COUNTER_CONTAINER_ID
+      );
+
+    const destinationElement =
+      document.getElementById(
+        DESTINATION_COUNT_ID
+      );
+
+    const photoElement =
+      document.getElementById(
+        PHOTO_COUNT_ID
+      );
+
+    if (destinationElement) {
+      destinationElement.textContent = "—";
+    }
+
+    if (photoElement) {
+      photoElement.textContent = "—";
+    }
+
+    if (counterContainer) {
+      counterContainer.dataset.archiveState =
+        "error";
+
+      counterContainer.setAttribute(
+        "aria-busy",
+        "false"
+      );
+    }
+
     const timeElement = document.getElementById(
       "archive-updated"
     );
@@ -351,6 +456,7 @@
       }
 
       updateRegionCards(catalogue.regions);
+      updateArchiveCounters(catalogue.regions);
       updateGeneratedTime(catalogue);
     } catch (error) {
       console.error(

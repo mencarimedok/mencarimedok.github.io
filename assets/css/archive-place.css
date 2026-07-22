@@ -636,7 +636,268 @@
 }
 
 /* ---------------------------------------------------------
-   11. ARCHIVE NOTE
+   11. PHOTO ATTRIBUTION
+--------------------------------------------------------- */
+
+.archive-media-card__credit {
+  margin: calc(var(--archive-space-4) * -0.45) 0 0;
+  padding-left: var(--archive-space-3);
+
+  border-left: 3px solid var(--archive-yellow);
+
+  color: var(--archive-ink);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.archive-media-card__credit[
+  data-attribution-state="missing"
+] {
+  color: var(--archive-muted);
+  border-left-color: var(--archive-border);
+}
+
+/* ---------------------------------------------------------
+   12. LARGE PHOTO VIEWER
+--------------------------------------------------------- */
+
+.archive-media-viewer {
+  width: min(calc(100% - 2rem), 78rem);
+  max-width: none;
+  max-height: calc(100vh - 2rem);
+
+  margin: auto;
+  padding: 0;
+
+  overflow: hidden;
+
+  border: 1px solid var(--archive-ink);
+  border-radius: 0;
+
+  color: var(--archive-ink);
+  background: var(--archive-paper);
+}
+
+.archive-media-viewer::backdrop {
+  background: rgba(21, 21, 21, 0.88);
+}
+
+.archive-media-viewer__panel {
+  position: relative;
+
+  max-height: calc(100vh - 2rem);
+
+  overflow: auto;
+}
+
+.archive-media-viewer__close {
+  position: absolute;
+  z-index: 2;
+  top: var(--archive-space-2);
+  right: var(--archive-space-2);
+
+  min-height: 2.625rem;
+  padding:
+    var(--archive-space-1)
+    var(--archive-space-3);
+
+  border: 1px solid var(--archive-ink);
+  border-radius: 0;
+
+  color: var(--archive-ink);
+  background: var(--archive-yellow);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.archive-media-viewer__close:hover {
+  color: var(--archive-paper);
+  background: var(--archive-ink);
+}
+
+.archive-media-viewer__close:focus-visible {
+  outline: 3px solid var(--archive-yellow);
+  outline-offset: 3px;
+}
+
+.archive-media-viewer__figure {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.618fr)
+    minmax(17rem, 1fr);
+
+  min-height: 28rem;
+  margin: 0;
+}
+
+.archive-media-viewer__image {
+  width: 100%;
+  height: 100%;
+  max-height: calc(100vh - 2rem);
+
+  object-fit: contain;
+
+  background: var(--archive-ink);
+}
+
+.archive-media-viewer__caption {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--archive-space-3);
+
+  min-width: 0;
+  padding:
+    calc(var(--archive-space-5) + var(--archive-space-2))
+    var(--archive-space-4)
+    var(--archive-space-4);
+}
+
+.archive-media-viewer__title {
+  margin: 0;
+
+  overflow-wrap: anywhere;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: clamp(
+    var(--archive-text-md),
+    3vw,
+    var(--archive-text-lg)
+  );
+
+  font-weight: 400;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+
+.archive-media-viewer__credit {
+  margin: 0;
+  padding:
+    var(--archive-space-2)
+    var(--archive-space-3);
+
+  border: 1px solid var(--archive-ink);
+
+  color: var(--archive-ink);
+  background: var(--archive-yellow);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.archive-media-viewer__credit[
+  data-attribution-state="missing"
+] {
+  border-color: var(--archive-border);
+  color: var(--archive-muted);
+  background: rgba(21, 21, 21, 0.04);
+}
+
+.archive-media-viewer__details {
+  margin: 0;
+
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.archive-media-viewer__original {
+  align-self: flex-start;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 3.4375rem;
+  padding:
+    var(--archive-space-2)
+    var(--archive-space-3);
+
+  border: 1px solid var(--archive-ink);
+
+  color: var(--archive-ink);
+  background: var(--archive-paper);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.07em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.archive-media-viewer__original:hover {
+  color: var(--archive-paper);
+  background: var(--archive-ink);
+  text-decoration: none;
+}
+
+.archive-media-viewer__original:focus-visible {
+  outline: 3px solid var(--archive-ink);
+  outline-offset: 4px;
+}
+
+/* ---------------------------------------------------------
+   13. ARCHIVE NOTE
 --------------------------------------------------------- */
 
 .archive-place-note {
@@ -755,6 +1016,14 @@
 --------------------------------------------------------- */
 
 @media (max-width: 880px) {
+  .archive-media-viewer__figure {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-media-viewer__image {
+    max-height: 68vh;
+  }
+
   .archive-place-hero {
     grid-template-columns: 1fr;
     align-items: start;
@@ -783,6 +1052,30 @@
 --------------------------------------------------------- */
 
 @media (max-width: 620px) {
+  .archive-media-viewer {
+    width: calc(100% - 1rem);
+    max-height: calc(100vh - 1rem);
+  }
+
+  .archive-media-viewer__panel {
+    max-height: calc(100vh - 1rem);
+  }
+
+  .archive-media-viewer__image {
+    max-height: 58vh;
+  }
+
+  .archive-media-viewer__caption {
+    padding:
+      calc(var(--archive-space-5) + var(--archive-space-2))
+      var(--archive-space-3)
+      var(--archive-space-3);
+  }
+
+  .archive-media-viewer__original {
+    width: 100%;
+  }
+
   .archive-place-page {
     padding-bottom: var(--archive-space-5);
   }
