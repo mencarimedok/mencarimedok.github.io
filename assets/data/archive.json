@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-22T14:26:08.572806Z",
+  "generatedAt": "2026-07-22T18:49:03.685527Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -113,14 +113,14 @@
       "name": "Surabaya Pusat",
       "slug": "surabaya-pusat",
       "districtCount": 2,
-      "placeCount": 8,
-      "mediaCount": 12,
+      "placeCount": 9,
+      "mediaCount": 13,
       "districts": [
         {
           "name": "Genteng",
           "slug": "genteng",
-          "placeCount": 2,
-          "mediaCount": 2,
+          "placeCount": 3,
+          "mediaCount": 3,
           "places": [
             {
               "name": "Bakso Chukul",
@@ -159,6 +159,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 21294,
                   "previewBytes": 105020
+                }
+              ]
+            },
+            {
+              "name": "Depot Sederhana Gubeng Pojok",
+              "folderName": "Depot Sederhana Gubeng Pojok (Buka) - Jalan Stasiun Gubeng No. 1A",
+              "slug": "depot-sederhana-gubeng-pojok",
+              "status": "Buka",
+              "address": "Jalan Stasiun Gubeng No. 1A",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-5bcb3a77ecf2048f",
+                  "filename": "2026-07-21 19.54.30 - Depot Sederhana Gubeng Pojok - Penyet Lele - Rp18.000 - (@bastronomika).JPEG",
+                  "relativePath": "2026-07-21 19.54.30 - Depot Sederhana Gubeng Pojok - Penyet Lele - Rp18.000 - (@bastronomika).JPEG",
+                  "date": "2026-07-21",
+                  "time": "19:54:30",
+                  "dish": "Penyet Lele",
+                  "price": "Rp18.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 3874365,
+                  "lastModified": "2026-07-22T17:53:01Z",
+                  "etag": "\"18c4ae1a75d783c03b1e3d\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/5b/media-5bcb3a77ecf2048f-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/5b/media-5bcb3a77ecf2048f-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 50416,
+                  "previewBytes": 263362
                 }
               ]
             },
