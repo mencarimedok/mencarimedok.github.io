@@ -10,6 +10,8 @@
 
   const REGION_CARD_SELECTOR = "[data-region-slug]";
   const REGION_META_SELECTOR = "[data-region-meta]";
+  const REGION_IMAGE_SELECTOR = "[data-region-image]";
+  const REGION_CREDIT_SELECTOR = "[data-region-credit]";
   const COUNTER_CONTAINER_ID = "archive-counters";
   const DESTINATION_COUNT_ID = "archive-destination-count";
   const PHOTO_COUNT_ID = "archive-photo-count";
@@ -161,6 +163,171 @@
   }
 
   /**
+   * Mengumpulkan foto yang siap ditampilkan dari seluruh tempat
+   * dalam satu wilayah. Preview berukuran besar diprioritaskan
+   * agar kartu tetap tajam pada layar desktop.
+   *
+   * @param {object} region
+   * @returns {Array<{url: string, credit: string|null}>}
+   */
+  function collectRegionMedia(region) {
+    const candidates = [];
+    const districts = Array.isArray(region?.districts)
+      ? region.districts
+      : [];
+
+    districts.forEach((district) => {
+      const places = Array.isArray(district?.places)
+        ? district.places
+        : [];
+
+      places.forEach((place) => {
+        const mediaItems = Array.isArray(place?.media)
+          ? place.media
+          : [];
+
+        mediaItems.forEach((media) => {
+          if (!media || typeof media !== "object") {
+            return;
+          }
+
+          if (
+            media.previewStatus &&
+            media.previewStatus !== "ready"
+          ) {
+            return;
+          }
+
+          const previewUrl =
+            typeof media.previewUrl === "string"
+              ? media.previewUrl.trim()
+              : "";
+
+          const thumbnailUrl =
+            typeof media.thumbnailUrl === "string"
+              ? media.thumbnailUrl.trim()
+              : "";
+
+          const url = previewUrl || thumbnailUrl;
+
+          if (!url) {
+            return;
+          }
+
+          const credit =
+            typeof media.credit === "string" &&
+            media.credit.trim()
+              ? media.credit.trim()
+              : null;
+
+          candidates.push({
+            url,
+            credit
+          });
+        });
+      });
+    });
+
+    return candidates;
+  }
+
+  /**
+   * Memilih satu item secara acak. Pemilihan dilakukan ulang
+   * setiap katalog dimuat, sehingga reload halaman dapat
+   * menghasilkan sampul wilayah yang berbeda.
+   *
+   * @template T
+   * @param {Array<T>} items
+   * @returns {T|null}
+   */
+  function chooseRandomItem(items) {
+    if (!Array.isArray(items) || items.length === 0) {
+      return null;
+    }
+
+    const index = Math.floor(
+      Math.random() * items.length
+    );
+
+    return items[index] ?? null;
+  }
+
+  /**
+   * Menghapus sampul acak lama dari sebuah kartu.
+   *
+   * @param {Element} card
+   */
+  function clearRegionThumbnail(card) {
+    card.querySelector(
+      REGION_IMAGE_SELECTOR
+    )?.remove();
+
+    card.querySelector(
+      REGION_CREDIT_SELECTOR
+    )?.remove();
+
+    delete card.dataset.hasThumbnail;
+  }
+
+  /**
+   * Menampilkan satu foto acak dari wilayah terkait sebagai
+   * sampul kartu. Foto bersifat dekoratif; kredit tetap
+   * ditampilkan sebagai teks yang dapat dibaca.
+   *
+   * @param {Element} card
+   * @param {object} region
+   */
+  function applyRandomRegionThumbnail(card, region) {
+    clearRegionThumbnail(card);
+
+    const candidate = chooseRandomItem(
+      collectRegionMedia(region)
+    );
+
+    if (!candidate) {
+      return;
+    }
+
+    const image = document.createElement("img");
+    image.className =
+      "archive-region-card__image";
+    image.dataset.regionImage = "";
+    image.alt = "";
+    image.loading = "lazy";
+    image.decoding = "async";
+    image.setAttribute("aria-hidden", "true");
+
+    const credit = document.createElement("span");
+    credit.className =
+      "archive-region-card__credit";
+    credit.dataset.regionCredit = "";
+    credit.textContent = candidate.credit
+      ? `Foto: ${candidate.credit}`
+      : "Atribusi belum tercatat";
+
+    image.addEventListener(
+      "load",
+      () => {
+        card.dataset.hasThumbnail = "true";
+      },
+      { once: true }
+    );
+
+    image.addEventListener(
+      "error",
+      () => {
+        clearRegionThumbnail(card);
+      },
+      { once: true }
+    );
+
+    image.src = candidate.url;
+
+    card.prepend(image);
+    card.append(credit);
+  }
+
+  /**
    * Memperbarui seluruh kartu wilayah di landing page.
    *
    * @param {Array<object>} regions
@@ -190,6 +357,7 @@
           "Data wilayah belum tersedia";
 
         card.dataset.archiveState = "missing";
+        clearRegionThumbnail(card);
 
         return;
       }
@@ -220,6 +388,8 @@
 
       card.dataset.archiveState =
         mediaCount > 0 ? "available" : "empty";
+
+      applyRandomRegionThumbnail(card, region);
     });
   }
 
@@ -333,6 +503,7 @@
       }
 
       card.dataset.archiveState = "error";
+      clearRegionThumbnail(card);
     });
 
     const counterContainer =
