@@ -228,7 +228,111 @@
 }
 
 /* ---------------------------------------------------------
-   5. SECTION HEADINGS
+   5. LIVE ARCHIVE COUNTERS
+--------------------------------------------------------- */
+
+.archive-counters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  margin:
+    var(--archive-space-4)
+    0
+    0;
+  padding: 0;
+
+  border-top: 1px solid var(--archive-border);
+  border-left: 1px solid var(--archive-border);
+}
+
+.archive-counter {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  padding: var(--archive-space-3);
+
+  border-right: 1px solid var(--archive-border);
+  border-bottom: 1px solid var(--archive-border);
+}
+
+.archive-counter__label {
+  order: 2;
+
+  margin: 0;
+
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.archive-counter__value {
+  order: 1;
+
+  margin:
+    0
+    0
+    var(--archive-space-1);
+
+  overflow-wrap: anywhere;
+
+  font-family:
+    "Special Elite",
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: clamp(
+    var(--archive-text-lg),
+    5vw,
+    var(--archive-text-xl)
+  );
+
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.archive-counter-note {
+  margin:
+    var(--archive-space-2)
+    0
+    0;
+
+  color: var(--archive-muted);
+
+  font-family:
+    "Courier Prime",
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: var(--archive-text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.archive-counters[data-archive-state="error"] {
+  opacity: 0.7;
+}
+
+/* ---------------------------------------------------------
+   6. SECTION HEADINGS
 --------------------------------------------------------- */
 
 .archive-section__head {
@@ -560,6 +664,12 @@
 /* ---------------------------------------------------------
    12. REDUCED MOTION
 --------------------------------------------------------- */
+
+@media (max-width: 360px) {
+  .archive-counters {
+    grid-template-columns: 1fr;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .archive-region-card {

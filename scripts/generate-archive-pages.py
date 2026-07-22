@@ -492,8 +492,8 @@ def build_place_page(
       <div class=\"archive-gallery-section__head\">
         <h2 class=\"archive-gallery-section__title\" id=\"archive-gallery-title\">Dokumentasi</h2>
         <p class=\"archive-gallery-section__description\">
-          Foto dan berkas ditampilkan bersama informasi sajian, harga, tanggal, waktu,
-          dan format arsip yang terbaca dari nama file.
+          Foto dan berkas ditampilkan bersama atribusi, informasi sajian, harga,
+          tanggal, waktu, dan format arsip yang terbaca dari nama file.
         </p>
       </div>
 
