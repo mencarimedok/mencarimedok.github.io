@@ -28,7 +28,9 @@ layout: default
     {% endif %}
   </header>
 
-  <div class="prose">
-    {{ content }}
-  </div>
+  <div
+  class="post-content{% if page.justify == true %} post-content--justified{% endif %}"
+>
+  {{ content }}
+</div>
 </article>
