@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-22T18:49:03.685527Z",
+  "generatedAt": "2026-07-23T09:49:23.153075Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -113,14 +113,14 @@
       "name": "Surabaya Pusat",
       "slug": "surabaya-pusat",
       "districtCount": 2,
-      "placeCount": 9,
-      "mediaCount": 13,
+      "placeCount": 12,
+      "mediaCount": 17,
       "districts": [
         {
           "name": "Genteng",
           "slug": "genteng",
-          "placeCount": 3,
-          "mediaCount": 3,
+          "placeCount": 4,
+          "mediaCount": 4,
           "places": [
             {
               "name": "Bakso Chukul",
@@ -241,14 +241,54 @@
                   "previewBytes": 281360
                 }
               ]
+            },
+            {
+              "name": "Lobby Lounge di Hotel Bumi Surabaya",
+              "folderName": "Lobby Lounge di Hotel Bumi Surabaya (Buka) - Jl. Jend. Basuki Rakhmat 106 - 128",
+              "slug": "lobby-lounge-di-hotel-bumi-surabaya",
+              "status": "Buka",
+              "address": "Jl. Jend. Basuki Rakhmat 106 - 128",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-883357e467e997a6",
+                  "filename": "2021-08-14 12.59.47 - Lobby Lounge di Hotel Bumi Surabaya - Iced Tea something with earl grey - Lupa harga - (@bastronomika).JPEG",
+                  "relativePath": "2021-08-14 12.59.47 - Lobby Lounge di Hotel Bumi Surabaya - Iced Tea something with earl grey - Lupa harga - (@bastronomika).JPEG",
+                  "date": "2021-08-14",
+                  "time": "12:59:47",
+                  "dish": "Iced Tea something with earl grey",
+                  "price": null,
+                  "credit": "@bastronomika",
+                  "notes": "Lupa harga",
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 1301707,
+                  "lastModified": "2026-07-23T08:47:57Z",
+                  "etag": "\"18c4def0b690818013dccb\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/88/media-883357e467e997a6-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/88/media-883357e467e997a6-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 2268,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 405,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1012,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 34316,
+                  "previewBytes": 191134
+                }
+              ]
             }
           ]
         },
         {
           "name": "Tegalsari",
           "slug": "tegalsari",
-          "placeCount": 6,
-          "mediaCount": 10,
+          "placeCount": 8,
+          "mediaCount": 13,
           "places": [
             {
               "name": "Blackbarn",
@@ -287,6 +327,76 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 36410,
                   "previewBytes": 284950
+                }
+              ]
+            },
+            {
+              "name": "Coffee at Louis",
+              "folderName": "Coffee at Louis (Buka) - Jl. Trunojoyo No.69",
+              "slug": "coffee-at-louis",
+              "status": "Buka",
+              "address": "Jl. Trunojoyo No.69",
+              "mediaCount": 2,
+              "media": [
+                {
+                  "id": "media-a45d8ff90862de8b",
+                  "filename": "2021-05-26 14.49.00 - Coffee at Louis - Cold Brew Green Rose - Rp40.000 - (@bastronomika).JPEG",
+                  "relativePath": "2021-05-26 14.49.00 - Coffee at Louis - Cold Brew Green Rose - Rp40.000 - (@bastronomika).JPEG",
+                  "date": "2021-05-26",
+                  "time": "14:49:00",
+                  "dish": "Cold Brew Green Rose",
+                  "price": "Rp40.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 3206088,
+                  "lastModified": "2026-07-23T08:56:12Z",
+                  "etag": "\"18c4df63e4539bc030ebc8\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/a4/media-a45d8ff90862de8b-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/a4/media-a45d8ff90862de8b-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 4032,
+                  "sourceHeight": 3024,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 540,
+                  "previewWidth": 1800,
+                  "previewHeight": 1350,
+                  "thumbnailBytes": 42004,
+                  "previewBytes": 206826
+                },
+                {
+                  "id": "media-68335f8a037e5391",
+                  "filename": "2021-05-26 14.24.34 - Coffee at Louis - Cold Brew Tea English Breakfast - Rp40.000 - (@bastronomika).JPEG",
+                  "relativePath": "2021-05-26 14.24.34 - Coffee at Louis - Cold Brew Tea English Breakfast - Rp40.000 - (@bastronomika).JPEG",
+                  "date": "2021-05-26",
+                  "time": "14:24:34",
+                  "dish": "Cold Brew Tea English Breakfast",
+                  "price": "Rp40.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 2816623,
+                  "lastModified": "2026-07-23T08:54:13Z",
+                  "etag": "\"18c4df4818d7e3402afa6f\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/68/media-68335f8a037e5391-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/68/media-68335f8a037e5391-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 35426,
+                  "previewBytes": 207486
                 }
               ]
             },
@@ -437,6 +547,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 45652,
                   "previewBytes": 247164
+                }
+              ]
+            },
+            {
+              "name": "Pizza Place",
+              "folderName": "Pizza Place (Buka) - Jl. Untung Suropati No.84",
+              "slug": "pizza-place",
+              "status": "Buka",
+              "address": "Jl. Untung Suropati No.84",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-000ed3e432074167",
+                  "filename": "2021-10-13 15.38.46 - Pizza Place - Pepperoni Slice - Rp30.000 - (@bastronomika).JPEG",
+                  "relativePath": "2021-10-13 15.38.46 - Pizza Place - Pepperoni Slice - Rp30.000 - (@bastronomika).JPEG",
+                  "date": "2021-10-13",
+                  "time": "15:38:46",
+                  "dish": "Pepperoni Slice",
+                  "price": "Rp30.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 1959261,
+                  "lastModified": "2026-07-23T09:42:33Z",
+                  "etag": "\"18c4e1eb787422001de55d\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/00/media-000ed3e432074167-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/00/media-000ed3e432074167-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 64846,
+                  "previewBytes": 268754
                 }
               ]
             },
@@ -617,9 +767,9 @@
     {
       "name": "Surabaya Selatan",
       "slug": "surabaya-selatan",
-      "districtCount": 3,
-      "placeCount": 4,
-      "mediaCount": 5,
+      "districtCount": 4,
+      "placeCount": 7,
+      "mediaCount": 8,
       "districts": [
         {
           "name": "Tenggilis Mejoyo",
@@ -664,6 +814,134 @@
                   "previewHeight": 1350,
                   "thumbnailBytes": 70724,
                   "previewBytes": 409674
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Wiyung",
+          "slug": "wiyung",
+          "placeCount": 3,
+          "mediaCount": 3,
+          "places": [
+            {
+              "name": "Kokumi Pakuwon Trade Center",
+              "folderName": "Kokumi Pakuwon Trade Center (Buka) - Pakuwon Trade Center",
+              "slug": "kokumi-pakuwon-trade-center",
+              "status": "Buka",
+              "address": "Pakuwon Trade Center",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-ffb737d7f7f6aa09",
+                  "filename": "2022-01-08 19.27.07 - Kokumi Pakuwon Trade Center - Milk Tea Okinawa - Lupa harga - (@bastronomika).JPEG",
+                  "relativePath": "2022-01-08 19.27.07 - Kokumi Pakuwon Trade Center - Milk Tea Okinawa - Lupa harga - (@bastronomika).JPEG",
+                  "date": "2022-01-08",
+                  "time": "19:27:07",
+                  "dish": "Milk Tea Okinawa",
+                  "price": null,
+                  "credit": "@bastronomika",
+                  "notes": "Lupa harga",
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 2226051,
+                  "lastModified": "2026-07-23T09:40:09Z",
+                  "etag": "\"18c4e1c9d367564021f783\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/ff/media-ffb737d7f7f6aa09-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/ff/media-ffb737d7f7f6aa09-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 11868,
+                  "previewBytes": 58308
+                }
+              ]
+            },
+            {
+              "name": "Pancious Pakuwon Mall",
+              "folderName": "Pancious Pakuwon Mall (Buka) - Pakuwon Mall",
+              "slug": "pancious-pakuwon-mall",
+              "status": "Buka",
+              "address": "Pakuwon Mall",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-bb51280523503c1b",
+                  "filename": "2021-11-05 18.11.45 - Pancious Pakuwon Mall - Earl Grey Milk Tea - Rp77.000 - (@bastronomika).JPEG",
+                  "relativePath": "2021-11-05 18.11.45 - Pancious Pakuwon Mall - Earl Grey Milk Tea - Rp77.000 - (@bastronomika).JPEG",
+                  "date": "2021-11-05",
+                  "time": "18:11:45",
+                  "dish": "Earl Grey Milk Tea",
+                  "price": "Rp77.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 1410182,
+                  "lastModified": "2026-07-23T09:24:16Z",
+                  "etag": "\"18c4e0ebef94c5c0158486\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/bb/media-bb51280523503c1b-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/bb/media-bb51280523503c1b-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 2268,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 405,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1012,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 28182,
+                  "previewBytes": 122938
+                }
+              ]
+            },
+            {
+              "name": "Pizza Marzano Pakuwon Mall",
+              "folderName": "Pizza Marzano Pakuwon Mall (Buka) - Pakuwon Mall",
+              "slug": "pizza-marzano-pakuwon-mall",
+              "status": "Buka",
+              "address": "Pakuwon Mall",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-d60e18f36900eb0a",
+                  "filename": "2026-07-23 15.49.20 - Pizza Marzano Pakuwon Mall - Calabrese - Rp142.000 - (@bastronomika).JPEG",
+                  "relativePath": "2026-07-23 15.49.20 - Pizza Marzano Pakuwon Mall - Calabrese - Rp142.000 - (@bastronomika).JPEG",
+                  "date": "2026-07-23",
+                  "time": "15:49:20",
+                  "dish": "Calabrese",
+                  "price": "Rp142.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 80286,
+                  "lastModified": "2026-07-23T09:00:03Z",
+                  "etag": "\"18c4df99a66228001399e\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/d6/media-d60e18f36900eb0a-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/d6/media-d60e18f36900eb0a-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 738,
+                  "sourceHeight": 415,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 405,
+                  "previewWidth": 738,
+                  "previewHeight": 415,
+                  "thumbnailBytes": 79140,
+                  "previewBytes": 102076
                 }
               ]
             }
@@ -841,14 +1119,14 @@
       "name": "Surabaya Timur",
       "slug": "surabaya-timur",
       "districtCount": 4,
-      "placeCount": 12,
-      "mediaCount": 18,
+      "placeCount": 13,
+      "mediaCount": 20,
       "districts": [
         {
           "name": "Gubeng",
           "slug": "gubeng",
-          "placeCount": 4,
-          "mediaCount": 5,
+          "placeCount": 5,
+          "mediaCount": 7,
           "places": [
             {
               "name": "Carnivor",
@@ -999,6 +1277,76 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 31380,
                   "previewBytes": 173296
+                }
+              ]
+            },
+            {
+              "name": "Menantea Dharmawangsa",
+              "folderName": "Menantea Dharmawangsa (Tutup) - Jl. Dharmawangsa No.48",
+              "slug": "menantea-dharmawangsa",
+              "status": "Tutup",
+              "address": "Jl. Dharmawangsa No.48",
+              "mediaCount": 2,
+              "media": [
+                {
+                  "id": "media-b5a9d85afa480189",
+                  "filename": "2021-09-14 16.05.45 - Menantea Dharmawangsa - Oolong Milk Tea - Rp18.000 - (@bastronomika).JPEG",
+                  "relativePath": "2021-09-14 16.05.45 - Menantea Dharmawangsa - Oolong Milk Tea - Rp18.000 - (@bastronomika).JPEG",
+                  "date": "2021-09-14",
+                  "time": "16:05:45",
+                  "dish": "Oolong Milk Tea",
+                  "price": "Rp18.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 2270142,
+                  "lastModified": "2026-07-23T09:21:11Z",
+                  "etag": "\"18c4e0c0fbb75dc022a3be\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/b5/media-b5a9d85afa480189-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/b5/media-b5a9d85afa480189-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 21754,
+                  "previewBytes": 98806
+                },
+                {
+                  "id": "media-9c86f288258fb38e",
+                  "filename": "2021-09-14 16.03.17 - Menantea Dharmawangsa - Prinia Pure Tea - Rp18.000 - (@bastronomika).JPEG",
+                  "relativePath": "2021-09-14 16.03.17 - Menantea Dharmawangsa - Prinia Pure Tea - Rp18.000 - (@bastronomika).JPEG",
+                  "date": "2021-09-14",
+                  "time": "16:03:17",
+                  "dish": "Prinia Pure Tea",
+                  "price": "Rp18.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 2529661,
+                  "lastModified": "2026-07-23T09:19:18Z",
+                  "etag": "\"18c4e0a69de8510026997d\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/9c/media-9c86f288258fb38e-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/9c/media-9c86f288258fb38e-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 24960,
+                  "previewBytes": 139390
                 }
               ]
             },
