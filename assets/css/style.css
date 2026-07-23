@@ -250,6 +250,12 @@ code{
   background: transparent;
 }
 
+.post-content--justified p {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
 .empty{ padding: 18px 0 44px; color: var(--muted); max-width: var(--measure); }
 
 /* Mobile */
