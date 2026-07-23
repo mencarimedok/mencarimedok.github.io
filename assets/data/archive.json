@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-23T09:49:23.153075Z",
+  "generatedAt": "2026-07-23T17:51:07.055077Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -113,8 +113,8 @@
       "name": "Surabaya Pusat",
       "slug": "surabaya-pusat",
       "districtCount": 2,
-      "placeCount": 12,
-      "mediaCount": 17,
+      "placeCount": 14,
+      "mediaCount": 20,
       "districts": [
         {
           "name": "Genteng",
@@ -287,8 +287,8 @@
         {
           "name": "Tegalsari",
           "slug": "tegalsari",
-          "placeCount": 8,
-          "mediaCount": 13,
+          "placeCount": 10,
+          "mediaCount": 16,
           "places": [
             {
               "name": "Blackbarn",
@@ -327,6 +327,76 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 36410,
                   "previewBytes": 284950
+                }
+              ]
+            },
+            {
+              "name": "Carpentier Kitchen",
+              "folderName": "Carpentier Kitchen (Buka) - Jl. Untung Suropati No. 83",
+              "slug": "carpentier-kitchen",
+              "status": "Buka",
+              "address": "Jl. Untung Suropati No. 83",
+              "mediaCount": 2,
+              "media": [
+                {
+                  "id": "media-adc22fbf3706c528",
+                  "filename": "2026-03-03 17.48.41 - Carpentier Kitchen - Willa’s Kitchen - Rp82.700 - (Mita).JPEG",
+                  "relativePath": "2026-03-03 17.48.41 - Carpentier Kitchen - Willa’s Kitchen - Rp82.700 - (Mita).JPEG",
+                  "date": "2026-03-03",
+                  "time": "17:48:41",
+                  "dish": "Willa’s Kitchen - Rp82.700 - (Mita)",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 2536901,
+                  "lastModified": "2026-07-23T16:59:30Z",
+                  "etag": "\"18c4f9c3732061c026b5c5\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/ad/media-adc22fbf3706c528-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/ad/media-adc22fbf3706c528-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 73018,
+                  "previewBytes": 412406
+                },
+                {
+                  "id": "media-f3b7502248b056e3",
+                  "filename": "2025-05-09 18.55.49 - Carpentier Kitchen - Willa’s Kitchen - Rp82.700 - (Mita).JPEG",
+                  "relativePath": "2025-05-09 18.55.49 - Carpentier Kitchen - Willa’s Kitchen - Rp82.700 - (Mita).JPEG",
+                  "date": "2025-05-09",
+                  "time": "18:55:49",
+                  "dish": "Willa’s Kitchen - Rp82.700 - (Mita)",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 2369592,
+                  "lastModified": "2026-07-23T16:58:36Z",
+                  "etag": "\"18c4f9b704989940242838\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/f3/media-f3b7502248b056e3-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/f3/media-f3b7502248b056e3-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 57878,
+                  "previewBytes": 347170
                 }
               ]
             },
@@ -467,6 +537,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 55192,
                   "previewBytes": 268596
+                }
+              ]
+            },
+            {
+              "name": "Depot Citra Rasa",
+              "folderName": "Depot Citra Rasa (Buka) - Jl. Kedungdoro No. 291",
+              "slug": "depot-citra-rasa",
+              "status": "Buka",
+              "address": "Jl. Kedungdoro No. 291",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-53921c15b1859768",
+                  "filename": "2026-02-15 19.39.08 - Depot Citra Rasa - Nasi Goreng, Mie Goreng - Rp25.000 - (Mita).JPEG",
+                  "relativePath": "2026-02-15 19.39.08 - Depot Citra Rasa - Nasi Goreng, Mie Goreng - Rp25.000 - (Mita).JPEG",
+                  "date": "2026-02-15",
+                  "time": "19:39:08",
+                  "dish": "Nasi Goreng, Mie Goreng - Rp25.000 - (Mita)",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 2520172,
+                  "lastModified": "2026-07-23T17:02:55Z",
+                  "etag": "\"18c4f9f3575338c026746c\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/53/media-53921c15b1859768-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/53/media-53921c15b1859768-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 77892,
+                  "previewBytes": 430484
                 }
               ]
             },
@@ -1119,8 +1229,8 @@
       "name": "Surabaya Timur",
       "slug": "surabaya-timur",
       "districtCount": 4,
-      "placeCount": 13,
-      "mediaCount": 20,
+      "placeCount": 14,
+      "mediaCount": 21,
       "districts": [
         {
           "name": "Gubeng",
@@ -1543,8 +1653,8 @@
         {
           "name": "Rungkut",
           "slug": "rungkut",
-          "placeCount": 5,
-          "mediaCount": 8,
+          "placeCount": 6,
+          "mediaCount": 9,
           "places": [
             {
               "name": "Azyan Viennoiserie Merr",
@@ -1793,6 +1903,46 @@
                   "previewHeight": 1155,
                   "thumbnailBytes": 34594,
                   "previewBytes": 146334
+                }
+              ]
+            },
+            {
+              "name": "Sego Sambel Sahara",
+              "folderName": "Sego Sambel Sahara (Buka) - Jl. Rungkut Madya No. 213",
+              "slug": "sego-sambel-sahara",
+              "status": "Buka",
+              "address": "Jl. Rungkut Madya No. 213",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-d054b7c3ddc6ac5a",
+                  "filename": "2026-07-06 18.34.18 - Sego Sambel Sahara - Nasi, ampela, ayam, 2 tahu - Rp25.000 - (Mita).JPEG",
+                  "relativePath": "2026-07-06 18.34.18 - Sego Sambel Sahara - Nasi, ampela, ayam, 2 tahu - Rp25.000 - (Mita).JPEG",
+                  "date": "2026-07-06",
+                  "time": "18:34:18",
+                  "dish": "Nasi, ampela, ayam, 2 tahu - Rp25.000 - (Mita)",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 2661357,
+                  "lastModified": "2026-07-23T16:55:03Z",
+                  "etag": "\"18c4f985694a4280289bed\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/d0/media-d054b7c3ddc6ac5a-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/d0/media-d054b7c3ddc6ac5a-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 51602,
+                  "previewBytes": 342642
                 }
               ]
             },
