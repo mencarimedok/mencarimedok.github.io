@@ -4,7 +4,8 @@ title: "Adaptasi Lokal Bihun Somtam di Lidah Surabaya"
 date: 2026-07-24 15:23:22 +0700
 author: "Alina Salya"
 editor: "Baskoro Aris Sansoko"
-cover: "/assets/images/posts/adaptasi-lokal-bihun-somtam-di-lidah-surabaya/image-01.jpg"
+cover: "/assets/images/posts/adaptasi-lokal-bihun-somtam-di-lidah-surabaya
+/cc59db41-ef94-479c-959d-11221f57588b.jpeg"
 description: "Bicara tentang kuliner lokal Surabaya, pasti tidak jauh dari rujak cingur, rujak buah, petis udang, lontong balap, dan sebagainya. Berani, tegas, dan akrab dengan ragam olahan..."
 slug: adaptasi-lokal-bihun-somtam-di-lidah-surabaya
 ---
