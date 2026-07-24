@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-23T17:51:07.055077Z",
+  "generatedAt": "2026-07-24T14:15:41.292646Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -113,14 +113,14 @@
       "name": "Surabaya Pusat",
       "slug": "surabaya-pusat",
       "districtCount": 2,
-      "placeCount": 14,
-      "mediaCount": 20,
+      "placeCount": 15,
+      "mediaCount": 21,
       "districts": [
         {
           "name": "Genteng",
           "slug": "genteng",
-          "placeCount": 4,
-          "mediaCount": 4,
+          "placeCount": 5,
+          "mediaCount": 5,
           "places": [
             {
               "name": "Bakso Chukul",
@@ -159,6 +159,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 21294,
                   "previewBytes": 105020
+                }
+              ]
+            },
+            {
+              "name": "COBA PHO",
+              "folderName": "COBA PHO (Buka) - Jalan Tunjungan No.82",
+              "slug": "coba-pho",
+              "status": "Buka",
+              "address": "Jalan Tunjungan No.82",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-f9faf23b8d33181d",
+                  "filename": "2023-12-29 17.14.28 - COBA PHO - Pho Bo (Noodle soup with slice beef) - Lupa harga - (Ekayulinar_).JPG",
+                  "relativePath": "2023-12-29 17.14.28 - COBA PHO - Pho Bo (Noodle soup with slice beef) - Lupa harga - (Ekayulinar_).JPG",
+                  "date": "2023-12-29",
+                  "time": "17:14:28",
+                  "dish": "Pho Bo (Noodle soup with slice beef) - Lupa harga - (Ekayulinar_)",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 1853667,
+                  "lastModified": "2026-07-24T13:25:28Z",
+                  "etag": "\"18c53ca9fc29b1001c48e3\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/f9/media-f9faf23b8d33181d-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/f9/media-f9faf23b8d33181d-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3000,
+                  "sourceHeight": 3033,
+                  "thumbnailWidth": 712,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1780,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 53770,
+                  "previewBytes": 254584
                 }
               ]
             },
@@ -878,8 +918,8 @@
       "name": "Surabaya Selatan",
       "slug": "surabaya-selatan",
       "districtCount": 4,
-      "placeCount": 7,
-      "mediaCount": 8,
+      "placeCount": 9,
+      "mediaCount": 11,
       "districts": [
         {
           "name": "Tenggilis Mejoyo",
@@ -932,8 +972,8 @@
         {
           "name": "Wiyung",
           "slug": "wiyung",
-          "placeCount": 3,
-          "mediaCount": 3,
+          "placeCount": 4,
+          "mediaCount": 4,
           "places": [
             {
               "name": "Kokumi Pakuwon Trade Center",
@@ -1054,6 +1094,46 @@
                   "previewBytes": 102076
                 }
               ]
+            },
+            {
+              "name": "Soto Lamongan Pak Juwari",
+              "folderName": "Soto Lamongan Pak Juwari (Buka) - Jalan Raya Wiyung No. 353",
+              "slug": "soto-lamongan-pak-juwari",
+              "status": "Buka",
+              "address": "Jalan Raya Wiyung No. 353",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-6c049dfa533ae224",
+                  "filename": "2026-04-09 10.59.25 - Soto Lamongan Pak Juwari - Soto Ayam Jumbo - Rp22.000 - (Ekayulinar_).JPG",
+                  "relativePath": "2026-04-09 10.59.25 - Soto Lamongan Pak Juwari - Soto Ayam Jumbo - Rp22.000 - (Ekayulinar_).JPG",
+                  "date": "2026-04-09",
+                  "time": "10:59:25",
+                  "dish": "Soto Ayam Jumbo - Rp22.000 - (Ekayulinar_)",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 4523378,
+                  "lastModified": "2026-07-24T13:04:05Z",
+                  "etag": "\"18c53b7f585328c0450572\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/6c/media-6c049dfa533ae224-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/6c/media-6c049dfa533ae224-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 4500,
+                  "sourceHeight": 6035,
+                  "thumbnailWidth": 537,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1342,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 56342,
+                  "previewBytes": 259968
+                }
+              ]
             }
           ]
         },
@@ -1108,8 +1188,8 @@
         {
           "name": "Wonokromo",
           "slug": "wonokromo",
-          "placeCount": 2,
-          "mediaCount": 3,
+          "placeCount": 3,
+          "mediaCount": 5,
           "places": [
             {
               "name": "Go Go Curry Darmo",
@@ -1220,6 +1300,76 @@
                   "previewBytes": 173512
                 }
               ]
+            },
+            {
+              "name": "Steak Industry",
+              "folderName": "Steak Industry (Buka) - Jalan Nias No.140",
+              "slug": "steak-industry",
+              "status": "Buka",
+              "address": "Jalan Nias No.140",
+              "mediaCount": 2,
+              "media": [
+                {
+                  "id": "media-729a62fdafc79bae",
+                  "filename": "2026-07-24 18.28.18 - Steak Industry - Beef Pique Ribeye - Rp105.000 - (Ekayulinar_) - Harga tersebut tahun 2025.JPG",
+                  "relativePath": "2026-07-24 18.28.18 - Steak Industry - Beef Pique Ribeye - Rp105.000 - (Ekayulinar_) - Harga tersebut tahun 2025.JPG",
+                  "date": "2026-07-24",
+                  "time": "18:28:18",
+                  "dish": "Beef Pique Ribeye - Rp105.000 - (Ekayulinar_) - Harga tersebut tahun 2025",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 1012806,
+                  "lastModified": "2026-07-24T12:48:04Z",
+                  "etag": "\"18c53a9f9e574440f7446\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/72/media-729a62fdafc79bae-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/72/media-729a62fdafc79bae-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3120,
+                  "sourceHeight": 4160,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 55494,
+                  "previewBytes": 335220
+                },
+                {
+                  "id": "media-97272ceea61c476d",
+                  "filename": "2025-11-02 13.15.29 - Steak Industry - Beef Pique Sirloin - Rp120.000 - (Ekayulinar_) - Harga tersebut tahun 2025.JPG",
+                  "relativePath": "2025-11-02 13.15.29 - Steak Industry - Beef Pique Sirloin - Rp120.000 - (Ekayulinar_) - Harga tersebut tahun 2025.JPG",
+                  "date": "2025-11-02",
+                  "time": "13:15:29",
+                  "dish": "Beef Pique Sirloin - Rp120.000 - (Ekayulinar_) - Harga tersebut tahun 2025",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 1669348,
+                  "lastModified": "2026-07-24T12:44:52Z",
+                  "etag": "\"18c53a72d6298e001978e4\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/97/media-97272ceea61c476d-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/97/media-97272ceea61c476d-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 2242,
+                  "sourceHeight": 2803,
+                  "thumbnailWidth": 576,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1440,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 62042,
+                  "previewBytes": 350568
+                }
+              ]
             }
           ]
         }
@@ -1229,14 +1379,14 @@
       "name": "Surabaya Timur",
       "slug": "surabaya-timur",
       "districtCount": 4,
-      "placeCount": 14,
-      "mediaCount": 21,
+      "placeCount": 15,
+      "mediaCount": 24,
       "districts": [
         {
           "name": "Gubeng",
           "slug": "gubeng",
-          "placeCount": 5,
-          "mediaCount": 7,
+          "placeCount": 6,
+          "mediaCount": 10,
           "places": [
             {
               "name": "Carnivor",
@@ -1387,6 +1537,106 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 31380,
                   "previewBytes": 173296
+                }
+              ]
+            },
+            {
+              "name": "Libreria Eatery",
+              "folderName": "Libreria Eatery (Buka) - Jalan Ngagel Jaya no. 89",
+              "slug": "libreria-eatery",
+              "status": "Buka",
+              "address": "Jalan Ngagel Jaya no. 89",
+              "mediaCount": 3,
+              "media": [
+                {
+                  "id": "media-fa2d3000667c1443",
+                  "filename": "2025-10-02 19.15.26 - Libreria Eatery - Libreria Fried Sampler - Rp35.000 - (Ekayulinar_) - Harga tersebut tahun 2025.JPG",
+                  "relativePath": "2025-10-02 19.15.26 - Libreria Eatery - Libreria Fried Sampler - Rp35.000 - (Ekayulinar_) - Harga tersebut tahun 2025.JPG",
+                  "date": "2025-10-02",
+                  "time": "19:15:26",
+                  "dish": "Libreria Fried Sampler - Rp35.000 - (Ekayulinar_) - Harga tersebut tahun 2025",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 670295,
+                  "lastModified": "2026-07-24T12:31:28Z",
+                  "etag": "\"18c539b7b93004c0a3a57\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/fa/media-fa2d3000667c1443-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/fa/media-fa2d3000667c1443-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 2250,
+                  "sourceHeight": 1274,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 408,
+                  "previewWidth": 1800,
+                  "previewHeight": 1019,
+                  "thumbnailBytes": 36256,
+                  "previewBytes": 159906
+                },
+                {
+                  "id": "media-33179590bb5b1013",
+                  "filename": "2025-10-02 19.15.26 - Libreria Eatery - Beef Bulgogi - Rp38.000 - (Ekayulinar_) - Harga tersebut tahun 2025.JPG",
+                  "relativePath": "2025-10-02 19.15.26 - Libreria Eatery - Beef Bulgogi - Rp38.000 - (Ekayulinar_) - Harga tersebut tahun 2025.JPG",
+                  "date": "2025-10-02",
+                  "time": "19:15:26",
+                  "dish": "Beef Bulgogi - Rp38.000 - (Ekayulinar_) - Harga tersebut tahun 2025",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 740512,
+                  "lastModified": "2026-07-24T12:27:50Z",
+                  "etag": "\"18c53984dea39b00b4ca0\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/33/media-33179590bb5b1013-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/33/media-33179590bb5b1013-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 2250,
+                  "sourceHeight": 1559,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 499,
+                  "previewWidth": 1800,
+                  "previewHeight": 1247,
+                  "thumbnailBytes": 38720,
+                  "previewBytes": 171782
+                },
+                {
+                  "id": "media-0823327e581d71e5",
+                  "filename": "2025-10-02 19.15.26 - Libreria Eatery - Aglio olio - Rp35.000 - (Ekayulinar_) - Harga tersebut harga tahun 2025.JPG",
+                  "relativePath": "2025-10-02 19.15.26 - Libreria Eatery - Aglio olio - Rp35.000 - (Ekayulinar_) - Harga tersebut harga tahun 2025.JPG",
+                  "date": "2025-10-02",
+                  "time": "19:15:26",
+                  "dish": "Aglio olio - Rp35.000 - (Ekayulinar_) - Harga tersebut harga tahun 2025",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 569138,
+                  "lastModified": "2026-07-24T12:09:05Z",
+                  "etag": "\"18c5387efa153bc08af32\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/08/media-0823327e581d71e5-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/08/media-0823327e581d71e5-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 2109,
+                  "sourceHeight": 1198,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 409,
+                  "previewWidth": 1800,
+                  "previewHeight": 1022,
+                  "thumbnailBytes": 36568,
+                  "previewBytes": 154638
                 }
               ]
             },
