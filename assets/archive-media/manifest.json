@@ -44,7 +44,6 @@
     },
     "media-f9faf23b8d33181d": {
       "sourceFingerprint": "b088f8d9d53b2e94bf4fbaca7127ed33209236c6c3111866322e782725fe27fc",
-      "sourceSha256": "9fb023ab8529c84c57e7538cb8be25ced8b253656829571d02b8c6c1afa7c1b3",
       "sourceWidth": 3000,
       "sourceHeight": 3033,
       "thumbnailWidth": 712,
@@ -357,7 +356,6 @@
     },
     "media-6c049dfa533ae224": {
       "sourceFingerprint": "00db45b45cd7fa647568a62e0e06eb73b5e6869e74e480b783a43c0b481d9f7a",
-      "sourceSha256": "d83a9f6dffaaa049c566673dadc26ad14dec5778ed760dd8197c03f003cf1d7a",
       "sourceWidth": 4500,
       "sourceHeight": 6035,
       "thumbnailWidth": 537,
@@ -423,7 +421,6 @@
     },
     "media-729a62fdafc79bae": {
       "sourceFingerprint": "9878e7c5bd340c588b5fb6289081ac62ff487e0ac69d3cd819350a26d452686b",
-      "sourceSha256": "d7550e2727c881c97813fceb620ac49253c86f80638487a1fe972cd519e1beff",
       "sourceWidth": 3120,
       "sourceHeight": 4160,
       "thumbnailWidth": 540,
@@ -437,7 +434,6 @@
     },
     "media-97272ceea61c476d": {
       "sourceFingerprint": "9abe44eb03e8111e73497edc51fdb28b3e2b53a2b3878b4af75b4d917aa26b67",
-      "sourceSha256": "8dbd283cfd985336600f45ae0da3e8f351cd5abf739fd34b945e49d65c7bad29",
       "sourceWidth": 2242,
       "sourceHeight": 2803,
       "thumbnailWidth": 576,
@@ -503,7 +499,6 @@
     },
     "media-fa2d3000667c1443": {
       "sourceFingerprint": "21410da6248bffcbab68232d5c38d7fb1722d31e30175ade944e81da1cf4a667",
-      "sourceSha256": "10129d04c669cbba347accf6658a7f7f52ae33460bd153eeb78a167cbf62e26b",
       "sourceWidth": 2250,
       "sourceHeight": 1274,
       "thumbnailWidth": 720,
@@ -517,7 +512,6 @@
     },
     "media-33179590bb5b1013": {
       "sourceFingerprint": "7cdf2746b1ef10cca24ff130c4446b7d5f85387b884d8615478094c36dcdeb67",
-      "sourceSha256": "0439f2854efd304796f6253f2b815540b9585eece2b6d66e7bc4067959ee65c6",
       "sourceWidth": 2250,
       "sourceHeight": 1559,
       "thumbnailWidth": 720,
@@ -531,7 +525,6 @@
     },
     "media-0823327e581d71e5": {
       "sourceFingerprint": "0caef076cb2aa4fb7301043f8d7176f9accc5f7dcbb2868ea3208956938ea52c",
-      "sourceSha256": "2a999102f6fb60f102a8af0264d9c6e8d6b58de369563991a699fd69d17001ab",
       "sourceWidth": 2109,
       "sourceHeight": 1198,
       "thumbnailWidth": 720,
@@ -751,6 +744,20 @@
       "thumbnailUrl": "/assets/archive-media/29/media-293920bda1955d7f-thumb.webp",
       "previewUrl": "/assets/archive-media/29/media-293920bda1955d7f-preview.webp"
     },
+    "media-4acfff54fb774022": {
+      "sourceFingerprint": "6c135a7cd1f806184b070265a8600cd15c7d8ad4dcc9649444d972c8b1e5d0f4",
+      "sourceSha256": "993b2f2aa04a88ecd910afee551b181593b933bb044c7d36cb29892eedff6c87",
+      "sourceWidth": 3072,
+      "sourceHeight": 4096,
+      "thumbnailWidth": 540,
+      "thumbnailHeight": 720,
+      "previewWidth": 1350,
+      "previewHeight": 1800,
+      "thumbnailBytes": 59650,
+      "previewBytes": 341100,
+      "thumbnailUrl": "/assets/archive-media/4a/media-4acfff54fb774022-thumb.webp",
+      "previewUrl": "/assets/archive-media/4a/media-4acfff54fb774022-preview.webp"
+    },
     "media-34e50ce100db89f5": {
       "sourceFingerprint": "c2d4069fee459db1dd2feec7586c68746b91ffb95c238ac822c11a302d86bc61",
       "sourceWidth": 3072,
@@ -763,6 +770,20 @@
       "previewBytes": 225746,
       "thumbnailUrl": "/assets/archive-media/34/media-34e50ce100db89f5-thumb.webp",
       "previewUrl": "/assets/archive-media/34/media-34e50ce100db89f5-preview.webp"
+    },
+    "media-0f10ba3a07497d11": {
+      "sourceFingerprint": "d73cc441273d5e8462d640055c24d8c7f3fce15ebc6fede1f3ebf8c0dee66e39",
+      "sourceSha256": "dcfabce879978623a1a52dda440954ed23dfdbcabe86af2e68057d5400f07c2c",
+      "sourceWidth": 4096,
+      "sourceHeight": 3072,
+      "thumbnailWidth": 720,
+      "thumbnailHeight": 540,
+      "previewWidth": 1800,
+      "previewHeight": 1350,
+      "thumbnailBytes": 74790,
+      "previewBytes": 348532,
+      "thumbnailUrl": "/assets/archive-media/0f/media-0f10ba3a07497d11-thumb.webp",
+      "previewUrl": "/assets/archive-media/0f/media-0f10ba3a07497d11-preview.webp"
     }
   }
 }

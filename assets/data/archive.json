@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-24T14:15:41.292646Z",
+  "generatedAt": "2026-07-25T07:05:23.171843Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -1378,9 +1378,9 @@
     {
       "name": "Surabaya Timur",
       "slug": "surabaya-timur",
-      "districtCount": 4,
-      "placeCount": 15,
-      "mediaCount": 24,
+      "districtCount": 5,
+      "placeCount": 17,
+      "mediaCount": 26,
       "districts": [
         {
           "name": "Gubeng",
@@ -2241,9 +2241,49 @@
         {
           "name": "Sukolilo",
           "slug": "sukolilo",
-          "placeCount": 1,
-          "mediaCount": 1,
+          "placeCount": 2,
+          "mediaCount": 2,
           "places": [
+            {
+              "name": "Depot Pangsit Mie Ayam Rizky",
+              "folderName": "Depot Pangsit Mie Ayam Rizky (Buka) - Sentra Wisata Kuliner Kebun Bibit Bratang",
+              "slug": "depot-pangsit-mie-ayam-rizky",
+              "status": "Buka",
+              "address": "Sentra Wisata Kuliner Kebun Bibit Bratang",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-4acfff54fb774022",
+                  "filename": "2026-07-18 17.34.50 - Depot Pangsit Mie Ayam Rizky - Pangsit Mie Ayam Bakwan Jumbo - Rp26.000 - (@hrdnfbrn).JPG",
+                  "relativePath": "2026-07-18 17.34.50 - Depot Pangsit Mie Ayam Rizky - Pangsit Mie Ayam Bakwan Jumbo - Rp26.000 - (@hrdnfbrn).JPG",
+                  "date": "2026-07-18",
+                  "time": "17:34:50",
+                  "dish": "Pangsit Mie Ayam Bakwan Jumbo",
+                  "price": "Rp26.000",
+                  "credit": "@hrdnfbrn",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 4000017,
+                  "lastModified": "2026-07-25T05:05:57Z",
+                  "etag": "\"18c56ffc8a7a92003d0911\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/4a/media-4acfff54fb774022-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/4a/media-4acfff54fb774022-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 59650,
+                  "previewBytes": 341100
+                }
+              ]
+            },
             {
               "name": "Sate Padang Sinar Gemilang Djo Siin",
               "folderName": "Sate Padang Sinar Gemilang Djo Siin (Buka) - Jl. Raya Manyar No.55",
@@ -2281,6 +2321,54 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 44778,
                   "previewBytes": 225746
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tambaksari",
+          "slug": "tambaksari",
+          "placeCount": 1,
+          "mediaCount": 1,
+          "places": [
+            {
+              "name": "Nasi Goreng Jawa Bogen Dekat TPS",
+              "folderName": "Nasi Goreng Jawa Bogen Dekat TPS (Buka) - Jalan Bogen Tambaksari, depan TPS Bogen",
+              "slug": "nasi-goreng-jawa-bogen-dekat-tps",
+              "status": "Buka",
+              "address": "Jalan Bogen Tambaksari, depan TPS Bogen",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-0f10ba3a07497d11",
+                  "filename": "2026-07-22 21.50.48 - Nasi Goreng Jawa Bogen Dekat TPS - Nasi Goreng Jawa - Rp13.000 - (@hrdnfbrn).JPG",
+                  "relativePath": "2026-07-22 21.50.48 - Nasi Goreng Jawa Bogen Dekat TPS - Nasi Goreng Jawa - Rp13.000 - (@hrdnfbrn).JPG",
+                  "date": "2026-07-22",
+                  "time": "21:50:48",
+                  "dish": "Nasi Goreng Jawa",
+                  "price": "Rp13.000",
+                  "credit": "@hrdnfbrn",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 2855348,
+                  "lastModified": "2026-07-25T04:54:07Z",
+                  "etag": "\"18c56f57243bb3c02b91b4\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/0f/media-0f10ba3a07497d11-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/0f/media-0f10ba3a07497d11-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 4096,
+                  "sourceHeight": 3072,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 540,
+                  "previewWidth": 1800,
+                  "previewHeight": 1350,
+                  "thumbnailBytes": 74790,
+                  "previewBytes": 348532
                 }
               ]
             }
