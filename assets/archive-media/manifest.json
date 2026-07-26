@@ -302,6 +302,20 @@
       "thumbnailUrl": "/assets/archive-media/0b/media-0b0efea50c82de46-thumb.webp",
       "previewUrl": "/assets/archive-media/0b/media-0b0efea50c82de46-preview.webp"
     },
+    "media-f78916594fcc30e7": {
+      "sourceFingerprint": "40a2f60c86fbd7938dccb2c9cfab6649b3bc836d747b5776d9ffc52e511f1470",
+      "sourceSha256": "e84a1d01fb2ac46b35fcceeebeab36e9452cf39f92faef9a1df1509521c647d4",
+      "sourceWidth": 3024,
+      "sourceHeight": 4032,
+      "thumbnailWidth": 540,
+      "thumbnailHeight": 720,
+      "previewWidth": 1350,
+      "previewHeight": 1800,
+      "thumbnailBytes": 39776,
+      "previewBytes": 195926,
+      "thumbnailUrl": "/assets/archive-media/f7/media-f78916594fcc30e7-thumb.webp",
+      "previewUrl": "/assets/archive-media/f7/media-f78916594fcc30e7-preview.webp"
+    },
     "media-1298c5e69f8fc09a": {
       "sourceFingerprint": "030ecc5d4bd8ff9668353f007769b2b0697a5107ceda3195bede8f67bc788216",
       "sourceWidth": 4080,
@@ -470,6 +484,20 @@
       "previewBytes": 186300,
       "thumbnailUrl": "/assets/archive-media/ec/media-ecd03f5e0c143734-thumb.webp",
       "previewUrl": "/assets/archive-media/ec/media-ecd03f5e0c143734-preview.webp"
+    },
+    "media-c0b7d169784bfff5": {
+      "sourceFingerprint": "d72115b446946d71af1bb51facc045ae5fa8622e1938bfa3f176b550d381d5c3",
+      "sourceSha256": "ab35e2cfa06c93c8b3e6375afec6dbe817e1b16ec64792919d2919ad87f7b075",
+      "sourceWidth": 3024,
+      "sourceHeight": 4032,
+      "thumbnailWidth": 540,
+      "thumbnailHeight": 720,
+      "previewWidth": 1350,
+      "previewHeight": 1800,
+      "thumbnailBytes": 61206,
+      "previewBytes": 317644,
+      "thumbnailUrl": "/assets/archive-media/c0/media-c0b7d169784bfff5-thumb.webp",
+      "previewUrl": "/assets/archive-media/c0/media-c0b7d169784bfff5-preview.webp"
     },
     "media-8299dd18f778f643": {
       "sourceFingerprint": "90762a5e9b773f8380567b48404ab664c021cb47633618745d30ae85de67a4a7",
@@ -746,7 +774,6 @@
     },
     "media-4acfff54fb774022": {
       "sourceFingerprint": "6c135a7cd1f806184b070265a8600cd15c7d8ad4dcc9649444d972c8b1e5d0f4",
-      "sourceSha256": "993b2f2aa04a88ecd910afee551b181593b933bb044c7d36cb29892eedff6c87",
       "sourceWidth": 3072,
       "sourceHeight": 4096,
       "thumbnailWidth": 540,
@@ -773,7 +800,6 @@
     },
     "media-0f10ba3a07497d11": {
       "sourceFingerprint": "d73cc441273d5e8462d640055c24d8c7f3fce15ebc6fede1f3ebf8c0dee66e39",
-      "sourceSha256": "dcfabce879978623a1a52dda440954ed23dfdbcabe86af2e68057d5400f07c2c",
       "sourceWidth": 4096,
       "sourceHeight": 3072,
       "thumbnailWidth": 720,

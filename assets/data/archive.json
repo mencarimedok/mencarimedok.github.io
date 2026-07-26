@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-25T07:05:23.171843Z",
+  "generatedAt": "2026-07-26T07:06:12.903225Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -917,10 +917,58 @@
     {
       "name": "Surabaya Selatan",
       "slug": "surabaya-selatan",
-      "districtCount": 4,
-      "placeCount": 9,
-      "mediaCount": 11,
+      "districtCount": 5,
+      "placeCount": 10,
+      "mediaCount": 12,
       "districts": [
+        {
+          "name": "Sawahan",
+          "slug": "sawahan",
+          "placeCount": 1,
+          "mediaCount": 1,
+          "places": [
+            {
+              "name": "Bakmi Pulo Jawi",
+              "folderName": "Bakmi Pulo Jawi (Buka) - Jalan Arjuno No. 140",
+              "slug": "bakmi-pulo-jawi",
+              "status": "Buka",
+              "address": "Jalan Arjuno No. 140",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-f78916594fcc30e7",
+                  "filename": "2022-02-18 19.32.30 - Bakmi Pulo Jawi - Bakmi Nyemek Komplit - Rp20.000 - (@bastronomika).JPEG",
+                  "relativePath": "2022-02-18 19.32.30 - Bakmi Pulo Jawi - Bakmi Nyemek Komplit - Rp20.000 - (@bastronomika).JPEG",
+                  "date": "2022-02-18",
+                  "time": "19:32:30",
+                  "dish": "Bakmi Nyemek Komplit",
+                  "price": "Rp20.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 3206359,
+                  "lastModified": "2026-07-26T06:37:50Z",
+                  "etag": "\"18c5c394a086458030ecd7\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/f7/media-f78916594fcc30e7-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/f7/media-f78916594fcc30e7-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 39776,
+                  "previewBytes": 195926
+                }
+              ]
+            }
+          ]
+        },
         {
           "name": "Tenggilis Mejoyo",
           "slug": "tenggilis-mejoyo",
@@ -1379,14 +1427,14 @@
       "name": "Surabaya Timur",
       "slug": "surabaya-timur",
       "districtCount": 5,
-      "placeCount": 17,
-      "mediaCount": 26,
+      "placeCount": 18,
+      "mediaCount": 27,
       "districts": [
         {
           "name": "Gubeng",
           "slug": "gubeng",
-          "placeCount": 6,
-          "mediaCount": 10,
+          "placeCount": 7,
+          "mediaCount": 11,
           "places": [
             {
               "name": "Carnivor",
@@ -1467,6 +1515,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 40498,
                   "previewBytes": 186300
+                }
+              ]
+            },
+            {
+              "name": "De Bun",
+              "folderName": "De Bun (Buka) - Jalan Biliton No. 51",
+              "slug": "de-bun",
+              "status": "Buka",
+              "address": "Jalan Biliton No. 51",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-c0b7d169784bfff5",
+                  "filename": "2021-10-14 13.17.45 - De Bun - Black Truffle Beef Wich - Lupa harga - (@bastronomika).JPEG",
+                  "relativePath": "2021-10-14 13.17.45 - De Bun - Black Truffle Beef Wich - Lupa harga - (@bastronomika).JPEG",
+                  "date": "2021-10-14",
+                  "time": "13:17:45",
+                  "dish": "Black Truffle Beef Wich",
+                  "price": null,
+                  "credit": "@bastronomika",
+                  "notes": "Lupa harga",
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 3537055,
+                  "lastModified": "2026-07-26T07:00:03Z",
+                  "etag": "\"18c5c4cafb7d4b0035f89f\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/c0/media-c0b7d169784bfff5-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/c0/media-c0b7d169784bfff5-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 61206,
+                  "previewBytes": 317644
                 }
               ]
             },
