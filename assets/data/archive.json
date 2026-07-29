@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-29T09:30:33.082098Z",
+  "generatedAt": "2026-07-29T11:50:41.480786Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -113,14 +113,14 @@
       "name": "Surabaya Pusat",
       "slug": "surabaya-pusat",
       "districtCount": 2,
-      "placeCount": 21,
-      "mediaCount": 29,
+      "placeCount": 22,
+      "mediaCount": 30,
       "districts": [
         {
           "name": "Genteng",
           "slug": "genteng",
-          "placeCount": 8,
-          "mediaCount": 9,
+          "placeCount": 9,
+          "mediaCount": 10,
           "places": [
             {
               "name": "Alltime Buns",
@@ -429,6 +429,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 34316,
                   "previewBytes": 191134
+                }
+              ]
+            },
+            {
+              "name": "Our Bar",
+              "folderName": "Our Bar (Buka) - Jl. Embong Cerme No.17",
+              "slug": "our-bar",
+              "status": "Buka",
+              "address": "Jl. Embong Cerme No.17",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-2fd96f01116c4195",
+                  "filename": "2026-05-15 00.09.12 - Our Bar - Sangria - Rp90.000 - (@bastronomika).JPG",
+                  "relativePath": "2026-05-15 00.09.12 - Our Bar - Sangria - Rp90.000 - (@bastronomika).JPG",
+                  "date": "2026-05-15",
+                  "time": "00:09:12",
+                  "dish": "Sangria",
+                  "price": "Rp90.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 5200056,
+                  "lastModified": "2026-07-29T10:05:14Z",
+                  "etag": "\"18c6baa3a5bc58804f58b8\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/2f/media-2fd96f01116c4195-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/2f/media-2fd96f01116c4195-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 74106,
+                  "previewBytes": 436724
                 }
               ]
             },
@@ -1218,8 +1258,8 @@
       "name": "Surabaya Selatan",
       "slug": "surabaya-selatan",
       "districtCount": 6,
-      "placeCount": 11,
-      "mediaCount": 13,
+      "placeCount": 12,
+      "mediaCount": 14,
       "districts": [
         {
           "name": "Dukuh Pakis",
@@ -1272,8 +1312,8 @@
         {
           "name": "Sawahan",
           "slug": "sawahan",
-          "placeCount": 1,
-          "mediaCount": 1,
+          "placeCount": 2,
+          "mediaCount": 2,
           "places": [
             {
               "name": "Bakmi Pulo Jawi",
@@ -1312,6 +1352,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 39776,
                   "previewBytes": 195926
+                }
+              ]
+            },
+            {
+              "name": "Bakso Jaya Mulya Banyu Urip",
+              "folderName": "Bakso Jaya Mulya Banyu Urip (Tutup) - Jalan Banyu Urip No. 90",
+              "slug": "bakso-jaya-mulya-banyu-urip",
+              "status": "Tutup",
+              "address": "Jalan Banyu Urip No. 90",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-cb2b9659fdc69877",
+                  "filename": "2022-03-02 19.39.47 - Bakso Jaya Mulya Banyu Urip - Bakso, Gorengan, dan Nasi - Lupa harga - (@bastronomika).JPG",
+                  "relativePath": "2022-03-02 19.39.47 - Bakso Jaya Mulya Banyu Urip - Bakso, Gorengan, dan Nasi - Lupa harga - (@bastronomika).JPG",
+                  "date": "2022-03-02",
+                  "time": "19:39:47",
+                  "dish": "Bakso, Gorengan, dan Nasi",
+                  "price": null,
+                  "credit": "@bastronomika",
+                  "notes": "Lupa harga",
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 1559755,
+                  "lastModified": "2026-07-29T10:51:12Z",
+                  "etag": "\"18c6bd25c525aa8017cccb\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/cb/media-cb2b9659fdc69877-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/cb/media-cb2b9659fdc69877-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 2268,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 405,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1012,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 13228,
+                  "previewBytes": 76520
                 }
               ]
             }
@@ -1775,14 +1855,14 @@
       "name": "Surabaya Timur",
       "slug": "surabaya-timur",
       "districtCount": 5,
-      "placeCount": 20,
-      "mediaCount": 30,
+      "placeCount": 22,
+      "mediaCount": 33,
       "districts": [
         {
           "name": "Gubeng",
           "slug": "gubeng",
-          "placeCount": 8,
-          "mediaCount": 13,
+          "placeCount": 9,
+          "mediaCount": 15,
           "places": [
             {
               "name": "Carnivor",
@@ -1912,8 +1992,38 @@
               "slug": "gh-corner",
               "status": "Tutup",
               "address": "Jalan Pucang Anom No. 58",
-              "mediaCount": 2,
+              "mediaCount": 3,
               "media": [
+                {
+                  "id": "media-643af263f2ae9810",
+                  "filename": "2021-06-05 19.06.14 - GH Corner - Mee Kari Malaysia - Rp50.000 - (@bastronomika).JPG",
+                  "relativePath": "2021-06-05 19.06.14 - GH Corner - Mee Kari Malaysia - Rp50.000 - (@bastronomika).JPG",
+                  "date": "2021-06-05",
+                  "time": "19:06:14",
+                  "dish": "Mee Kari Malaysia",
+                  "price": "Rp50.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 3435561,
+                  "lastModified": "2026-07-29T10:48:47Z",
+                  "etag": "\"18c6bd040ab2f700346c29\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/64/media-643af263f2ae9810-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/64/media-643af263f2ae9810-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 59114,
+                  "previewBytes": 324054
+                },
                 {
                   "id": "media-8299dd18f778f643",
                   "filename": "2021-05-22 17.57.35 GH Corner - GHC Ice Cream - Rp18.000 .JPG",
@@ -2213,6 +2323,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 24960,
                   "previewBytes": 139390
+                }
+              ]
+            },
+            {
+              "name": "Nasi Goreng Tiarbah Dharmawangsa",
+              "folderName": "Nasi Goreng Tiarbah Dharmawangsa (Buka) - Jl. Gubeng Kertajaya VII C No.22",
+              "slug": "nasi-goreng-tiarbah-dharmawangsa",
+              "status": "Buka",
+              "address": "Jl. Gubeng Kertajaya VII C No.22",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-2994ef000433c4ea",
+                  "filename": "2022-03-04 11.03.05 - Nasi Goreng Tiarbah Dharmawangsa - Nasi Goreng Dendeng Lemak - Lupa harga - (@bastronomika).JPG",
+                  "relativePath": "2022-03-04 11.03.05 - Nasi Goreng Tiarbah Dharmawangsa - Nasi Goreng Dendeng Lemak - Lupa harga - (@bastronomika).JPG",
+                  "date": "2022-03-04",
+                  "time": "11:03:05",
+                  "dish": "Nasi Goreng Dendeng Lemak",
+                  "price": null,
+                  "credit": "@bastronomika",
+                  "notes": "Lupa harga",
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 1662858,
+                  "lastModified": "2026-07-29T10:58:46Z",
+                  "etag": "\"18c6bd8f80bfb240195f8a\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/29/media-2994ef000433c4ea-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/29/media-2994ef000433c4ea-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 2268,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 405,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1012,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 13664,
+                  "previewBytes": 80022
                 }
               ]
             },
@@ -2787,8 +2937,8 @@
         {
           "name": "Sukolilo",
           "slug": "sukolilo",
-          "placeCount": 2,
-          "mediaCount": 2,
+          "placeCount": 3,
+          "mediaCount": 3,
           "places": [
             {
               "name": "Depot Pangsit Mie Ayam Rizky",
@@ -2867,6 +3017,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 44778,
                   "previewBytes": 225746
+                }
+              ]
+            },
+            {
+              "name": "Warung Penyetan Pak Kumis",
+              "folderName": "Warung Penyetan Pak Kumis (Buka) - Jalan Arif Rachman Hakim No. 50",
+              "slug": "warung-penyetan-pak-kumis",
+              "status": "Buka",
+              "address": "Jalan Arif Rachman Hakim No. 50",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-b630c699b3c859df",
+                  "filename": "2022-03-05 17.58.45 - Warung Penyetan Pak Kumis - Nasi Goreng Gila - Lupa harga - (@bastronomika).JPG",
+                  "relativePath": "2022-03-05 17.58.45 - Warung Penyetan Pak Kumis - Nasi Goreng Gila - Lupa harga - (@bastronomika).JPG",
+                  "date": "2022-03-05",
+                  "time": "17:58:45",
+                  "dish": "Nasi Goreng Gila",
+                  "price": null,
+                  "credit": "@bastronomika",
+                  "notes": "Lupa harga",
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 1923504,
+                  "lastModified": "2026-07-29T11:33:10Z",
+                  "etag": "\"18c6bf70250f91801d59b0\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/b6/media-b630c699b3c859df-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/b6/media-b630c699b3c859df-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 2268,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 405,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1012,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 30230,
+                  "previewBytes": 160638
                 }
               ]
             }
