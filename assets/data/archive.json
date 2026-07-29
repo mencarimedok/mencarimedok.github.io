@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-26T09:26:21.560482Z",
+  "generatedAt": "2026-07-29T03:45:21.405910Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -1775,14 +1775,14 @@
       "name": "Surabaya Timur",
       "slug": "surabaya-timur",
       "districtCount": 5,
-      "placeCount": 18,
-      "mediaCount": 27,
+      "placeCount": 19,
+      "mediaCount": 28,
       "districts": [
         {
           "name": "Gubeng",
           "slug": "gubeng",
-          "placeCount": 7,
-          "mediaCount": 11,
+          "placeCount": 8,
+          "mediaCount": 12,
           "places": [
             {
               "name": "Carnivor",
@@ -1973,6 +1973,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 31380,
                   "previewBytes": 173296
+                }
+              ]
+            },
+            {
+              "name": "Kopilaborasi",
+              "folderName": "Kopilaborasi (Buka) - Jalan Ngagel Jaya Utara No. 66",
+              "slug": "kopilaborasi",
+              "status": "Buka",
+              "address": "Jalan Ngagel Jaya Utara No. 66",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-ce8d493739ba35b0",
+                  "filename": "2026-07-28 17.59.07 - Kopilaborasi - Spaghetti Bolognese - Rp50.000 - (@bastronomika).JPEG",
+                  "relativePath": "2026-07-28 17.59.07 - Kopilaborasi - Spaghetti Bolognese - Rp50.000 - (@bastronomika).JPEG",
+                  "date": "2026-07-28",
+                  "time": "17:59:07",
+                  "dish": "Spaghetti Bolognese",
+                  "price": "Rp50.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 3195711,
+                  "lastModified": "2026-07-29T03:28:24Z",
+                  "etag": "\"18c6a4fbfae4690030c33f\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/ce/media-ce8d493739ba35b0-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/ce/media-ce8d493739ba35b0-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 55310,
+                  "previewBytes": 247782
                 }
               ]
             },
