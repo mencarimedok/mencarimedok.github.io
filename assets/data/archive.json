@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-29T03:45:21.405910Z",
+  "generatedAt": "2026-07-29T09:30:33.082098Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -1775,14 +1775,14 @@
       "name": "Surabaya Timur",
       "slug": "surabaya-timur",
       "districtCount": 5,
-      "placeCount": 19,
-      "mediaCount": 28,
+      "placeCount": 20,
+      "mediaCount": 30,
       "districts": [
         {
           "name": "Gubeng",
           "slug": "gubeng",
           "placeCount": 8,
-          "mediaCount": 12,
+          "mediaCount": 13,
           "places": [
             {
               "name": "Carnivor",
@@ -1982,7 +1982,7 @@
               "slug": "kopilaborasi",
               "status": "Buka",
               "address": "Jalan Ngagel Jaya Utara No. 66",
-              "mediaCount": 1,
+              "mediaCount": 2,
               "media": [
                 {
                   "id": "media-ce8d493739ba35b0",
@@ -2013,6 +2013,36 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 55310,
                   "previewBytes": 247782
+                },
+                {
+                  "id": "media-4857166523871730",
+                  "filename": "2026-07-28 17.52.10 - Kopilaborasi - Magic - Rp35.000 - (@bastronomika).JPEG",
+                  "relativePath": "2026-07-28 17.52.10 - Kopilaborasi - Magic - Rp35.000 - (@bastronomika).JPEG",
+                  "date": "2026-07-28",
+                  "time": "17:52:10",
+                  "dish": "Magic",
+                  "price": "Rp35.000",
+                  "credit": "@bastronomika",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 2722699,
+                  "lastModified": "2026-07-29T07:52:43Z",
+                  "etag": "\"18c6b36856127040298b8b\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/48/media-4857166523871730-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/48/media-4857166523871730-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3024,
+                  "sourceHeight": 4032,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 33014,
+                  "previewBytes": 166316
                 }
               ]
             },
@@ -2231,8 +2261,8 @@
         {
           "name": "Gunung Anyar",
           "slug": "gunung-anyar",
-          "placeCount": 2,
-          "mediaCount": 4,
+          "placeCount": 3,
+          "mediaCount": 5,
           "places": [
             {
               "name": "Daidokoro Japanese Cuisine",
@@ -2371,6 +2401,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 27406,
                   "previewBytes": 158138
+                }
+              ]
+            },
+            {
+              "name": "Warkop Ejet",
+              "folderName": "Warkop Ejet (Buka) - Jalan Gunung Anyar Tengah VII No. 15",
+              "slug": "warkop-ejet",
+              "status": "Buka",
+              "address": "Jalan Gunung Anyar Tengah VII No. 15",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-b664fddf15250335",
+                  "filename": "2026-07-28 21.29 - Warkop Ejet - Indomie Jumbo Spesial Telor - Rp10.000 - (@hrdnfbrn) - Warkop yang menyediakan Indomie dengan berbagai rasa dengan cara masak dan penyajian yang unik, sudah ada sejak 1990an awal. Favorit warlok.JPEG",
+                  "relativePath": "2026-07-28 21.29 - Warkop Ejet - Indomie Jumbo Spesial Telor - Rp10.000 - (@hrdnfbrn) - Warkop yang menyediakan Indomie dengan berbagai rasa dengan cara masak dan penyajian yang unik, sudah ada sejak 1990an awal. Favorit warlok.JPEG",
+                  "date": "2026-07-28",
+                  "time": "21:29",
+                  "dish": "Indomie Jumbo Spesial Telor - Rp10.000 - (@hrdnfbrn) - Warkop yang menyediakan Indomie dengan berbagai rasa dengan cara masak dan penyajian yang unik, sudah ada sejak 1990an awal. Favorit warlok",
+                  "price": null,
+                  "credit": null,
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPEG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 1584612,
+                  "lastModified": "2026-07-29T07:58:28Z",
+                  "etag": "\"18c6b3b8da3151c0182de4\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/b6/media-b664fddf15250335-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/b6/media-b664fddf15250335-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 3072,
+                  "sourceHeight": 4096,
+                  "thumbnailWidth": 540,
+                  "thumbnailHeight": 720,
+                  "previewWidth": 1350,
+                  "previewHeight": 1800,
+                  "thumbnailBytes": 51852,
+                  "previewBytes": 294142
                 }
               ]
             }
