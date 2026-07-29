@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "parserVersion": 2,
   "mode": "koofr-preview",
-  "generatedAt": "2026-07-29T14:34:08.936370Z",
+  "generatedAt": "2026-07-29T16:12:38.836435Z",
   "regions": [
     {
       "name": "Surabaya Barat",
@@ -2013,8 +2013,8 @@
       "name": "Surabaya Timur",
       "slug": "surabaya-timur",
       "districtCount": 6,
-      "placeCount": 24,
-      "mediaCount": 35,
+      "placeCount": 25,
+      "mediaCount": 36,
       "districts": [
         {
           "name": "Gubeng",
@@ -2845,8 +2845,8 @@
         {
           "name": "Rungkut",
           "slug": "rungkut",
-          "placeCount": 6,
-          "mediaCount": 9,
+          "placeCount": 7,
+          "mediaCount": 10,
           "places": [
             {
               "name": "Azyan Viennoiserie Merr",
@@ -3055,6 +3055,46 @@
                   "previewHeight": 1800,
                   "thumbnailBytes": 45474,
                   "previewBytes": 226408
+                }
+              ]
+            },
+            {
+              "name": "Pecel dan Tempe Penyet Asli Madiun",
+              "folderName": "Pecel dan Tempe Penyet Asli Madiun (Buka) - Jalan Rungkut Madya (Depan Perumahan Rungkut Mapan Utara)",
+              "slug": "pecel-dan-tempe-penyet-asli-madiun",
+              "status": "Buka",
+              "address": "Jalan Rungkut Madya (Depan Perumahan Rungkut Mapan Utara)",
+              "mediaCount": 1,
+              "media": [
+                {
+                  "id": "media-48a2e8b1c3e39d73",
+                  "filename": "2026-07-28 17.47.58 - Pecel dan Tempe Penyet Asli Madiun - Nasi Pecel (bumbu pedas) lauk sate telur puyuh bumbu kuning - Rp17.000 - (@hrdnfbrn).JPG",
+                  "relativePath": "2026-07-28 17.47.58 - Pecel dan Tempe Penyet Asli Madiun - Nasi Pecel (bumbu pedas) lauk sate telur puyuh bumbu kuning - Rp17.000 - (@hrdnfbrn).JPG",
+                  "date": "2026-07-28",
+                  "time": "17:47:58",
+                  "dish": "Nasi Pecel (bumbu pedas) lauk sate telur puyuh bumbu kuning",
+                  "price": "Rp17.000",
+                  "credit": "@hrdnfbrn",
+                  "notes": null,
+                  "collaboration": null,
+                  "extension": "JPG",
+                  "mimeType": "image/jpeg",
+                  "sizeBytes": 3472115,
+                  "lastModified": "2026-07-29T15:49:13Z",
+                  "etag": "\"18c6cd69229dafc034faf3\"",
+                  "parseWarnings": [],
+                  "previewUrl": "/assets/archive-media/48/media-48a2e8b1c3e39d73-preview.webp",
+                  "originalUrl": null,
+                  "thumbnailUrl": "/assets/archive-media/48/media-48a2e8b1c3e39d73-thumb.webp",
+                  "previewStatus": "ready",
+                  "sourceWidth": 4096,
+                  "sourceHeight": 3072,
+                  "thumbnailWidth": 720,
+                  "thumbnailHeight": 540,
+                  "previewWidth": 1800,
+                  "previewHeight": 1350,
+                  "thumbnailBytes": 68142,
+                  "previewBytes": 412354
                 }
               ]
             },
